@@ -3,7 +3,7 @@ import { BellIcon, Cog6ToothIcon, UserIcon } from "@heroicons/react/24/outline";
 export default function Header() {
     return (
         <>
-            <header className="w-full h-16 px-12 flex justify-between items-center font-medium text-gray-700 border-b border-gray-200 shadow-sm sticky top-0 bg-white z-10">
+            <header className="w-full h-16 px-8 flex justify-between items-center font-medium text-gray-700 border-b border-gray-200 shadow-sm sticky top-0 bg-white z-10">
                 <div>
                     <p>Dashboard</p>
                 </div>
