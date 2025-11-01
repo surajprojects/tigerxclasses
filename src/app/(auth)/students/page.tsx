@@ -37,6 +37,12 @@ export default function Students() {
                         </button>
                     </div>
                 </div>
+                <div className="rounded-2xl bg-white p-8 border border-gray-100 shadow-sm">
+                    <div>
+                        <p className="text-lg font-bold text-gray-800">All Students</p>
+                        <p className="text-sm font-medium text-gray-500">4 students found</p>
+                    </div>
+                </div>
             </div>
         </>
     );

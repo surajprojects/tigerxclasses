@@ -5,7 +5,7 @@ import { XMarkIcon, UsersIcon, BookOpenIcon } from "@heroicons/react/24/outline"
 export default function SideBar() {
     return (
         <>
-            <aside className="bg-white w-xs h-full flex flex-col border-r border-gray-200">
+            <aside className="bg-white w-72 h-full flex flex-col border-r border-gray-200">
                 {/* Title Container */}
                 <div className="px-10 flex justify-between items-center border-b border-gray-200 py-6">
                     <Link href="/" className="text-2xl font-bold hover:cursor-pointer text-blue-500">Tiger Classes</Link>
