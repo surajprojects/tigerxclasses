@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
-import { Poppins } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import RootWrapper from "@/components/home/rootWrapper";
 import { ToastContainer } from "react-toastify";
 
-const poppins = Poppins({
+const geist = Geist({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-poppins",
+  variable: "--font-geist",
   display: "swap",
 });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <html lang="en" className={`${poppins.variable} font-poppins`}>
+      <html lang="en" className={`${geist.variable} font-geist`}>
         <body className="flex flex-col min-h-screen">
           <RootWrapper>
             {children}
