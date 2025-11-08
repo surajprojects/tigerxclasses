@@ -7,7 +7,7 @@ export default function Dashboard() {
         <>
             <div>
                 <h6 className="text-4xl text-blue-500 font-bold">Dashboard</h6>
-                <p className="my-2 font-medium text-gray-500 text-lg">Welcome back! Here's your management overview.</p>
+                <p className="my-2 font-medium text-gray-500 text-base">Welcome back! Here's your management overview.</p>
                 <div className="flex justify-between gap-8 my-8">
                     <Card className="bg-blue-50 text-blue-500" />
                     <Card className="bg-cyan-50 text-cyan-500">
