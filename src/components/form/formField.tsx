@@ -20,7 +20,7 @@ export default function FormField({
     fieldType?: string,
     isTextHolder?: boolean,
     textHolder?: string,
-    fieldValue: string,
+    fieldValue: string | number,
     showMessage?: boolean,
     isSuccess?: boolean,
     msgSuccess?: string,
