@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { ChangeEvent } from "react";
 
 export default function FormField({
@@ -10,6 +11,7 @@ export default function FormField({
     fieldValue,
     showMessage = false,
     isSuccess = true,
+    removeBorder = false,
     msgSuccess = "Alright! Username available!",
     msgError = "Oops! Username already taken!",
     onChangeFunc,
@@ -25,6 +27,7 @@ export default function FormField({
     isSuccess?: boolean,
     msgSuccess?: string,
     msgError?: string,
+    removeBorder?: boolean,
     onChangeFunc: (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
 }) {
     return (
@@ -41,7 +44,7 @@ export default function FormField({
                             onChange={onChangeFunc}
                             placeholder={textHolder}
                             required={isRequired}
-                            className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out"
+                            className={clsx("border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out", removeBorder ? "border-none border-white shadow-sm" : "")}
                         />
                         {showMessage && (isSuccess ?
                             <p className="mt-2 text-sm text-green-600 dark:text-green-500">{msgSuccess}</p>
@@ -59,7 +62,7 @@ export default function FormField({
                             value={fieldValue}
                             onChange={onChangeFunc}
                             required={isRequired}
-                            className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-2 ring-blue-400/65 duration-75 ease-out"
+                            className={clsx("border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out", removeBorder ? "border-none border-white shadow-sm" : "")}
                         />
                         {showMessage && (isSuccess ?
                             <p className="mt-2 text-sm text-green-600 dark:text-green-500">{msgSuccess}</p>

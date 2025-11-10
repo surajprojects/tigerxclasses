@@ -39,18 +39,190 @@ export default function StudentProfile() {
                     </button>
                 </div>
 
+                <div className="bg-blue-50 p-6 rounded-2xl my-8 shadow-sm">
+                    <ul className="flex justify-between items-center">
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Status</li>
+                                <li className="text-gray-800 font-semibold text-lg">Active</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Acitve Courses</li>
+                                <li className="text-gray-800 font-semibold text-lg">2</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div className="border rounded-full p-8"></div>
+                        </li>
+                    </ul>
+                </div>
+
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
                     <h5 className="text-2xl font-medium text-gray-800">Personal Information</h5>
-                    <p className="text-gray-500 mt-1">Basic details and contact information</p>
+                    <p className="text-gray-500 mt-1">Basic student details</p>
                     <ul className="my-6 gap-3 grid grid-cols-2">
-                        {data.map((item, idx) => {
-                            return <li key={idx}>
-                                <ul>
-                                    <li className="text-gray-500">{item.title}</li>
-                                    <li className="text-gray-800 font-semibold text-lg">{item.value}</li>
-                                </ul>
-                            </li>
-                        })}
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Full Name</li>
+                                <li className="text-gray-800 font-semibold text-lg">Alice Johnson</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Date of Birth</li>
+                                <li className="text-gray-800 font-semibold text-lg">23-08-2025</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Gender</li>
+                                <li className="text-gray-800 font-semibold text-lg">Male</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Category</li>
+                                <li className="text-gray-800 font-semibold text-lg">ST</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Mobile No</li>
+                                <li className="text-gray-800 font-semibold text-lg">1234567980</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Email</li>
+                                <li className="text-gray-800 font-semibold text-lg">suraj23082002@gmail.com</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
+                    <h5 className="text-2xl font-medium text-gray-800">Address Information</h5>
+                    <p className="text-gray-500 mt-1">Student address details</p>
+                    <ul className="my-6 gap-3 grid grid-cols-2">
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Country</li>
+                                <li className="text-gray-800 font-semibold text-lg">India</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Street/Area</li>
+                                <li className="text-gray-800 font-semibold text-lg">Pali Road Salapura</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Landmark</li>
+                                <li className="text-gray-800 font-semibold text-lg">eg Near Hospital</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">City</li>
+                                <li className="text-gray-800 font-semibold text-lg">Sheopur</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">State</li>
+                                <li className="text-gray-800 font-semibold text-lg">Madhya Pradesh</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Pin</li>
+                                <li className="text-gray-800 font-semibold text-lg">476337</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
+                    <h5 className="text-2xl font-medium text-gray-800">Family Information</h5>
+                    <p className="text-gray-500 mt-1">Parent and guardian details</p>
+                    <ul className="my-6 gap-3 grid grid-cols-2">
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Father Name</li>
+                                <li className="text-gray-800 font-semibold text-lg">Alice Johnson</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Mother Name</li>
+                                <li className="text-gray-800 font-semibold text-lg">Alice Johnson</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Guardian Mobile No 1</li>
+                                <li className="text-gray-800 font-semibold text-lg">1234567980</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Guardian Mobile No 2</li>
+                                <li className="text-gray-800 font-semibold text-lg">1234567980</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
+                    <h5 className="text-2xl font-medium text-gray-800">Academic Information</h5>
+                    <p className="text-gray-500 mt-1">Student's current academic details</p>
+                    <ul className="my-6 gap-3 grid grid-cols-2">
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Class</li>
+                                <li className="text-gray-800 font-semibold text-lg">12th</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Institute</li>
+                                <li className="text-gray-800 font-semibold text-lg">School</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Institute Name</li>
+                                <li className="text-gray-800 font-semibold text-lg">Govt Excellence School</li>
+                            </ul>
+                        </li>
+                        {/*  */}
+                        <li>
+                            <ul>
+                                <li className="text-gray-500">Session</li>
+                                <li className="text-gray-800 font-semibold text-lg">2025-26</li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
 
