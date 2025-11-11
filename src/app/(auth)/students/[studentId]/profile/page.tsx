@@ -1,6 +1,15 @@
-import { PlusIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+"use client"
+
+import { useState } from "react";
+import AddCourse from "@/components/students/course/addCourse";
+import { PlusIcon, ArrowLeftIcon, ArrowDownTrayIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
+import NewDocument from "@/components/students/document/newDocument";
+import ViewDocument from "@/components/students/document/viewDocument";
 
 export default function StudentProfile() {
+    const [showCourseForm, setShowCourseForm] = useState<boolean>(false);
+    const [showDocumentForm, setShowDocumentForm] = useState<boolean>(false);
+    const [showDocForm, setShowDocForm] = useState<boolean>(false);
     const data = [
         { title: "Full Name", value: "Alice Johnson" },
         { title: "Father Name", value: "Alice Johnson" },
@@ -227,8 +236,20 @@ export default function StudentProfile() {
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
-                    <h5 className="text-2xl font-medium text-gray-800">Enrolled Courses</h5>
-                    <p className="text-gray-500 mt-1">All courses information</p>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h5 className="text-2xl font-medium text-gray-800">Enrolled Courses</h5>
+                            <p className="text-gray-500 mt-1">All courses information</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setShowCourseForm(true)}
+                            className="text-white bg-blue-500 rounded-xl px-4 py-2 font-medium duration-300 ease-out cursor-pointer hover:bg-blue-400 h-fit w-fit flex items-center justify-center"
+                        >
+                            <PlusIcon className="size-5 mr-2" />
+                            Add Course
+                        </button>
+                    </div>
                     <div className="mt-6">
                         <div className="w-sm p-6 rounded-2xl shadow-sm hover:shadow-md bg-white font-medium">
                             <div>
@@ -270,10 +291,90 @@ export default function StudentProfile() {
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl shadow-sm">
-                    <h5 className="text-2xl font-medium text-gray-800">Documents</h5>
-                    <p className="text-gray-500 mt-1">Add documents information</p>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h5 className="text-2xl font-medium text-gray-800">Documents</h5>
+                            <p className="text-gray-500 mt-1">Add documents information</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setShowDocumentForm(true)}
+                            className="text-white bg-blue-500 rounded-xl px-4 py-2 font-medium duration-300 ease-out cursor-pointer hover:bg-blue-400 h-fit w-fit flex items-center justify-center"
+                        >
+                            <PlusIcon className="size-5 mr-2" />
+                            Add Document
+                        </button>
+                    </div>
+                    <div>
+                        {/*  */}
+                        <div className="border border-gray-200 w-full rounded-xl p-4 flex justify-between items-center hover:bg-gray-100 shadow-xs mt-5">
+                            <div className="flex items-center">
+                                <div className="mr-4 bg-blue-100 p-2.5 rounded-2xl text-blue-500">
+                                    <DocumentTextIcon className="size-5" strokeWidth={1.8} />
+                                </div>
+                                <div>
+                                    <p onClick={() => setShowDocForm((prevData) => !prevData)} className="font-semibold cursor-pointer">Aadhaar</p>
+                                    <p className="text-xs text-gray-500 mt-1">2025-01-01</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button
+                                    type="button"
+                                    className="font-medium flex items-center hover:bg-blue-500 px-3 py-1 rounded-lg duration-300 ease-out cursor-pointer hover:text-white"
+                                >
+                                    <ArrowDownTrayIcon className="size-4 mr-2" />
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                        {showDocForm && <ViewDocument />}
+                        {/*  */}
+                        <div className="border border-gray-200 w-full rounded-xl p-4 flex justify-between items-center hover:bg-gray-100 shadow-xs mt-5">
+                            <div className="flex items-center">
+                                <div className="mr-4 bg-blue-100 p-2.5 rounded-2xl text-blue-500">
+                                    <DocumentTextIcon className="size-5" strokeWidth={1.8} />
+                                </div>
+                                <div>
+                                    <p className="font-semibold">Aadhaar</p>
+                                    <p className="text-xs text-gray-500 mt-1">2025-01-01</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button
+                                    type="button"
+                                    className="font-medium flex items-center hover:bg-blue-500 px-3 py-1 rounded-lg duration-300 ease-out cursor-pointer hover:text-white"
+                                >
+                                    <ArrowDownTrayIcon className="size-4 mr-2" />
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                        {/*  */}
+                        <div className="border border-gray-200 w-full rounded-xl p-4 flex justify-between items-center hover:bg-gray-100 shadow-xs mt-5">
+                            <div className="flex items-center">
+                                <div className="mr-4 bg-blue-100 p-2.5 rounded-2xl text-blue-500">
+                                    <DocumentTextIcon className="size-5" strokeWidth={1.8} />
+                                </div>
+                                <div>
+                                    <p className="font-semibold">Aadhaar</p>
+                                    <p className="text-xs text-gray-500 mt-1">2025-01-01</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button
+                                    type="button"
+                                    className="font-medium flex items-center hover:bg-blue-500 px-3 py-1 rounded-lg duration-300 ease-out cursor-pointer hover:text-white"
+                                >
+                                    <ArrowDownTrayIcon className="size-4 mr-2" />
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {showCourseForm && <AddCourse setShowForm={setShowCourseForm} />}
+            {showDocumentForm && <NewDocument setShowForm={setShowDocumentForm} />}
         </>
     );
 };

@@ -68,7 +68,7 @@ export default function StudentForm() {
                         {/* Gender */}
                         <div className="flex flex-col my-2">
                             <label htmlFor="gender" className="font-sans font-medium text-sm text-gray-800">Gender</label>
-                            <select name="gender" id="gender" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
+                            <select onChange={handleChange} name="gender" id="gender" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
                                 <option value="MALE">MALE</option>
                                 <option value="FEMALE">FEMALE</option>
                                 <option value="OTHER">OTHER</option>
@@ -77,7 +77,7 @@ export default function StudentForm() {
                         {/* Category */}
                         <div className="flex flex-col my-2">
                             <label htmlFor="category" className="font-sans font-medium text-sm text-gray-800">Category</label>
-                            <select name="category" id="category" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
+                            <select onChange={handleChange} name="category" id="category" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
                                 <option value="ST">ST</option>
                                 <option value="SC">SC</option>
                                 <option value="OBC">OBC</option>
@@ -149,7 +149,7 @@ export default function StudentForm() {
                         {/* State */}
                         <div className="flex flex-col my-2">
                             <label htmlFor="state" className="font-sans font-medium text-sm text-gray-800">State</label>
-                            <select name="state" id="state" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
+                            <select onChange={handleChange} name="state" id="state" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
                                 <option value="MP">Madhya Pradesh</option>
                             </select>
                         </div>
@@ -168,7 +168,7 @@ export default function StudentForm() {
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
                     <h5 className="text-2xl font-medium text-gray-800">Family Information</h5>
                     <p className="text-gray-500 mt-1">Parent and guardian details</p>
-                    <ul className="my-6 gap-3 grid grid-cols-2">
+                    <ul className="grid grid-cols-2 gap-x-6">
                         {/* Father Name */}
                         <FormField
                             id="fatherName"
@@ -211,7 +211,7 @@ export default function StudentForm() {
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
                     <h5 className="text-2xl font-medium text-gray-800">Academic Information</h5>
                     <p className="text-gray-500 mt-1">Student's current academic details</p>
-                    <ul className="my-6 gap-3 grid grid-cols-2">
+                    <ul className="grid grid-cols-2 gap-x-6">
                         {/* Class */}
                         <FormField
                             id="class"
@@ -224,7 +224,7 @@ export default function StudentForm() {
                         {/* Institute */}
                         <div className="flex flex-col my-2">
                             <label htmlFor="institute" className="font-sans font-medium text-sm text-gray-800">Institute</label>
-                            <select name="institute" id="institute" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
+                            <select onChange={handleChange} name="institute" id="institute" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
                                 <option value="SCHOOl">SCHOOL</option>
                                 <option value="COLLEGE">COLLEGE</option>
                                 <option value="UNIVERSITY">UNIVERSITY</option>
