@@ -84,7 +84,7 @@ export default function ViewDocument() {
                 </li>
                 <li>
                     <ul>
-                        <li className="text-gray-500">Link</li>
+                        <li className="text-gray-500">Document Link</li>
                         <li className="text-gray-800 font-semibold text-base">  <button
                             type="button"
                             className="font-medium flex items-center hover:bg-blue-500 px-3 py-1 rounded-lg duration-300 ease-out cursor-pointer hover:text-white"
