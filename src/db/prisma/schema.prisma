@@ -1,0 +1,354 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ----------------------------
+// ENUMS
+// ----------------------------
+
+// Gender types
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+// Social category
+enum Category {
+  ST
+  SC
+  OBC
+  GEN
+}
+
+// Student academic status
+enum StudentCourseStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+  ONHOLD
+  TERMINATED
+}
+
+// Fees payment status
+enum FeesStatus {
+  PAID
+  PARTIAL
+  UNPAID
+}
+
+// Payment methods
+enum PaymentMethod {
+  CASH
+  UPI
+  PHONEPAY
+  GOOGLEPAY
+}
+
+// Type of institute for student/education
+enum Institute {
+  SCHOOL
+  COLLEGE
+  UNIVERSITY
+  OTHER
+  NONE
+}
+
+// Type of student document
+enum DocumentType {
+  AADHAAR
+  SECONDARY
+  HIGHERSECONDARY
+  GRADUATION
+  POSTGRADUATION
+  OTHER
+}
+
+// All Indian States & Union Territories
+enum State {
+  ANDHRA_PRADESH
+  ARUNACHAL_PRADESH
+  ASSAM
+  BIHAR
+  CHHATTISGARH
+  GOA
+  GUJARAT
+  HARYANA
+  HIMACHAL_PRADESH
+  JHARKHAND
+  KARNATAKA
+  KERALA
+  MADHYA_PRADESH
+  MAHARASHTRA
+  MANIPUR
+  MEGHALAYA
+  MIZORAM
+  NAGALAND
+  ODISHA
+  PUNJAB
+  RAJASTHAN
+  SIKKIM
+  TAMIL_NADU
+  TELANGANA
+  TRIPURA
+  UTTAR_PRADESH
+  UTTARAKHAND
+  WEST_BENGAL
+
+  // Union Territories
+  ANDAMAN_AND_NICOBAR_ISLANDS
+  CHANDIGARH
+  DADRA_AND_NAGAR_HAVELI_AND_DAMAN_AND_DIU
+  DELHI
+  JAMMU_AND_KASHMIR
+  LADAKH
+  LAKSHADWEEP
+  PUDUCHERRY
+}
+
+// ----------------------------
+// MODELS
+// ----------------------------
+
+// Admin or coaching institute owner
+model User {
+  id         String   @id @default(cuid())
+  username   String   @unique
+  password   String
+  email      String   @unique
+  mobileNo   String   @unique
+  name       String
+  fatherName String?
+  motherName String?
+  dob        DateTime
+  gender     Gender
+  category   Category
+  photo      String?
+  remarks    String?
+
+  // Address relation
+  address   Address @relation(fields: [addressId], references: [id])
+  addressId String
+
+  // Institute details
+  instituteName    String  @unique
+  instituteAddress String?
+  contactNo        String?
+
+  // Relations
+  batches  Batch[]
+  courses  Course[]
+  students Student[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Batch info
+model Batch {
+  id          String    @id @default(cuid())
+  code        String
+  name        String
+  description String?
+  time        String
+  startDate   DateTime?
+  endDate     DateTime?
+
+  // Relations
+  students StudentCourse[]
+  user     User            @relation(fields: [userId], references: [id])
+  userId   String
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([code, userId])
+}
+
+// Course details offered by institute
+model Course {
+  id            String @id @default(cuid())
+  code          String
+  name          String
+  description   String
+  instituteName String
+  duration      String
+  fees          Int
+
+  // Relations
+  students StudentCourse[]
+  user     User            @relation(fields: [userId], references: [id])
+  userId   String
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([code, userId])
+}
+
+// Join table linking Student, Batch, and Course
+model StudentCourse {
+  id String @id @default(cuid())
+
+  enrolledOn DateTime @default(now())
+  totalFees  Int
+  session    String
+  remarks    String?
+
+  // Status
+  status     StudentCourseStatus @default(ACTIVE)
+  feesStatus FeesStatus          @default(UNPAID)
+
+  // Payments relation
+  payments Payment[]
+
+  // Relations
+  batch     Batch   @relation(fields: [batchId], references: [id])
+  batchId   String
+  course    Course  @relation(fields: [courseId], references: [id])
+  courseId  String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Residential address
+model Address {
+  id String @id @default(cuid())
+
+  flatHouseBuilding String?
+  streetOrArea      String
+  landmark          String?
+  city              String
+  state             State
+  pincode           String?
+
+  // Relations
+  users    User[]
+  students Student[]
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Student main profile data
+model Student {
+  // Personal info
+  id       String   @id @default(cuid())
+  fullName String
+  dob      DateTime
+  gender   Gender
+  category Category
+  mobileNo String   @unique
+  email    String?  @unique
+
+  // Address relation
+  address   Address @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  addressId String
+
+  // Family info
+  fatherName              String
+  motherName              String
+  parentGuardianMobileNo1 String?
+  parentGuardianMobileNo2 String?
+
+  // Education info
+  class         String?
+  institute     Institute
+  instituteName String?
+  session       String?
+
+  photo   String?
+  remarks String?
+
+  // Relations
+  documents      StudentDocument[]
+  studentCourses StudentCourse[]
+  user           User              @relation(fields: [userId], references: [id])
+  userId         String
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Payment details for each student/course
+model Payment {
+  id String @id @default(cuid())
+
+  amount  Int
+  method  PaymentMethod
+  date    DateTime
+  remarks String?
+
+  // Relations
+  studentCourse   StudentCourse @relation(fields: [studentCourseId], references: [id], onDelete: Cascade)
+  studentCourseId String
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Documents of student (like Aadhar, marksheets, etc.)
+model StudentDocument {
+  id String @id @default(cuid())
+
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String
+
+  documentType  DocumentType
+  documentName  String?
+  institute     Institute
+  instituteName String?
+  idNo          String?
+  aadhaarNo     String?
+  rollNo        String?
+  enrollmentNo  String?
+  obtainedMarks Int?
+  totalMarks    Int?
+  session       String?
+  documentLink  String?
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Handles student transfer requests between institutes
+model StudentTransfer {
+  id String @id @default(cuid())
+
+  reason        String?
+  transferredOn DateTime?
+  status        TransferStatus @default(PENDING)
+
+  // Relations
+  studentId  String
+  fromUserId String
+  toUserId   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Transfer status for student movement between institutes
+enum TransferStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELLED
+}
