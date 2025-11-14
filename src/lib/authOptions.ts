@@ -1,7 +1,5 @@
 import prisma from "@/db";
 import bcrypt from "bcryptjs";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -62,14 +60,4 @@ export const authOptions: NextAuthOptions = {
         },
     },
     secret: process.env.NEXTAUTH_SECRET,
-};
-
-export async function getSessionOrRedirect() {
-    const session = await getServerSession(authOptions);
-
-    if (!session) {
-        redirect("/")
-    }
-
-    return session;
 };

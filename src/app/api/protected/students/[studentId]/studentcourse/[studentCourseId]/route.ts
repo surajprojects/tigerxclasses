@@ -1,6 +1,6 @@
 import prisma from "@/db";
 import { NextRequest } from "next/server";
-import { verifyUser } from "@/lib/apiAuth";
+import { verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { studentCourseInputEdit, StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 

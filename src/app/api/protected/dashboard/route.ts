@@ -1,6 +1,6 @@
 import prisma from "@/db";
 import { NextRequest } from "next/server";
-import { verifyUser } from "@/lib/apiAuth";
+import { verifyUser } from "@/lib/verifyUser";
 
 export async function GET(req: NextRequest) {
     try {

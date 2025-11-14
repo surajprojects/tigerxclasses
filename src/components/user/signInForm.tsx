@@ -1,4 +1,6 @@
 import Btn from "../button/btn";
+import { toast } from "react-toastify";
+import { signIn } from "next-auth/react";
 import FormField from "../form/formField";
 import FormHeader from "../form/formHeader";
 import FormAction from "../form/formAction";
@@ -6,7 +8,7 @@ import { useState, type ChangeEvent } from "react";
 
 export default function SignInForm() {
     const initialData = {
-        email: "",
+        username: "",
         password: "",
     };
 
@@ -25,6 +27,21 @@ export default function SignInForm() {
         });
     };
 
+    const handleSubmit = async () => {
+        const result = await signIn("credentials", {
+            redirect: false,
+            username: formData.username,
+            password: formData.password,
+        });
+        setFormData(initialData);
+        if (result?.error) {
+            toast.error("Invalid username or password!!!");
+        } else {
+            toast.success("Login successful!!!");
+            window.location.href = "/dashboard";
+        }
+    };
+
     return (
         <>
             <section className="w-full h-full p-5">
@@ -36,20 +53,17 @@ export default function SignInForm() {
                     <form onSubmit={async (evt) => {
                         setIsLoading(true);
                         evt.preventDefault();
-
-                        setTimeout(() => {
-                            setIsLoading(false);
-                        }, 3000);
+                        await handleSubmit();
+                        setIsLoading(false);
                     }}
                         className="max-w-sm sm:w-sm mt-8"
                     >
-                        {/* Email */}
+                        {/* Username */}
                         <FormField
-                            id="email"
-                            title="Email"
-                            fieldType="email"
-                            textHolder="your@email.com"
-                            fieldValue={formData.email}
+                            id="username"
+                            title="Username"
+                            textHolder="john123"
+                            fieldValue={formData.username}
                             onChangeFunc={handleChange}
                         />
                         {/* Password */}

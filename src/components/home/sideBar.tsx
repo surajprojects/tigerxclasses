@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import BtnLogout from "../button/btnLogout";
 import { usePathname } from "next/navigation";
 import { UsersIcon } from "@heroicons/react/24/outline";
-import { DollarSign, ChartColumn, LogOutIcon, PanelLeft, Notebook, BookOpenText } from "lucide-react";
+import { DollarSign, ChartColumn, PanelLeft, Notebook, BookOpenText } from "lucide-react";
 
 export default function SideBar() {
     const pathname = usePathname();
@@ -46,13 +47,7 @@ export default function SideBar() {
                     </nav>
                     {/* Control Settings */}
                     <div className={`flex flex-col font-medium text-gray-800 border-t border-gray-200 ${isCollapse ? "pt-4" : "pt-8"} pb-1`}>
-                        <Link
-                            href="#"
-                            className={`my-1 ${isCollapse ? "px-2.5" : "px-4"} py-2 rounded-xl hover:bg-red-500 hover:text-white hover:cursor-pointer border border-gray-200 duration-300 ease-out flex justify-center items-center`}>
-                            <LogOutIcon className={`size-5 ${!isCollapse && "mr-3"}`} />
-                            {!isCollapse && "Logout"}
-                        </Link>
-                        {/* <BtnLogout /> */}
+                        <BtnLogout isCollapse={isCollapse} />
                     </div>
                 </nav>
             </aside>
