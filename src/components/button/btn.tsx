@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Spinner from "../ui/spinner";
 
 export type BtnType = "button" | "reset" | "submit";
@@ -7,15 +8,27 @@ export default function Btn({
     btnType = "button",
     isLoading = false,
     btnDisabled = false,
+    className = "bg-blue-500 hover:bg-blue-500/90 text-white",
+    spinnerClassName,
+    handleClick,
 }: {
     text?: string,
     btnType?: BtnType,
     isLoading?: boolean,
     btnDisabled?: boolean,
+    className?: string,
+    spinnerClassName?: string,
+    handleClick?: (() => void) | (() => Promise<void>),
 }) {
     return (
         <>
-            <button type={btnType} disabled={btnDisabled} className="bg-blue-500 font-sans text-white w-full text-sm font-semibold py-2 rounded-xl hover:cursor-pointer hover:bg-blue-500/90 duration-300 ease-out outline-none">{isLoading ? <div className="flex justify-center items-center w-full"><Spinner customize={true} /></div> : text}</button>
+            <button
+                type={btnType}
+                disabled={btnDisabled}
+                onClick={handleClick}
+                className={clsx("font-sans w-full text-sm font-semibold py-2 rounded-xl hover:cursor-pointer  duration-300 ease-out outline-none", className)}>
+                {isLoading ? <div className="flex justify-center items-center w-full"><Spinner className={spinnerClassName} customize={true} /></div> : text}
+            </button>
         </>
     );
 };

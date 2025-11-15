@@ -1,10 +1,29 @@
 import BatchForm from "./batchForm";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { errorHandle } from "@/utils/errors/errorHandle";
+import axiosProtected from "@/utils/axios/axiosProtected";
+import { BatchFormInput } from "@/utils/validators/batchInput";
 
 export default function NewBatch({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const router = useRouter();
     const handleCloseForm = () => {
         setShowForm(false);
     };
+
+    const handleSubmit = async (formData: BatchFormInput) => {
+        try {
+            await axiosProtected.post("/batch", formData);
+            toast.success("Batch created successfully!!!");
+            handleCloseForm();
+            router.refresh();
+        }
+        catch (error: unknown) {
+            errorHandle(error);
+        }
+    };
+
     return (
         <>
             <div onClick={handleCloseForm} className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -19,7 +38,10 @@ export default function NewBatch({ setShowForm }: { setShowForm: React.Dispatch<
                     <div className="w-md">
                         <h5 className="text-lg font-medium text-gray-800">Add Batch</h5>
                         <p className="text-gray-600 text-base my-1">Fill in the details to create a new batch</p>
-                        <BatchForm />
+                        <BatchForm
+                            btnText="Add Batch"
+                            handleSubmit={handleSubmit}
+                        />
                     </div>
                 </div>
             </div>

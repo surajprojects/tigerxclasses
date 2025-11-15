@@ -17,7 +17,21 @@ export async function GET(req: NextRequest) {
                 userId: String(token.id),
                 isDeleted: false,
             },
-            include: { students: true }
+            select: {
+                id: true,
+                code: true,
+                name: true,
+                description: true,
+                startDate: true,
+                endDate: true,
+                time: true,
+                _count: {
+                    select: { students: true },
+                }
+            },
+            orderBy: {
+                createdAt: "desc",
+            }
         });
 
         if (!(allBatches.length > 0)) {
@@ -53,9 +67,21 @@ export async function POST(req: NextRequest) {
                 name: parsedInput.data.name,
                 time: parsedInput.data.time,
                 ...(parsedInput.data.description && { description: parsedInput.data.description }),
-                ...(parsedInput.data.startDate && { startDate: parsedInput.data.startDate }),
-                ...(parsedInput.data.endDate && { endDate: parsedInput.data.startDate }),
-            }
+                ...(parsedInput.data.startDate && { startDate: new Date(parsedInput.data.startDate).toISOString() }),
+                ...(parsedInput.data.endDate && { endDate: new Date(parsedInput.data.endDate).toISOString() }),
+            },
+            select: {
+                id: true,
+                code: true,
+                name: true,
+                description: true,
+                startDate: true,
+                endDate: true,
+                time: true,
+                _count: {
+                    select: { students: true },
+                }
+            },
         });
 
         return Response.json({ message: "Successfully created the batch!!!", batchData }, { status: 201 });

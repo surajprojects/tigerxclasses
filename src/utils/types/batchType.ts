@@ -1,13 +1,14 @@
-import { StudentData } from "./studentType";
-
 export interface BatchData {
     id: string,
     code: string,
     name: string,
+    description: string,
     time: string,
-    students: StudentData[],
-    createdAt: string,
-    updatedAt: string,
+    startDate: string,
+    endDate: string,
+    _count: {
+        students: number
+    },
 };
 
 export type BatchesList = BatchData[];

@@ -1,10 +1,20 @@
 import BatchForm from "./batchForm";
+import { BatchData } from "@/utils/types/batchType";
+import { BatchFormInputEdit } from "@/utils/validators/batchInput";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function EditBatch({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function EditBatch({
+    setShowForm,
+    batchData,
+    handleEditSubmit,
+}: {
+    setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
+    batchData: BatchData,
+    handleEditSubmit: (data: BatchFormInputEdit) => Promise<void>,
+}) {
     const handleCloseForm = () => {
         setShowForm(false);
-    }
+    };
     return (
         <>
             <div onClick={handleCloseForm} className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -19,7 +29,18 @@ export default function EditBatch({ setShowForm }: { setShowForm: React.Dispatch
                     <div className="w-md max-w-lg">
                         <h5 className="text-lg font-medium text-gray-800">Edit Batch</h5>
                         <p className="text-gray-600 text-base my-1">Update batch information</p>
-                        <BatchForm />
+                        <BatchForm
+                            initialData={{
+                                name: batchData.name,
+                                description: batchData.description,
+                                code: batchData.code,
+                                time: batchData.time,
+                                startDate: batchData.startDate.split("T")[0],
+                                endDate: batchData.endDate.split("T")[0],
+                            }}
+                            btnText="Update Batch"
+                            handleEditSubmit={handleEditSubmit}
+                        />
                     </div>
                 </div>
             </div>

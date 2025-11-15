@@ -4,7 +4,7 @@ import { verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { BatchFormInputEdit, batchFormInputEdit } from "@/utils/validators/batchInput";
 
-export async function GET(req: NextRequest, { params }: { params: { batchId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ batchId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, { params }: { params: { batchId: str
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { batchId } = params;
+        const { batchId } = await params;
 
         const batchData = await prisma.batch.findUnique({
             where: {
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest, { params }: { params: { batchId: str
     }
 };
 
-export async function PATCH(req: NextRequest, { params }: { params: { batchId: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ batchId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -42,7 +42,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { batchId: s
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { batchId } = params;
+        const { batchId } = await params;
         const data: BatchFormInputEdit = await req.json();
         const parsedInput = batchFormInputEdit.safeParse(data);
 
@@ -61,8 +61,8 @@ export async function PATCH(req: NextRequest, { params }: { params: { batchId: s
                 ...(parsedInput.data.name && { name: parsedInput.data.name }),
                 ...(parsedInput.data.time && { time: parsedInput.data.time }),
                 ...(parsedInput.data.description && { description: parsedInput.data.description }),
-                ...(parsedInput.data.startDate && { startDate: parsedInput.data.startDate }),
-                ...(parsedInput.data.endDate && { endDate: parsedInput.data.startDate }),
+                ...(parsedInput.data.startDate && { startDate: new Date(parsedInput.data.startDate).toISOString() }),
+                ...(parsedInput.data.endDate && { endDate: new Date(parsedInput.data.endDate).toISOString() }),
             }
         });
 
@@ -73,7 +73,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { batchId: s
     }
 };
 
-export async function DELETE(req: NextRequest, { params }: { params: { batchId: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ batchId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -81,7 +81,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { batchId: 
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { batchId } = params;
+        const { batchId } = await params;
 
         const batchData = await prisma.batch.update({
             where: {

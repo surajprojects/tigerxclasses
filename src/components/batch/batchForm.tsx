@@ -1,15 +1,29 @@
 import Btn from "../button/btn";
 import FormField from "../form/formField";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useContext } from "react";
+import { BatchData } from "@/utils/types/batchType";
+import { BatchFormInput, BatchFormInputEdit } from "@/utils/validators/batchInput";
 
-export default function BatchForm() {
-    const [formData, setFormData] = useState({
+export default function BatchForm({
+    btnText = "Submit",
+    handleSubmit,
+    handleEditSubmit,
+    initialData = {
         name: "",
-        course: "",
-        instructor: "",
+        description: "",
+        code: "",
+        time: "",
         startDate: "",
         endDate: "",
-    });
+    },
+}: {
+    btnText?: string,
+    handleSubmit?: (data: BatchFormInput) => Promise<void>,
+    handleEditSubmit?: (data: BatchFormInputEdit) => Promise<void>,
+    initialData?: Pick<BatchData, "name" | "description" | "code" | "time" | "startDate" | "endDate">,
+}) {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [formData, setFormData] = useState(initialData);
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const fieldName = evt.target.name;
@@ -24,7 +38,18 @@ export default function BatchForm() {
 
     return (
         <>
-            <form className="w-full">
+            <form
+                onSubmit={async (evt) => {
+                    evt.preventDefault();
+                    setIsLoading(true);
+                    // Handle submit function
+                    handleSubmit && await handleSubmit(formData);
+                    // Handle edit submit function
+                    handleEditSubmit && await handleEditSubmit(formData);
+                    setIsLoading(false);
+                    setFormData(initialData);
+                }}
+                className="w-full">
                 {/* Batch Name */}
                 <FormField
                     id="name"
@@ -33,20 +58,28 @@ export default function BatchForm() {
                     fieldValue={formData.name}
                     onChangeFunc={handleChange}
                 />
-                {/* Course */}
+                {/* Description */}
                 <FormField
-                    id="course"
-                    title="Course"
+                    id="description"
+                    title="Description"
                     textHolder="Web Development"
-                    fieldValue={formData.course}
+                    fieldValue={formData.description}
                     onChangeFunc={handleChange}
                 />
-                {/* Instructor */}
+                {/* Code */}
                 <FormField
-                    id="instructor"
-                    title="Instructor"
-                    textHolder="John Smith"
-                    fieldValue={formData.instructor}
+                    id="code"
+                    title="Code"
+                    textHolder="B01T7AM"
+                    fieldValue={formData.code}
+                    onChangeFunc={handleChange}
+                />
+                {/* Time */}
+                <FormField
+                    id="time"
+                    title="Time"
+                    fieldType="time"
+                    fieldValue={formData.time}
                     onChangeFunc={handleChange}
                 />
                 <div className="grid grid-cols-2 gap-4 mb-1">
@@ -68,8 +101,8 @@ export default function BatchForm() {
                     />
                 </div>
                 {/* Add Button */}
-                <Btn btnType="submit" text="Add Batch" />
-            </form>
+                <Btn btnType="submit" text={btnText} isLoading={isLoading} />
+            </form >
         </>
     );
 };

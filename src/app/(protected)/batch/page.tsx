@@ -1,12 +1,9 @@
-"use client"
-
-import { useState } from "react";
-import NewBatch from "@/components/batch/newBatch";
+import getBatches from "@/lib/server/getBatches";
 import BatchCard from "@/components/card/batchCard";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import AddBatchBtn from "@/components/button/batch/addBatchBtn";
 
-export default function Batch() {
-    const [showForm, setShowForm] = useState<boolean>(false);
+export default async function Batch() {
+    const batchData = await getBatches();
     return (
         <>
             <div>
@@ -15,22 +12,20 @@ export default function Batch() {
                         <h6 className="text-4xl text-gray-800 font-bold">Batches</h6>
                         <p className="my-1 font-medium text-gray-500 text-lg">Manage student batches and schedules</p>
                     </div>
-                    <button
-                        type="button"
-                        onClick={() => setShowForm(true)}
-                        className="text-white bg-blue-500 rounded-xl px-4 py-2 font-medium duration-300 ease-out cursor-pointer hover:bg-blue-400 h-fit w-fit flex items-center justify-center"
-                    >
-                        <PlusIcon className="size-5 mr-2" />
-                        Add Batch
-                    </button>
+                    <AddBatchBtn />
                 </div>
-                <div className="my-8 flex gap-6">
-                    <BatchCard />
-                    <BatchCard />
-                    <BatchCard />
+                <div className="my-8 grid grid-cols-3 gap-6">
+                    {batchData && batchData.length > 0 ? batchData.map((batch) => {
+                        return <BatchCard
+                            key={batch.id}
+                            batchData={batch}
+                        />
+                    })
+                        :
+                        <p>No batches found!!!</p>
+                    }
                 </div>
             </div>
-            {showForm && <NewBatch setShowForm={setShowForm} />}
         </>
     );
 };

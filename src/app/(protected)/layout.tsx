@@ -1,11 +1,13 @@
-import Header from "@/components/dashboard/header";
 import SideBar from "@/components/home/sideBar";
+import Header from "@/components/dashboard/header";
+import { getSessionOrRedirect } from "@/lib/verifyUser";
 
-export default function AuthLayout({
+export default async function AuthLayout({
     children
 }: {
     children: React.ReactNode
 }) {
+    await getSessionOrRedirect();
     return (
         <>
             <div className="flex h-screen overflow-hidden">
