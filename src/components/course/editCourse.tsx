@@ -1,7 +1,17 @@
+import { CourseData } from "@/utils/types/courseType";
 import CourseForm from "./courseForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { CourseFormInputEdit } from "@/utils/validators/courseInput";
 
-export default function EditCourse({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function EditCourse({
+    setShowForm,
+    courseData,
+    handleEditSubmit,
+}: {
+    setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
+    courseData: CourseData,
+    handleEditSubmit: (data: CourseFormInputEdit) => Promise<void>,
+}) {
     const handleCloseForm = () => {
         setShowForm(false);
     }
@@ -19,7 +29,18 @@ export default function EditCourse({ setShowForm }: { setShowForm: React.Dispatc
                     <div className="w-md max-w-lg">
                         <h5 className="text-lg font-medium text-gray-800">Edit Course</h5>
                         <p className="text-gray-600 text-base my-1">Update course information</p>
-                        <CourseForm />
+                        <CourseForm
+                            initialData={{
+                                name: courseData.name,
+                                description: courseData.description,
+                                instituteName: courseData.instituteName,
+                                code: courseData.code,
+                                duration: courseData.duration,
+                                fees: courseData.fees,
+                            }}
+                            btnText="Update Course"
+                            handleEditSubmit={handleEditSubmit}
+                        />
                     </div>
                 </div>
             </div>

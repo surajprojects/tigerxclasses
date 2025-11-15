@@ -20,7 +20,18 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ batc
                 userId: String(token.id),
                 isDeleted: false,
             },
-            include: { students: true }
+            select: {
+                id: true,
+                code: true,
+                name: true,
+                description: true,
+                startDate: true,
+                endDate: true,
+                time: true,
+                _count: {
+                    select: { students: true },
+                },
+            },
         });
 
         if (!batchData) {
@@ -63,7 +74,19 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ba
                 ...(parsedInput.data.description && { description: parsedInput.data.description }),
                 ...(parsedInput.data.startDate && { startDate: new Date(parsedInput.data.startDate).toISOString() }),
                 ...(parsedInput.data.endDate && { endDate: new Date(parsedInput.data.endDate).toISOString() }),
-            }
+            },
+            select: {
+                id: true,
+                code: true,
+                name: true,
+                description: true,
+                startDate: true,
+                endDate: true,
+                time: true,
+                _count: {
+                    select: { students: true },
+                },
+            },
         });
 
         return Response.json({ message: "Successfully updated the batch!!!", batchData }, { status: 200 });
@@ -91,7 +114,19 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ b
             },
             data: {
                 isDeleted: true,
-            }
+            },
+            select: {
+                id: true,
+                code: true,
+                name: true,
+                description: true,
+                startDate: true,
+                endDate: true,
+                time: true,
+                _count: {
+                    select: { students: true },
+                },
+            },
         });
 
         return Response.json({ message: "Successfully deleted the batch!!!", batchData }, { status: 200 });

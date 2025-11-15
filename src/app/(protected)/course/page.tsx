@@ -1,12 +1,9 @@
-"use client"
-
-import { useState } from "react";
+import getCourses from "@/lib/server/getCourses";
 import CourseCard from "@/components/card/courseCard";
-import NewCourse from "@/components/course/newCourse";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import AddCourseBtn from "@/components/button/course/addCourse";
 
-export default function Course() {
-    const [showForm, setShowForm] = useState<boolean>(false);
+export default async function Course() {
+    const courseData = await getCourses();
     return (
         <>
             <div>
@@ -15,22 +12,20 @@ export default function Course() {
                         <h6 className="text-4xl text-gray-800 font-bold">Courses</h6>
                         <p className="my-1 font-medium text-gray-500 text-lg">Manage all available courses</p>
                     </div>
-                    <button
-                        type="button"
-                        onClick={() => setShowForm(true)}
-                        className="text-white bg-blue-500 rounded-xl px-4 py-2 font-medium duration-300 ease-out cursor-pointer hover:bg-blue-400 h-fit w-fit flex items-center justify-center"
-                    >
-                        <PlusIcon className="size-5 mr-2" />
-                        Add Course
-                    </button>
+                    <AddCourseBtn />
                 </div>
-                <div className="my-8 flex gap-6">
-                    <CourseCard />
-                    <CourseCard />
-                    <CourseCard />
+                <div className="my-8 grid grid-cols-3 gap-6">
+                    {courseData && courseData.length > 0 ? courseData.map((course) => {
+                        return <CourseCard
+                            key={course.id}
+                            courseData={course}
+                        />
+                    })
+                        :
+                        <p>No courses found!!!</p>
+                    }
                 </div>
             </div>
-            {showForm && <NewCourse setShowForm={setShowForm} />}
         </>
     );
 };

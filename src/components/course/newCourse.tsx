@@ -1,10 +1,29 @@
 import CourseForm from "./courseForm";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { errorHandle } from "@/utils/errors/errorHandle";
+import axiosProtected from "@/utils/axios/axiosProtected";
+import { CourseFormInput } from "@/utils/validators/courseInput";
 
 export default function NewCourse({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const router = useRouter();
     const handleCloseForm = () => {
         setShowForm(false);
     };
+
+    const handleSubmit = async (formData: CourseFormInput) => {
+        try {
+            await axiosProtected.post("/course", formData);
+            toast.success("Course created successfully!!!");
+            handleCloseForm();
+            router.refresh();
+        }
+        catch (error: unknown) {
+            errorHandle(error);
+        }
+    };
+
     return (
         <>
             <div onClick={handleCloseForm} className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -19,7 +38,10 @@ export default function NewCourse({ setShowForm }: { setShowForm: React.Dispatch
                     <div className="w-md">
                         <h5 className="text-lg font-medium text-gray-800">Add New Course</h5>
                         <p className="text-gray-600 text-base my-1">Fill in the details to add a new course</p>
-                        <CourseForm />
+                        <CourseForm
+                            btnText="Add Course"
+                            handleSubmit={handleSubmit}
+                        />
                     </div>
                 </div>
             </div>

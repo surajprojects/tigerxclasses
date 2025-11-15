@@ -4,7 +4,7 @@ import { verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { courseFormInputEdit, CourseFormInputEdit } from "@/utils/validators/courseInput";
 
-export async function GET(req: NextRequest, { params }: { params: { courseId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ courseId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, { params }: { params: { courseId: st
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { courseId } = params;
+        const { courseId } = await params;
 
         const courseData = await prisma.course.findUnique({
             where: {
@@ -20,7 +20,18 @@ export async function GET(req: NextRequest, { params }: { params: { courseId: st
                 userId: String(token.id),
                 isDeleted: false,
             },
-            include: { students: true }
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                instituteName: true,
+                code: true,
+                duration: true,
+                fees: true,
+                _count: {
+                    select: { students: true },
+                },
+            },
         });
 
         if (!courseData) {
@@ -34,7 +45,7 @@ export async function GET(req: NextRequest, { params }: { params: { courseId: st
     }
 };
 
-export async function PATCH(req: NextRequest, { params }: { params: { courseId: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ courseId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -42,7 +53,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { courseId: 
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { courseId } = params;
+        const { courseId } = await params;
         const data: CourseFormInputEdit = await req.json();
         const parsedInput = courseFormInputEdit.safeParse(data);
 
@@ -63,7 +74,19 @@ export async function PATCH(req: NextRequest, { params }: { params: { courseId: 
                 ...(parsedInput.data.instituteName && { instituteName: parsedInput.data.instituteName }),
                 ...(parsedInput.data.duration && { duration: parsedInput.data.duration }),
                 ...(parsedInput.data.fees && { fees: parsedInput.data.fees }),
-            }
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                instituteName: true,
+                code: true,
+                duration: true,
+                fees: true,
+                _count: {
+                    select: { students: true },
+                },
+            },
         });
 
         return Response.json({ message: "Successfully updated the course!!!", courseData }, { status: 200 });
@@ -73,7 +96,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { courseId: 
     }
 };
 
-export async function DELETE(req: NextRequest, { params }: { params: { courseId: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ courseId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -81,7 +104,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { courseId:
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { courseId } = params;
+        const { courseId } = await params;
 
         const courseData = await prisma.course.update({
             where: {
@@ -91,7 +114,19 @@ export async function DELETE(req: NextRequest, { params }: { params: { courseId:
             },
             data: {
                 isDeleted: true,
-            }
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                instituteName: true,
+                code: true,
+                duration: true,
+                fees: true,
+                _count: {
+                    select: { students: true },
+                },
+            },
         });
 
         return Response.json({ message: "Successfully deleted the course!!!", courseData }, { status: 200 });

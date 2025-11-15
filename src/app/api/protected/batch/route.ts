@@ -27,11 +27,11 @@ export async function GET(req: NextRequest) {
                 time: true,
                 _count: {
                     select: { students: true },
-                }
+                },
             },
             orderBy: {
                 createdAt: "desc",
-            }
+            },
         });
 
         if (!(allBatches.length > 0)) {
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
                 time: true,
                 _count: {
                     select: { students: true },
-                }
+                },
             },
         });
 

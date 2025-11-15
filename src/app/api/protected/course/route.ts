@@ -17,7 +17,21 @@ export async function GET(req: NextRequest) {
                 userId: String(token.id),
                 isDeleted: false,
             },
-            include: { students: true }
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                instituteName: true,
+                code: true,
+                duration: true,
+                fees: true,
+                _count: {
+                    select: { students: true },
+                },
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
         });
 
         if (!(allCourses.length > 0)) {
@@ -55,7 +69,19 @@ export async function POST(req: NextRequest) {
                 instituteName: parsedInput.data.instituteName,
                 duration: parsedInput.data.duration,
                 fees: parsedInput.data.fees,
-            }
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                instituteName: true,
+                code: true,
+                duration: true,
+                fees: true,
+                _count: {
+                    select: { students: true },
+                },
+            },
         });
 
         return Response.json({ message: "Successfully created the course!!!", courseData }, { status: 201 });

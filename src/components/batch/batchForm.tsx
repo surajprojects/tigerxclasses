@@ -1,6 +1,6 @@
 import Btn from "../button/btn";
 import FormField from "../form/formField";
-import { ChangeEvent, useState, useContext } from "react";
+import { ChangeEvent, useState } from "react";
 import { BatchData } from "@/utils/types/batchType";
 import { BatchFormInput, BatchFormInputEdit } from "@/utils/validators/batchInput";
 
@@ -22,8 +22,8 @@ export default function BatchForm({
     handleEditSubmit?: (data: BatchFormInputEdit) => Promise<void>,
     initialData?: Pick<BatchData, "name" | "description" | "code" | "time" | "startDate" | "endDate">,
 }) {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [formData, setFormData] = useState(initialData);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const fieldName = evt.target.name;
