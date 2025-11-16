@@ -1,5 +1,6 @@
 import Table from "@/components/students/table";
-import { PlusIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import AddStudentBtn from "@/components/button/student/addStudentBtn";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Students() {
     return (
@@ -10,13 +11,7 @@ export default function Students() {
                         <h6 className="text-4xl text-gray-800 font-bold">Students</h6>
                         <p className="my-1 font-medium text-gray-500 text-lg">Manage all your students</p>
                     </div>
-                    <button
-                        type="button"
-                        className="text-white bg-blue-500 rounded-xl px-4 py-2 font-medium duration-300 ease-out cursor-pointer hover:bg-blue-400 h-fit w-fit flex items-center justify-center"
-                    >
-                        <PlusIcon className="size-5 mr-2" />
-                        Add Course
-                    </button>
+                    <AddStudentBtn />
                 </div>
                 <div className="rounded-2xl bg-white p-6 my-6 border border-gray-100 shadow-sm">
                     <div className="rounded-2xl bg-gray-50 p-2 mt-4 flex items-center">

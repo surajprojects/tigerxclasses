@@ -35,7 +35,7 @@ export default function FormField({
             {
                 isTextHolder ?
                     <div className="flex flex-col my-2">
-                        <label htmlFor={id} className="font-sans font-medium text-sm text-gray-800">{title}</label>
+                        <label htmlFor={id} className="font-sans font-medium text-sm text-gray-800">{title}{isRequired && "*"}</label>
                         <input
                             type={fieldType}
                             name={id}
@@ -54,7 +54,7 @@ export default function FormField({
                     </div>
                     :
                     <div className="flex flex-col my-2">
-                        <label htmlFor={id} className="font-sans font-medium text-sm text-gray-600">{title}</label>
+                        <label htmlFor={id} className="font-sans font-medium text-sm text-gray-600">{title}{isRequired && "*"}</label>
                         <input
                             type={fieldType}
                             name={id}

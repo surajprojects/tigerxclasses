@@ -1,10 +1,16 @@
-import { ChangeEvent, useState } from "react";
-import FormField from "../form/formField";
 import Btn from "../button/btn";
-import Link from "next/link";
+import FormField from "../form/formField";
+import { ChangeEvent, useState } from "react";
+import CancelBtn from "../button/cancelBtn";
+import { StudentFormInput } from "@/utils/validators/studentInput";
+import { Category, Gender, Institute, State } from "@/db/generated/prisma";
 
-export default function StudentForm() {
-    const [formData, setFormData] = useState({
+export default function StudentForm({
+    handleSubmit
+}: {
+    handleSubmit?: (data: StudentFormInput) => Promise<void>,
+}) {
+    const initialData = {
         fullName: "",
         dob: "",
         gender: "",
@@ -27,22 +33,68 @@ export default function StudentForm() {
         institute: "",
         instituteName: "",
         session: "",
-    });
+        remarks: "",
+    };
+    const [formData, setFormData] = useState(initialData);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const fieldName = evt.target.name;
         const changedValue = evt.target.value;
+        const keys = fieldName.split(".");
+
         setFormData((prevData) => {
+            if (keys.length === 1) {
+                return {
+                    ...prevData,
+                    [fieldName]: changedValue,
+                }
+            }
+
             return {
                 ...prevData,
-                [fieldName]: changedValue
+                address: {
+                    ...prevData.address,
+                    [keys[1]]: changedValue,
+                }
             }
         });
     };
     return (
         <>
-            <form>
-
+            <form
+                onSubmit={async (evt) => {
+                    evt.preventDefault();
+                    if (!Object.values(Gender).includes(formData.gender as Gender)) {
+                        throw new Error("Invalid gender");
+                    }
+                    if (!Object.values(Category).includes(formData.category as Category)) {
+                        throw new Error("Invalid category");
+                    }
+                    if (!Object.values(State).includes(formData.address.state as State)) {
+                        throw new Error("Invalid state");
+                    }
+                    if (!Object.values(Institute).includes(formData.institute as Institute)) {
+                        throw new Error("Invalid institute");
+                    }
+                    setIsLoading(true);
+                    // Handle submit function
+                    handleSubmit && await handleSubmit({
+                        ...formData,
+                        gender: formData.gender as Gender,
+                        category: formData.category as Category,
+                        institute: formData.institute as Institute,
+                        address: {
+                            ...formData.address,
+                            state: formData.address.state as State,
+                        },
+                    });
+                    // Handle edit submit function
+                    // handleEditSubmit && await handleEditSubmit(formData);
+                    setIsLoading(false);
+                    setFormData(initialData);
+                }}
+            >
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
                     <h5 className="text-2xl font-medium text-gray-800">Personal Information</h5>
                     <p className="text-gray-500 mt-1">Basic student details</p>
@@ -67,21 +119,32 @@ export default function StudentForm() {
                         />
                         {/* Gender */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="gender" className="font-sans font-medium text-sm text-gray-800">Gender</label>
-                            <select onChange={handleChange} name="gender" id="gender" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
-                                <option value="MALE">MALE</option>
-                                <option value="FEMALE">FEMALE</option>
-                                <option value="OTHER">OTHER</option>
+                            <label htmlFor="gender" className="font-sans font-medium text-sm text-gray-800">Gender*</label>
+                            <select
+                                id="gender"
+                                name="gender"
+                                value={formData.gender}
+                                onChange={handleChange}
+                                className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
+                                <option value="" disabled>Select Gender</option>
+                                {[...Object.values(Gender)].map((opt, idx) => {
+                                    return <option key={idx} value={opt}>{opt}</option>
+                                })}
                             </select>
                         </div>
                         {/* Category */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="category" className="font-sans font-medium text-sm text-gray-800">Category</label>
-                            <select onChange={handleChange} name="category" id="category" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
-                                <option value="ST">ST</option>
-                                <option value="SC">SC</option>
-                                <option value="OBC">OBC</option>
-                                <option value="GEN">GEN</option>
+                            <label htmlFor="category" className="font-sans font-medium text-sm text-gray-800">Category*</label>
+                            <select
+                                id="category"
+                                name="category"
+                                value={formData.category}
+                                onChange={handleChange}
+                                className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
+                                <option value="" disabled>Select Category</option>
+                                {[...Object.values(Category)].map((opt, idx) => {
+                                    return <option key={idx} value={opt}>{opt}</option>
+                                })}
                             </select>
                         </div>
                         {/* Mobile No */}
@@ -102,6 +165,7 @@ export default function StudentForm() {
                             fieldValue={formData.email}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                     </ul>
                 </div>
@@ -112,16 +176,17 @@ export default function StudentForm() {
                     <ul className="grid grid-cols-2 gap-x-6">
                         {/* Flat/House/Building */}
                         <FormField
-                            id="flatHouseBuilding"
+                            id="address.flatHouseBuilding"
                             title="Flat/House/Building"
                             textHolder="117/Kha Salapura"
                             fieldValue={formData.address.flatHouseBuilding}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                         {/* Street/Area */}
                         <FormField
-                            id="streetOrArea"
+                            id="address.streetOrArea"
                             title="Street/Area"
                             textHolder="Pali Road Salapura"
                             fieldValue={formData.address.streetOrArea}
@@ -130,16 +195,17 @@ export default function StudentForm() {
                         />
                         {/* Landmark */}
                         <FormField
-                            id="landmark"
+                            id="address.landmark"
                             title="Landmark"
                             textHolder="Near Apollo Hospital"
                             fieldValue={formData.address.landmark}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                         {/* City */}
                         <FormField
-                            id="city"
+                            id="address.city"
                             title="City"
                             textHolder="Sheopur"
                             fieldValue={formData.address.city}
@@ -148,19 +214,28 @@ export default function StudentForm() {
                         />
                         {/* State */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="state" className="font-sans font-medium text-sm text-gray-800">State</label>
-                            <select onChange={handleChange} name="state" id="state" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
-                                <option value="MP">Madhya Pradesh</option>
+                            <label htmlFor="address.state" className="font-sans font-medium text-sm text-gray-800">State*</label>
+                            <select
+                                id="address.state"
+                                name="address.state"
+                                value={formData.address.state}
+                                onChange={handleChange}
+                                className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
+                                <option value="" disabled>Select State</option>
+                                {[...Object.values(State)].map((opt, idx) => {
+                                    return <option key={idx} value={opt}>{opt}</option>
+                                })}
                             </select>
                         </div>
                         {/* Pincode */}
                         <FormField
-                            id="pincode"
+                            id="address.pincode"
                             title="PIN Code"
                             textHolder="476337"
                             fieldValue={formData.address.pincode}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                     </ul>
                 </div>
@@ -195,6 +270,7 @@ export default function StudentForm() {
                             fieldValue={formData.parentGuardianMobileNo1}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                         {/* Parent/Guardian Mobile No. 2 */}
                         <FormField
@@ -204,6 +280,7 @@ export default function StudentForm() {
                             fieldValue={formData.parentGuardianMobileNo2}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                     </ul>
                 </div>
@@ -220,16 +297,21 @@ export default function StudentForm() {
                             fieldValue={formData.class}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                         {/* Institute */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="institute" className="font-sans font-medium text-sm text-gray-800">Institute</label>
-                            <select onChange={handleChange} name="institute" id="institute" className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out">
-                                <option value="SCHOOl">SCHOOL</option>
-                                <option value="COLLEGE">COLLEGE</option>
-                                <option value="UNIVERSITY">UNIVERSITY</option>
-                                <option value="OTHER">OTHER</option>
-                                <option value="NONE">NONE</option>
+                            <label htmlFor="institute" className="font-sans font-medium text-sm text-gray-800">Institute*</label>
+                            <select
+                                id="institute"
+                                name="institute"
+                                value={formData.institute}
+                                onChange={handleChange}
+                                className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
+                                <option value="" disabled>Select Institute</option>
+                                {[...Object.values(Institute)].map((opt, idx) => {
+                                    return <option key={idx} value={opt}>{opt}</option>
+                                })}
                             </select>
                         </div>
                         {/* Institute Name */}
@@ -240,6 +322,7 @@ export default function StudentForm() {
                             fieldValue={formData.instituteName}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                         {/* Session */}
                         <FormField
@@ -249,17 +332,18 @@ export default function StudentForm() {
                             fieldValue={formData.session}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                     </ul>
                 </div>
                 {/* Buttons */}
                 <div className="flex items-center">
                     <div className="w-24">
-                        <Btn btnType="submit" text="Submit" />
+                        <Btn btnType="submit" text="Submit" isLoading={isLoading} />
                     </div>
-                    <Link href="/" className="font-sans text-black hover:text-white text-sm font-semibold px-3 py-2 rounded-xl cursor-pointer outline-none mx-3 border border-gray-300 hover:bg-red-500 duration-300 ease-out">Cancel</Link>
+                    <CancelBtn />
                 </div>
-            </form>
+            </form >
         </>
     );
 };
