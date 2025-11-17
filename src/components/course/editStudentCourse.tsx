@@ -1,7 +1,7 @@
-import CourseForm from "./courseForm";
+import CourseForm from "./studentCourseForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function UpdateCourse({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function EditStudentCourse({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
     const handleCloseForm = () => {
         setShowForm(false);
     };

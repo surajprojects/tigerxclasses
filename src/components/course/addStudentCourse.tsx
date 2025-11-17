@@ -1,7 +1,31 @@
-import CourseForm from "./courseForm";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import StudentCourseForm from "./studentCourseForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { errorHandle } from "@/utils/errors/errorHandle";
+import axiosProtected from "@/utils/axios/axiosProtected";
+import { StudentCourseInput } from "@/utils/validators/studentCourseInput";
 
-export default function AddCourse({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function AddStudentCourse({
+    setShowForm,
+    studentId,
+}: {
+    setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
+    studentId: string,
+}) {
+    const router = useRouter();
+    const handleSubmit = async (formData: StudentCourseInput) => {
+        try {
+            await axiosProtected.post(`/students/${studentId}/studentcourse`, formData);
+            toast.success("Student Course created successfully!!!");
+            handleCloseForm();
+            router.refresh();
+        }
+        catch (error: unknown) {
+            errorHandle(error);
+        }
+    };
+
     const handleCloseForm = () => {
         setShowForm(false);
     };
@@ -19,7 +43,7 @@ export default function AddCourse({ setShowForm }: { setShowForm: React.Dispatch
                     <div className="w-md">
                         <h5 className="text-2xl font-medium text-gray-800">Add Student Course</h5>
                         <p className="text-gray-600 text-base my-1">Fill in the details to add a student course</p>
-                        <CourseForm />
+                        <StudentCourseForm handleSubmit={handleSubmit} />
                     </div>
                 </div>
             </div>

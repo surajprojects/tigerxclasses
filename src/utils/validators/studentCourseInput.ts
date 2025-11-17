@@ -2,8 +2,8 @@ import z from "zod";
 import { FeesStatus, StudentCourseStatus } from "@/db/generated/prisma";
 
 export const studentCourseInput = z.object({
-    batchCode: z.string(),
-    courseCode: z.string(),
+    batchId: z.string(),
+    courseId: z.string(),
     enrolledOn: z.string(),
     totalFees: z.number(),
     session: z.string(),

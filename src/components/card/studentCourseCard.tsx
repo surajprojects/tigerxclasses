@@ -1,40 +1,59 @@
-export default function StudentCourseCard() {
+import CardData from "./cardData";
+import { StudentCourseData } from "@/utils/types/studentCourseType";
+
+export default function StudentCourseCard({ studentCourseData }: { studentCourseData: StudentCourseData }) {
     return (
         <>
             <div className="w-full m-2 p-6 rounded-2xl shadow-sm hover:shadow-md bg-white font-medium">
+                {/* Name & Description */}
                 <div>
-                    <p className="text-xl text-gray-800">DCA</p>
-                    <p className="text-base text-gray-500">Diploma in Computer Applications</p>
+                    <p className="text-xl text-gray-800">{studentCourseData.course.name}</p>
+                    <p className="text-base text-gray-500">{studentCourseData.course.description}</p>
                 </div>
                 <div className="my-6 flex">
-                    <div>
-                        <p className="text-base text-gray-500">Batch</p>
-                        <p className="text-lg text-gray-800">B01T10AM</p>
-                    </div>
-                    <div className="mx-auto">
-                        <p className="text-base text-gray-500">Enrolled On</p>
-                        <p className="text-lg text-gray-800">01-01-2025</p>
-                    </div>
+                    {/* Batch */}
+                    <CardData
+                        fieldName="Batch"
+                        fieldValue={studentCourseData.batch.code}
+                        secondary={true}
+                    />
+                    {/* Enrolled On */}
+                    <CardData
+                        fieldName="Enrolled On"
+                        fieldValue={studentCourseData.enrolledOn.split("T")[0]}
+                        secondary={true}
+                        marginX={true}
+                    />
                 </div>
                 <div className="flex">
-                    <div>
-                        <p className="text-base text-gray-500">Total Fees</p>
-                        <p className="text-lg text-gray-800">Rs.5000/-</p>
-                    </div>
-                    <div className="mx-auto">
-                        <p className="text-base text-gray-500">Due Fees</p>
-                        <p className="text-lg text-gray-800">Rs.3500/-</p>
-                    </div>
+                    {/* Total Fees */}
+                    <CardData
+                        fieldName="Total Fees"
+                        fieldValue={`Rs.${studentCourseData.totalFees}/-`}
+                        secondary={true}
+                    />
+                    {/* Due Fees */}
+                    <CardData
+                        fieldName="Due Fees"
+                        fieldValue={`Rs.${studentCourseData.payments.reduce((sum, payment) => sum + payment.amount, 0)}/-`}
+                        secondary={true}
+                        marginX={true}
+                    />
                 </div>
                 <div className="flex mt-6">
-                    <div>
-                        <p className="text-base text-gray-500">Fees Status</p>
-                        <p className="text-lg text-gray-800">UNPAID</p>
-                    </div>
-                    <div className="mx-auto">
-                        <p className="text-base text-gray-500">Status</p>
-                        <p className="text-lg text-gray-800">ACTIVE</p>
-                    </div>
+                    {/* Fees Status */}
+                    <CardData
+                        fieldName="Fees Status"
+                        fieldValue={studentCourseData.feesStatus}
+                        secondary={true}
+                    />
+                    {/* Status */}
+                    <CardData
+                        fieldName="Status"
+                        fieldValue={studentCourseData.status}
+                        secondary={true}
+                        marginX={true}
+                    />
                 </div>
             </div>
         </>

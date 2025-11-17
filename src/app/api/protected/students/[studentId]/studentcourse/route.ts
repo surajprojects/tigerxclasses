@@ -4,7 +4,7 @@ import { verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { studentCourseInput, StudentCourseInput } from "@/utils/validators/studentCourseInput";
 
-export async function POST(req: NextRequest, { params }: { params: { studentId: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ studentId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: { studentId: 
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { studentId } = params;
+        const { studentId } = await params;
         const data: StudentCourseInput = await req.json();
         const parsedInput = studentCourseInput.safeParse(data);
 
@@ -23,8 +23,8 @@ export async function POST(req: NextRequest, { params }: { params: { studentId: 
         const studentCourseData = await prisma.studentCourse.create({
             data: {
                 studentId,
-                batchId: parsedInput.data.batchCode,
-                courseId: parsedInput.data.courseCode,
+                batchId: parsedInput.data.batchId,
+                courseId: parsedInput.data.courseId,
                 totalFees: parsedInput.data.totalFees,
                 enrolledOn: new Date(parsedInput.data.enrolledOn).toISOString(),
                 session: parsedInput.data.session,

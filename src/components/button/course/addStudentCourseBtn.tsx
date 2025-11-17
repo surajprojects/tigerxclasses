@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import AddCourse from "@/components/students/course/addCourse";
+import AddStudentCourse from "@/components/course/addStudentCourse";
 
-export default function AddStudentCourseBtn() {
+export default function AddStudentCourseBtn({ studentId }: { studentId: string }) {
     const [showCourseForm, setShowCourseForm] = useState<boolean>(false);
     return (
         <>
@@ -16,7 +16,7 @@ export default function AddStudentCourseBtn() {
                 <PlusIcon className="size-5 mr-2" />
                 Add Course
             </button>
-            {showCourseForm && <AddCourse setShowForm={setShowCourseForm} />}
+            {showCourseForm && <AddStudentCourse setShowForm={setShowCourseForm} studentId={studentId} />}
         </>
     );
 };
