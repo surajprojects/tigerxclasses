@@ -1,14 +1,13 @@
-import { StudentData } from "./studentType";
+import { StudentCourseData } from "./studentCourseType";
 
 export interface PaymentData {
     id: string,
-    studentId: string,
     amount: number,
     method: string,
     date: string,
-    students: StudentData[],
-    createdAt: string,
-    updatedAt: string,
+    remarks?: string,
+    studentCourseId: string,
+    studentCourse: StudentCourseData,
 };
 
 export type PaymentsList = PaymentData[];

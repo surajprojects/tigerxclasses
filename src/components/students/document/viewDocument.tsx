@@ -1,15 +1,10 @@
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline"
+import CardData from "@/components/card/cardData";
 
 export default function ViewDocument() {
     return (
         <>
             <ul className="mt-4 mx-6 gap-3 grid grid-cols-2 duration-300 ease-out">
-                <li>
-                    <ul>
-                        <li className="text-gray-500">Document Type</li>
-                        <li className="text-gray-800 font-semibold text-lg">Aadhaar</li>
-                    </ul>
-                </li>
+                <CardData fieldName="Document Type" fieldValue="Aadhaar" />
                 <li>
                     <ul>
                         <li className="text-gray-500">Document Name</li>
@@ -80,18 +75,6 @@ export default function ViewDocument() {
                     <ul>
                         <li className="text-gray-500">Created On</li>
                         <li className="text-gray-800 font-semibold text-lg">01-01-2025</li>
-                    </ul>
-                </li>
-                <li>
-                    <ul>
-                        <li className="text-gray-500">Document Link</li>
-                        <li className="text-gray-800 font-semibold text-base">  <button
-                            type="button"
-                            className="font-medium flex items-center hover:bg-blue-500 px-3 py-1 rounded-lg duration-300 ease-out cursor-pointer hover:text-white"
-                        >
-                            <ArrowDownTrayIcon className="size-4 mr-2" />
-                            Download
-                        </button></li>
                     </ul>
                 </li>
             </ul>

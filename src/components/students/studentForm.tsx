@@ -2,15 +2,14 @@ import Btn from "../button/btn";
 import FormField from "../form/formField";
 import { ChangeEvent, useState } from "react";
 import CancelBtn from "../button/cancelBtn";
-import { StudentFormInput } from "@/utils/validators/studentInput";
+import { StudentFormInput, StudentFormInputEdit } from "@/utils/validators/studentInput";
 import { Category, Gender, Institute, State } from "@/db/generated/prisma";
+import { StudentFormData } from "@/utils/types/studentType";
 
 export default function StudentForm({
-    handleSubmit
-}: {
-    handleSubmit?: (data: StudentFormInput) => Promise<void>,
-}) {
-    const initialData = {
+    handleSubmit,
+    handleEditSubmit,
+    initialData = {
         fullName: "",
         dob: "",
         gender: "",
@@ -34,7 +33,12 @@ export default function StudentForm({
         instituteName: "",
         session: "",
         remarks: "",
-    };
+    },
+}: {
+    handleSubmit?: (data: StudentFormInput) => Promise<void>,
+    handleEditSubmit?: (data: StudentFormInputEdit) => Promise<void>,
+    initialData?: StudentFormData,
+}) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -78,8 +82,7 @@ export default function StudentForm({
                         throw new Error("Invalid institute");
                     }
                     setIsLoading(true);
-                    // Handle submit function
-                    handleSubmit && await handleSubmit({
+                    const newFormData = {
                         ...formData,
                         gender: formData.gender as Gender,
                         category: formData.category as Category,
@@ -88,9 +91,11 @@ export default function StudentForm({
                             ...formData.address,
                             state: formData.address.state as State,
                         },
-                    });
+                    };
+                    // Handle submit function
+                    handleSubmit && await handleSubmit(newFormData);
                     // Handle edit submit function
-                    // handleEditSubmit && await handleEditSubmit(formData);
+                    handleEditSubmit && await handleEditSubmit(newFormData);
                     setIsLoading(false);
                     setFormData(initialData);
                 }}
@@ -230,7 +235,7 @@ export default function StudentForm({
                         {/* Pincode */}
                         <FormField
                             id="address.pincode"
-                            title="PIN Code"
+                            title="Pincode"
                             textHolder="476337"
                             fieldValue={formData.address.pincode}
                             onChangeFunc={handleChange}
@@ -339,7 +344,7 @@ export default function StudentForm({
                 {/* Buttons */}
                 <div className="flex items-center">
                     <div className="w-24">
-                        <Btn btnType="submit" text="Submit" isLoading={isLoading} />
+                        <Btn btnType="submit" text={handleEditSubmit ? "Update" : "Submit"} isLoading={isLoading} />
                     </div>
                     <CancelBtn />
                 </div>

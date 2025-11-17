@@ -1,33 +1,43 @@
-import { PaymentsList } from "./paymentType";
+import { AddressData } from "./addressType";
 import { StudentCourseList } from "./studentCourseType";
 import { StudentDocumentList } from "./studentDocumentType";
 
 export interface StudentData {
     id: string,
-    userId: string,
     fullName: string,
-    fatherName: string,
-    motherName: string,
     dob: string,
-    class: string,
     gender: string,
     category: string,
+    mobileNo: string,
+    email?: string,
+    address: AddressData,
+
+    fatherName: string,
+    motherName: string,
+    parentGuardianMobileNo1?: string,
+    parentGuardianMobileNo2?: string,
+
+    class?: string,
     institute: string,
     instituteName?: string,
-    mobileNo: string,
-    guardianMobileNo: string,
-    email: string,
-    address: string,
-    photo?: string,
+    session?: string,
     remarks?: string,
-    createdAt: string,
-    updatedAt: string,
-    studentCourses: StudentCourseList,
-    payments: PaymentsList,
+
+    userId: string,
+    photo?: string,
+
     documents: StudentDocumentList,
+    studentCourses: StudentCourseList,
 };
 
 export type StudentsList = StudentData[];
+
+export type StudentFormData = Omit<
+    Required<StudentData>,
+    "id" | "userId" | "photo" | "documents" | "studentCourses" | "address"
+> & {
+    address: Omit<Required<StudentData["address"]>, "id" | "students">;
+};
 
 export interface StudentFeesData {
     id: string,
