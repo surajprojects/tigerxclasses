@@ -43,7 +43,7 @@ export default function AddStudentCourse({
                     <div className="w-md">
                         <h5 className="text-2xl font-medium text-gray-800">Add Student Course</h5>
                         <p className="text-gray-600 text-base my-1">Fill in the details to add a student course</p>
-                        <StudentCourseForm handleSubmit={handleSubmit} />
+                        <StudentCourseForm handleSubmit={handleSubmit} btnText="Add Student Course" />
                     </div>
                 </div>
             </div>

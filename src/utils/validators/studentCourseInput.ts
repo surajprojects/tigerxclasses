@@ -8,13 +8,12 @@ export const studentCourseInput = z.object({
     totalFees: z.number(),
     session: z.string(),
     remarks: z.string().optional(),
+    status: z.enum([...Object.values(StudentCourseStatus)] as [StudentCourseStatus, ...StudentCourseStatus[]]).optional(),
+    feesStatus: z.enum([...Object.values(FeesStatus)] as [FeesStatus, ...FeesStatus[]]).optional(),
 }).strict();
 
 export type StudentCourseInput = z.infer<typeof studentCourseInput>;
 
-export const studentCourseInputEdit = studentCourseInput.partial().extend({
-    status: z.enum([...Object.values(StudentCourseStatus)] as [StudentCourseStatus, ...StudentCourseStatus[]]).optional(),
-    feesStatus: z.enum([...Object.values(FeesStatus)] as [FeesStatus, ...FeesStatus[]]).optional(),
-}).strict();
+export const studentCourseInputEdit = studentCourseInput.partial().strict();
 
 export type StudentCourseInputEdit = z.infer<typeof studentCourseInputEdit>;

@@ -66,6 +66,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ stud
                             },
                         },
                         payments: {
+                            where: {
+                                isDeleted: false,
+                            },
                             omit: {
                                 isDeleted: true,
                                 createdAt: true,
@@ -80,6 +83,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ stud
                         status: true,
                         totalFees: true,
                     },
+                    where: {
+                        isDeleted: false,
+                    }
                 },
             },
         });

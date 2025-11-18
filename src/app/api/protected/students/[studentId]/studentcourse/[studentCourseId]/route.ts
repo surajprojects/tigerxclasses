@@ -4,7 +4,7 @@ import { verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { studentCourseInputEdit, StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
-export async function GET(req: NextRequest, { params }: { params: { studentCourseId: string, studentId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ studentCourseId: string, studentId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, { params }: { params: { studentCours
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { studentId, studentCourseId } = params;
+        const { studentId, studentCourseId } = await params;
 
         const studentCourseData = await prisma.studentCourse.findUnique({
             where: {
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest, { params }: { params: { studentCours
     }
 };
 
-export async function PATCH(req: NextRequest, { params }: { params: { studentCourseId: string, studentId: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ studentCourseId: string, studentId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -46,7 +46,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { studentCou
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { studentCourseId, studentId } = params;
+        const { studentCourseId, studentId } = await params;
         const data: StudentCourseInputEdit = await req.json();
         const parsedInput = studentCourseInputEdit.safeParse(data);
 
@@ -61,8 +61,8 @@ export async function PATCH(req: NextRequest, { params }: { params: { studentCou
                 isDeleted: false,
             },
             data: {
-                ...(parsedInput.data.batchCode && { batchId: parsedInput.data.batchCode }),
-                ...(parsedInput.data.courseCode && { courseId: parsedInput.data.courseCode }),
+                ...(parsedInput.data.batchId && { batchId: parsedInput.data.batchId }),
+                ...(parsedInput.data.courseId && { courseId: parsedInput.data.courseId }),
                 ...(parsedInput.data.totalFees && { totalFees: parsedInput.data.totalFees }),
                 ...(parsedInput.data.status && { status: parsedInput.data.status }),
                 ...(parsedInput.data.feesStatus && { feesStatus: parsedInput.data.feesStatus }),
@@ -79,7 +79,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { studentCou
     }
 };
 
-export async function DELETE(req: NextRequest, { params }: { params: { studentId: string, studentCourseId: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ studentId: string, studentCourseId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -87,7 +87,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { studentId
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { studentId, studentCourseId } = params;
+        const { studentId, studentCourseId } = await params;
 
         const studentCourseData = await prisma.studentCourse.update({
             where: {

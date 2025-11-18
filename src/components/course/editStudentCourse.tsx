@@ -1,14 +1,24 @@
 import CourseForm from "./studentCourseForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { StudentCourseData } from "@/utils/types/studentCourseType";
+import { StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
-export default function EditStudentCourse({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function EditStudentCourse({
+    setShowForm,
+    handleEditSubmit,
+    studentCourseData,
+}: {
+    setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
+    handleEditSubmit?: (data: StudentCourseInputEdit) => Promise<void>,
+    studentCourseData: StudentCourseData,
+}) {
     const handleCloseForm = () => {
         setShowForm(false);
     };
     return (
         <>
             <div onClick={handleCloseForm} className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div onClick={(evt) => evt.stopPropagation()} className="bg-white p-6 rounded-xl shadow-lg relative">
+                <div onClick={(evt) => evt.stopPropagation()} className="bg-white p-6 rounded-xl shadow-lg relative max-h-[90vh] overflow-y-auto scrollbar-none">
                     <button
                         type="button"
                         onClick={handleCloseForm}
@@ -19,7 +29,20 @@ export default function EditStudentCourse({ setShowForm }: { setShowForm: React.
                     <div className="w-md">
                         <h5 className="text-2xl font-medium text-gray-800">Edit Student Course</h5>
                         <p className="text-gray-600 text-base my-1">Update student course</p>
-                        <CourseForm />
+                        <CourseForm
+                            btnText="Update Student Course"
+                            handleEditSubmit={handleEditSubmit}
+                            initialData={{
+                                batchId: studentCourseData.batchId,
+                                courseId: studentCourseData.courseId,
+                                enrolledOn: studentCourseData.enrolledOn.split("T")[0],
+                                session: studentCourseData.session,
+                                totalFees: studentCourseData.totalFees,
+                                status: studentCourseData.status,
+                                feesStatus: studentCourseData.feesStatus,
+                                remarks: studentCourseData.remarks ? studentCourseData.remarks : "",
+                            }}
+                        />
                     </div>
                 </div>
             </div>

@@ -1,15 +1,26 @@
 import CardData from "./cardData";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
+import ActionStudentCourseBtn from "../button/course/actionStudentCourseBtn";
 
-export default function StudentCourseCard({ studentCourseData }: { studentCourseData: StudentCourseData }) {
+export default function StudentCourseCard({
+    studentId,
+    studentCourseData,
+}: {
+    studentId: string,
+    studentCourseData: StudentCourseData
+}) {
     return (
         <>
-            <div className="w-full m-2 p-6 rounded-2xl shadow-sm hover:shadow-md bg-white font-medium">
+            <div className="w-full p-6 rounded-2xl shadow-sm hover:shadow-md bg-white font-medium">
                 {/* Name & Description */}
-                <div>
-                    <p className="text-xl text-gray-800">{studentCourseData.course.name}</p>
-                    <p className="text-base text-gray-500">{studentCourseData.course.description}</p>
+                <div className="flex justify-between">
+                    <div>
+                        <p className="text-xl text-gray-800">{studentCourseData.course.name}</p>
+                        <p className="text-base text-gray-500">{studentCourseData.course.description}</p>
+                    </div>
+                    <ActionStudentCourseBtn studentId={studentId} studentCourseData={studentCourseData} />
                 </div>
+
                 <div className="my-6 flex">
                     {/* Batch */}
                     <CardData

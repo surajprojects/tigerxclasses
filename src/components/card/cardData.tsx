@@ -13,12 +13,12 @@ export default function CardData({
         <>
             {secondary ?
                 <div className={marginX ? "mx-auto" : ""}>
-                    <p className="text-base text-gray-500 capitalize">{fieldName}</p>
+                    <p className="text-base text-gray-500">{fieldName}</p>
                     <p className="text-lg text-gray-800">{fieldValue ? fieldValue : "-"}</p>
                 </div>
                 :
                 <div className={marginX ? "mx-auto" : ""}>
-                    <p className="text-gray-500 capitalize">{fieldName}</p>
+                    <p className="text-gray-500">{fieldName}</p>
                     <p className="text-gray-800 font-semibold text-lg">{fieldValue ? fieldValue : "-"}</p>
                 </div>
             }

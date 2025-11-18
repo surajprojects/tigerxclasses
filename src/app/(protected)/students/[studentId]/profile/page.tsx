@@ -140,9 +140,13 @@ export default async function StudentProfile({
                         />
                         <AddStudentCourseBtn studentId={studentId} />
                     </div>
-                    <div className="mt-6 grid grid-cols-3 gap-x-6">
+                    <div className="mt-6 grid grid-cols-3 gap-6">
                         {studentData.studentCourses.length > 0 && studentData.studentCourses.map((studentCourse) => {
-                            return <StudentCourseCard key={studentCourse.id} studentCourseData={studentCourse} />;
+                            return <StudentCourseCard
+                                key={studentCourse.id}
+                                studentId={studentId}
+                                studentCourseData={studentCourse}
+                            />;
                         })}
                     </div>
                 </Card>

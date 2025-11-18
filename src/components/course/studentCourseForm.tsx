@@ -6,8 +6,10 @@ import Spinner from "@/components/ui/spinner";
 import FormField from "@/components/form/formField";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
 import { StudentCourseInput, StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
+import { FeesStatus, StudentCourseStatus } from "@/db/generated/prisma";
 
 export default function StudentCourseForm({
+    btnText = "Submit",
     handleSubmit,
     handleEditSubmit,
     initialData = {
@@ -17,11 +19,14 @@ export default function StudentCourseForm({
         totalFees: 0,
         session: "",
         remarks: "",
+        status: "ACTIVE",
+        feesStatus: "PAID",
     },
 }: {
+    btnText?: string,
     handleSubmit?: (data: StudentCourseInput) => Promise<void>,
     handleEditSubmit?: (data: StudentCourseInputEdit) => Promise<void>,
-    initialData?: Pick<StudentCourseData, "batchId" | "courseId" | "enrolledOn" | "totalFees" | "session" | "remarks">
+    initialData?: Pick<StudentCourseData, "batchId" | "courseId" | "enrolledOn" | "totalFees" | "session" | "remarks" | "status" | "feesStatus">
 }) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -47,8 +52,19 @@ export default function StudentCourseForm({
                 <form
                     onSubmit={async (evt) => {
                         evt.preventDefault();
+                        if (!Object.values(StudentCourseStatus).includes(formData.status as StudentCourseStatus)) {
+                            throw new Error("Invalid status");
+                        }
+                        if (!Object.values(FeesStatus).includes(formData.feesStatus as FeesStatus)) {
+                            throw new Error("Invalid fees status");
+                        }
                         setIsLoading(true);
-                        const newFormData = { ...formData, totalFees: Number(formData.totalFees) }
+                        const newFormData = {
+                            ...formData,
+                            totalFees: Number(formData.totalFees),
+                            status: formData.status as StudentCourseStatus,
+                            feesStatus: formData.feesStatus as FeesStatus,
+                        };
                         // Handle submit function
                         handleSubmit && await handleSubmit(newFormData);
                         // Handle edit submit function
@@ -87,7 +103,6 @@ export default function StudentCourseForm({
                             })}
                         </select>
                     </div>
-
                     <div className="grid grid-cols-2 gap-x-4">
                         {/* Enrolled On */}
                         <FormField
@@ -105,7 +120,6 @@ export default function StudentCourseForm({
                             fieldValue={formData.totalFees}
                             onChangeFunc={handleChange}
                         />
-
                     </div>
                     {/* Session */}
                     <FormField
@@ -124,8 +138,40 @@ export default function StudentCourseForm({
                         onChangeFunc={handleChange}
                         isRequired={false}
                     />
+                    {handleEditSubmit &&
+                        <>
+                            {/* Status */}
+                            <div className="flex flex-col my-2">
+                                <label htmlFor="status" className="font-sans font-medium text-sm text-gray-800">Status</label>
+                                <select
+                                    id="status"
+                                    name="status"
+                                    value={formData.status}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
+                                    {[...Object.values(StudentCourseStatus)].map((opt, idx) => {
+                                        return <option key={idx} value={opt}>{opt}</option>
+                                    })}
+                                </select>
+                            </div>
+                            {/* Fees Status */}
+                            <div className="flex flex-col my-2">
+                                <label htmlFor="feesStatus" className="font-sans font-medium text-sm text-gray-800">Fees Status</label>
+                                <select
+                                    id="feesStatus"
+                                    name="feesStatus"
+                                    value={formData.feesStatus}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
+                                    {[...Object.values(FeesStatus)].map((opt, idx) => {
+                                        return <option key={idx} value={opt}>{opt}</option>
+                                    })}
+                                </select>
+                            </div>
+                        </>
+                    }
                     {/* Add Button */}
-                    <Btn btnType="submit" text="Add Student Course" isLoading={isLoading} />
+                    <Btn btnType="submit" text={btnText} isLoading={isLoading} />
                 </form>
             }
         </>
