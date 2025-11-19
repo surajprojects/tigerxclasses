@@ -1,6 +1,6 @@
 import getCourses from "@/lib/server/getCourses";
 import CourseCard from "@/components/card/courseCard";
-import AddCourseBtn from "@/components/button/course/addCourse";
+import AddCourseBtn from "@/components/button/course/addCourseBtn";
 
 export default async function Course() {
     const courseData = await getCourses();

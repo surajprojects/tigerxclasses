@@ -1,7 +1,7 @@
 import BatchForm from "./batchForm";
 import { BatchData } from "@/utils/types/batchType";
-import { BatchFormInputEdit } from "@/utils/validators/batchInput";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { BatchFormInputEdit } from "@/utils/validators/batchInput";
 
 export default function EditBatch({
     setShowForm,

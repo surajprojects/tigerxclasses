@@ -1,5 +1,5 @@
-import { CourseData } from "@/utils/types/courseType";
 import CourseForm from "./courseForm";
+import { CourseData } from "@/utils/types/courseType";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CourseFormInputEdit } from "@/utils/validators/courseInput";
 
@@ -14,7 +14,7 @@ export default function EditCourse({
 }) {
     const handleCloseForm = () => {
         setShowForm(false);
-    }
+    };
     return (
         <>
             <div onClick={handleCloseForm} className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">

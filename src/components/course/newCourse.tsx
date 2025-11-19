@@ -1,29 +1,17 @@
 import CourseForm from "./courseForm";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { errorHandle } from "@/utils/errors/errorHandle";
-import axiosProtected from "@/utils/axios/axiosProtected";
 import { CourseFormInput } from "@/utils/validators/courseInput";
 
-export default function NewCourse({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const router = useRouter();
+export default function NewCourse({
+    setShowForm,
+    handleSubmit,
+}: {
+    setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
+    handleSubmit: (data: CourseFormInput) => Promise<void>,
+}) {
     const handleCloseForm = () => {
         setShowForm(false);
     };
-
-    const handleSubmit = async (formData: CourseFormInput) => {
-        try {
-            await axiosProtected.post("/course", formData);
-            toast.success("Course created successfully!!!");
-            handleCloseForm();
-            router.refresh();
-        }
-        catch (error: unknown) {
-            errorHandle(error);
-        }
-    };
-
     return (
         <>
             <div onClick={handleCloseForm} className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">

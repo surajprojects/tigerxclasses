@@ -3,21 +3,21 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import NewCourse from "@/components/course/newCourse";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import axiosProtected from "@/utils/axios/axiosProtected";
-import NewStudentCourse from "@/components/course/newStudentCourse";
-import { StudentCourseInput } from "@/utils/validators/studentCourseInput";
+import { CourseFormInput } from "@/utils/validators/courseInput";
 
-export default function AddStudentCourseBtn({ studentId }: { studentId: string }) {
+export default function AddCourseBtn() {
     const router = useRouter();
-    const [showStudentCourseForm, setShowStudentCourseForm] = useState<boolean>(false);
+    const [showForm, setShowForm] = useState<boolean>(false);
 
-    const handleSubmit = async (formData: StudentCourseInput) => {
+    const handleSubmit = async (formData: CourseFormInput) => {
         try {
-            await axiosProtected.post(`/students/${studentId}/studentcourse`, formData);
-            toast.success("Student Course created successfully!!!");
-            setShowStudentCourseForm(false);
+            await axiosProtected.post("/course", formData);
+            toast.success("Course created successfully!!!");
+            setShowForm(false);
             router.refresh();
         }
         catch (error: unknown) {
@@ -29,13 +29,13 @@ export default function AddStudentCourseBtn({ studentId }: { studentId: string }
         <>
             <button
                 type="button"
-                onClick={() => setShowStudentCourseForm(true)}
+                onClick={() => setShowForm(true)}
                 className="text-white bg-blue-500 rounded-xl px-4 py-2 font-medium duration-300 ease-out cursor-pointer hover:bg-blue-400 h-fit w-fit flex items-center justify-center"
             >
                 <PlusIcon className="size-5 mr-2" />
                 Add Course
             </button>
-            {showStudentCourseForm && <NewStudentCourse setShowForm={setShowStudentCourseForm} handleSubmit={handleSubmit} />}
+            {showForm && <NewCourse setShowForm={setShowForm} handleSubmit={handleSubmit} />}
         </>
     );
-};
+};  

@@ -1,11 +1,30 @@
 "use client"
 
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import NewBatch from "@/components/batch/newBatch";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { errorHandle } from "@/utils/errors/errorHandle";
+import axiosProtected from "@/utils/axios/axiosProtected";
+import { BatchFormInput } from "@/utils/validators/batchInput";
 
 export default function AddBatchBtn() {
+    const router = useRouter();
     const [showForm, setShowForm] = useState<boolean>(false);
+
+    const handleSubmit = async (formData: BatchFormInput) => {
+        try {
+            await axiosProtected.post("/batch", formData);
+            toast.success("Batch created successfully!!!");
+            setShowForm(false);
+            router.refresh();
+        }
+        catch (error: unknown) {
+            errorHandle(error);
+        }
+    };
+
     return (
         <>
             <button
@@ -16,7 +35,7 @@ export default function AddBatchBtn() {
                 <PlusIcon className="size-5 mr-2" />
                 Add Batch
             </button>
-            {showForm && <NewBatch setShowForm={setShowForm} />}
+            {showForm && <NewBatch setShowForm={setShowForm} handleSubmit={handleSubmit} />}
         </>
     );
 };  

@@ -1,31 +1,14 @@
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import StudentCourseForm from "./studentCourseForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { errorHandle } from "@/utils/errors/errorHandle";
-import axiosProtected from "@/utils/axios/axiosProtected";
 import { StudentCourseInput } from "@/utils/validators/studentCourseInput";
 
-export default function AddStudentCourse({
+export default function NewStudentCourse({
     setShowForm,
-    studentId,
+    handleSubmit,
 }: {
     setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
-    studentId: string,
+    handleSubmit: (data: StudentCourseInput) => Promise<void>,
 }) {
-    const router = useRouter();
-    const handleSubmit = async (formData: StudentCourseInput) => {
-        try {
-            await axiosProtected.post(`/students/${studentId}/studentcourse`, formData);
-            toast.success("Student Course created successfully!!!");
-            handleCloseForm();
-            router.refresh();
-        }
-        catch (error: unknown) {
-            errorHandle(error);
-        }
-    };
-
     const handleCloseForm = () => {
         setShowForm(false);
     };

@@ -5,11 +5,11 @@ import DeleteBtn from "../deleteBtn";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { CourseData } from "@/utils/types/courseType";
+import EditCourse from "@/components/course/editCourse";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import axiosProtected from "@/utils/axios/axiosProtected";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { CourseFormInputEdit } from "@/utils/validators/courseInput";
-import EditCourse from "@/components/course/editCourse";
 
 export default function ActionCourseBtn({ courseData }: { courseData: CourseData }) {
     const router = useRouter();
