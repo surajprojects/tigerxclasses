@@ -1,5 +1,5 @@
 import getCourses from "@/lib/server/getCourses";
-import CourseCard from "@/components/card/courseCard";
+import CourseCard from "@/components/card/course/courseCard";
 import AddCourseBtn from "@/components/button/course/addCourseBtn";
 
 export default async function Course() {

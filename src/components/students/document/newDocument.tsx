@@ -1,7 +1,14 @@
 import DocumentForm from "./documentForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { StudentDocumentInput } from "@/utils/validators/studentDocumentInput";
 
-export default function NewDocument({ setShowForm }: { setShowForm: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function NewDocument({
+    setShowForm,
+    handleSubmit,
+}: {
+    setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
+    handleSubmit: (data: StudentDocumentInput) => Promise<void>,
+}) {
     const handleCloseForm = () => {
         setShowForm(false);
     };
@@ -19,7 +26,7 @@ export default function NewDocument({ setShowForm }: { setShowForm: React.Dispat
                     <div className="w-xl">
                         <h5 className="text-2xl font-medium text-gray-800">Add Document</h5>
                         <p className="text-gray-600 text-base my-1">Fill in the details to add a document</p>
-                        <DocumentForm />
+                        <DocumentForm btnText="Add Document" handleSubmit={handleSubmit} />
                     </div>
                 </div>
             </div>

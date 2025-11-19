@@ -1,6 +1,6 @@
 import { CourseData } from "@/utils/types/courseType";
 import { UsersIcon } from "@heroicons/react/24/outline";
-import ActionCourseBtn from "../button/course/actionCourseBtn";
+import ActionCourseBtn from "@/components/button/course/actionCourseBtn";
 
 export default function CourseCard({
     courseData = {

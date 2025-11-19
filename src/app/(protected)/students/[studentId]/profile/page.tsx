@@ -4,11 +4,11 @@ import BackBtn from "@/components/button/backBtn";
 import CardData from "@/components/card/cardData";
 import CardBody from "@/components/card/cardBody";
 import CardHeader from "@/components/card/cardHeader";
-import DocumentCard from "@/components/card/documentCard";
-import StudentCourseCard from "@/components/card/studentCourseCard";
 import EditStudentBtn from "@/components/button/student/editStudentBtn";
-import AddDocumentBtn from "@/components/button/student/addDocumentBtn";
-import AddStudentCourseBtn from "@/components/button/course/addStudentCourseBtn";
+import AddDocumentBtn from "@/components/button/student/document/addDocumentBtn";
+import AllDocumentCard from "@/components/card/document/allDocumentCard";
+import StudentCourseCard from "@/components/card/course/student/studentCourseCard";
+import AddStudentCourseBtn from "@/components/button/course/student/addStudentCourseBtn";
 
 export default async function StudentProfile({
     params,
@@ -158,13 +158,9 @@ export default async function StudentProfile({
                             title="Documents"
                             description="All documents information"
                         />
-                        <AddDocumentBtn />
+                        <AddDocumentBtn studentId={studentId} />
                     </div>
-                    <div className="mt-6">
-                        <DocumentCard />
-                        <DocumentCard />
-                        <DocumentCard />
-                    </div>
+                    <AllDocumentCard studentData={studentData} studentId={studentId} />
                 </Card>
             </div>
         </>

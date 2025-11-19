@@ -9,11 +9,11 @@ export interface StudentDocumentData {
     aadhaarNo?: string,
     rollNo?: string,
     enrollmentNo?: string,
-    passingSession?: string,
     obtainedMarks?: number,
     totalMarks?: number,
     session?: string,
     documentLink?: string,
+    createdAt: string,
 };
 
 export type StudentDocumentList = StudentDocumentData[];

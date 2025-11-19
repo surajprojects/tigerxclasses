@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react";
-import DeleteBtn from "../deleteBtn";
+import DeleteBtn from "../../deleteBtn";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import axiosProtected from "@/utils/axios/axiosProtected";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
-import EditStudentCourse from "@/components/course/editStudentCourse";
+import EditStudentCourse from "@/components/course/student/editStudentCourse";
 import { StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
 export default function ActionStudentCourseBtn({

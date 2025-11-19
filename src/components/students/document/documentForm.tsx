@@ -1,38 +1,93 @@
 import Btn from "@/components/button/btn";
 import { ChangeEvent, useState } from "react";
 import FormField from "@/components/form/formField";
-import { DocumentType } from "@/db/generated/prisma";
+import { DocumentType, Institute } from "@/db/generated/prisma";
+import { StudentDocumentData } from "@/utils/types/studentDocumentType";
+import { StudentDocumentInput } from "@/utils/validators/studentDocumentInput";
+import { StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
-export default function DocumentForm() {
-    const [formData, setFormData] = useState({
+export default function DocumentForm({
+    btnText = "Submit",
+    handleSubmit,
+    handleEditSubmit,
+    initialData = {
         documentType: "AADHAAR",
         documentName: "",
-        institute: "",
+        institute: "GOVT",
         instituteName: "",
         aadhaarNo: "",
         idNo: "",
         rollNo: "",
         enrollmentNo: "",
         session: "",
-        obtainedMarks: "",
-        totalMarks: "",
+        obtainedMarks: 0,
+        totalMarks: 0,
         documentLink: "",
-    });
+    },
+}: {
+    btnText?: string,
+    handleSubmit?: (data: StudentDocumentInput) => Promise<void>,
+    handleEditSubmit?: (data: StudentCourseInputEdit) => Promise<void>,
+    initialData?: Required<Omit<StudentDocumentData, "id" | "studentId" | "createdAt">>,
+}) {
+    const instituteData = {
+        AADHAAR: "GOVT",
+        SECONDARY: "SCHOOL",
+        HIGHERSECONDARY: "SCHOOL",
+        GRADUATION: "COLLEGE",
+        POSTGRADUATION: "COLLEGE",
+        OTHER: "OTHER",
+    } as const;
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [formData, setFormData] = useState(initialData);
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const fieldName = evt.target.name;
         const changedValue = evt.target.value;
+
         setFormData((prevData) => {
-            return {
-                ...prevData,
-                [fieldName]: changedValue
+            if (fieldName === "documentType") {
+                return {
+                    ...prevData,
+                    [fieldName]: changedValue,
+                    institute: instituteData[changedValue as keyof typeof instituteData],
+                };
+            }
+            else {
+                return {
+                    ...prevData,
+                    [fieldName]: changedValue,
+                };
             }
         });
     };
 
     return (
         <>
-            <form className="w-full">
+            <form
+                onSubmit={async (evt) => {
+                    evt.preventDefault();
+                    if (!Object.values(Institute).includes(formData.institute as Institute)) {
+                        throw new Error("Invalid institute");
+                    }
+                    if (!Object.values(DocumentType).includes(formData.documentType as DocumentType)) {
+                        throw new Error("Invalid document type");
+                    }
+                    setIsLoading(true);
+                    const newFormData = {
+                        ...formData,
+                        institute: formData.institute as Institute,
+                        documentType: formData.documentType as DocumentType,
+                    };
+                    // Handle submit function
+                    handleSubmit && await handleSubmit(newFormData);
+                    // Handle edit submit function
+                    handleEditSubmit && await handleEditSubmit(newFormData);
+                    setIsLoading(false);
+                    setFormData(initialData);
+                }}
+                className="w-full">
                 {/* Document Type */}
                 <div className="flex flex-col my-2">
                     <label htmlFor="documentType" className="font-sans font-medium text-sm text-gray-800">Document Type*</label>
@@ -162,7 +217,7 @@ export default function DocumentForm() {
                     isRequired={false}
                 />
                 {/* Add Button */}
-                <Btn btnType="submit" text="Add Document" />
+                <Btn btnType="submit" text={btnText} isLoading={isLoading} />
             </form>
         </>
     );

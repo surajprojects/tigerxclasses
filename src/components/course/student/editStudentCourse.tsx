@@ -1,4 +1,4 @@
-import CourseForm from "./studentCourseForm";
+import StudentCourseForm from "./studentCourseForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
 import { StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
@@ -29,7 +29,7 @@ export default function EditStudentCourse({
                     <div className="w-md">
                         <h5 className="text-2xl font-medium text-gray-800">Edit Student Course</h5>
                         <p className="text-gray-600 text-base my-1">Update student course</p>
-                        <CourseForm
+                        <StudentCourseForm
                             btnText="Update Student Course"
                             handleEditSubmit={handleEditSubmit}
                             initialData={{

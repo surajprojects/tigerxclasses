@@ -5,8 +5,8 @@ import { ChangeEvent, useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import FormField from "@/components/form/formField";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
-import { StudentCourseInput, StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 import { FeesStatus, StudentCourseStatus } from "@/db/generated/prisma";
+import { StudentCourseInput, StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
 export default function StudentCourseForm({
     btnText = "Submit",

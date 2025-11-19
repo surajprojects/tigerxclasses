@@ -4,7 +4,7 @@ import { verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { studentDocumentInput, StudentDocumentInput } from "@/utils/validators/studentDocumentInput";
 
-export async function POST(req: NextRequest, { params }: { params: { studentId: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ studentId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: { studentId: 
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { studentId } = params;
+        const { studentId } = await params;
         const data: StudentDocumentInput = await req.json();
         const parsedInput = studentDocumentInput.safeParse(data);
 

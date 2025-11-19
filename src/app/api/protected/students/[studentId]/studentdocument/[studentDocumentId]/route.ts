@@ -4,7 +4,7 @@ import { verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { studentDocumentInputEdit, StudentDocumentInputEdit } from "@/utils/validators/studentDocumentInput";
 
-export async function GET(req: NextRequest, { params }: { params: { studentDocumentId: string, studentId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ studentDocumentId: string, studentId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, { params }: { params: { studentDocum
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { studentId, studentDocumentId } = params;
+        const { studentId, studentDocumentId } = await params;
 
         const studentDocumentData = await prisma.studentDocument.findUnique({
             where: {
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest, { params }: { params: { studentDocum
     }
 };
 
-export async function PATCH(req: NextRequest, { params }: { params: { studentDocumentId: string, studentId: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ studentDocumentId: string, studentId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -41,7 +41,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { studentDoc
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { studentDocumentId, studentId } = params;
+        const { studentDocumentId, studentId } = await params;
         const data: StudentDocumentInputEdit = await req.json();
         const parsedInput = studentDocumentInputEdit.safeParse(data);
 
@@ -78,7 +78,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { studentDoc
     }
 };
 
-export async function DELETE(req: NextRequest, { params }: { params: { studentId: string, studentDocumentId: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ studentId: string, studentDocumentId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -86,7 +86,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { studentId
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { studentId, studentDocumentId } = params;
+        const { studentId, studentDocumentId } = await params;
 
         const studentDocumentData = await prisma.studentDocument.update({
             where: {

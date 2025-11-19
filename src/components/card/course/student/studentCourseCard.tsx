@@ -1,6 +1,6 @@
-import CardData from "./cardData";
+import CardData from "../../cardData";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
-import ActionStudentCourseBtn from "../button/course/actionStudentCourseBtn";
+import ActionStudentCourseBtn from "@/components/button/course/student/actionStudentCourseBtn";
 
 export default function StudentCourseCard({
     studentId,

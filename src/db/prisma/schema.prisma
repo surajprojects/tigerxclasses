@@ -57,6 +57,7 @@ enum Institute {
   SCHOOL
   COLLEGE
   UNIVERSITY
+  GOVT
   OTHER
   NONE
 }

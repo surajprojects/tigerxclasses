@@ -6,18 +6,18 @@ import { useRouter } from "next/navigation";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import axiosProtected from "@/utils/axios/axiosProtected";
-import NewStudentCourse from "@/components/course/newStudentCourse";
-import { StudentCourseInput } from "@/utils/validators/studentCourseInput";
+import NewDocument from "@/components/students/document/newDocument";
+import { StudentDocumentInput } from "@/utils/validators/studentDocumentInput";
 
-export default function AddStudentCourseBtn({ studentId }: { studentId: string }) {
+export default function AddDocumentBtn({ studentId }: { studentId: string }) {
     const router = useRouter();
-    const [showStudentCourseForm, setShowStudentCourseForm] = useState<boolean>(false);
+    const [showForm, setShowForm] = useState<boolean>(false);
 
-    const handleSubmit = async (formData: StudentCourseInput) => {
+    const handleSubmit = async (formData: StudentDocumentInput) => {
         try {
-            await axiosProtected.post(`/students/${studentId}/studentcourse`, formData);
-            toast.success("Student Course created successfully!!!");
-            setShowStudentCourseForm(false);
+            await axiosProtected.post(`/students/${studentId}/studentdocument`, formData);
+            toast.success("Student Document created successfully!!!");
+            setShowForm(false);
             router.refresh();
         }
         catch (error: unknown) {
@@ -29,13 +29,13 @@ export default function AddStudentCourseBtn({ studentId }: { studentId: string }
         <>
             <button
                 type="button"
-                onClick={() => setShowStudentCourseForm(true)}
+                onClick={() => setShowForm(true)}
                 className="text-white bg-blue-500 rounded-xl px-4 py-2 font-medium duration-300 ease-out cursor-pointer hover:bg-blue-400 h-fit w-fit flex items-center justify-center"
             >
                 <PlusIcon className="size-5 mr-2" />
-                Add Course
+                Add Document
             </button>
-            {showStudentCourseForm && <NewStudentCourse setShowForm={setShowStudentCourseForm} handleSubmit={handleSubmit} />}
+            {showForm && <NewDocument setShowForm={setShowForm} handleSubmit={handleSubmit} />}
         </>
     );
 };
