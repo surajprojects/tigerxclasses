@@ -8,7 +8,7 @@ export default function Card({
 }) {
     return (
         <>
-            <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
+            <div className="bg-[#f8fafc] font-normal duration-300 ease-out p-6 rounded-2xl my-8 shadow-sm hover:shadow-md">
                 {children}
             </div>
         </>

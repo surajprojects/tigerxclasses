@@ -51,7 +51,7 @@ export default function ActionDocumentBtn({
                 <button
                     type="button"
                     onClick={() => setShowForm(true)}
-                    className="hover:bg-blue-500 hover:text-white p-1.5 rounded-xl cursor-pointer duration-300 ease-out outline-none mx-1"
+                    className="text-blue-500 hover:bg-gray-200/70 p-1.5 rounded-xl cursor-pointer duration-300 ease-out outline-none mx-1"
                 >
                     <PencilSquareIcon className="size-5" />
                 </button>

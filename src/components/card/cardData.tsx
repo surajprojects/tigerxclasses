@@ -18,8 +18,8 @@ export default function CardData({
                 </div>
                 :
                 <div className={marginX ? "mx-auto" : ""}>
-                    <p className="text-gray-500">{fieldName}</p>
-                    <p className="text-gray-800 font-semibold text-lg">{fieldValue ? fieldValue : "-"}</p>
+                    <p className="text-gray-500 text-sm">{fieldName}</p>
+                    <p className="text-gray-800 font-semibold text-base mt-0.5">{fieldValue ? fieldValue : "-"}</p>
                 </div>
             }
         </>

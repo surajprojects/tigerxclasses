@@ -1,6 +1,6 @@
 import { CourseData } from "@/utils/types/courseType";
-import { UsersIcon } from "@heroicons/react/24/outline";
 import ActionCourseBtn from "@/components/button/course/actionCourseBtn";
+import { UsersIcon, ClockIcon, CurrencyRupeeIcon } from "@heroicons/react/24/outline";
 
 export default function CourseCard({
     courseData = {
@@ -16,37 +16,32 @@ export default function CourseCard({
 }: { courseData?: CourseData }) {
     return (
         <>
-            <div className="w-full p-7 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md bg-white font-medium">
+            <div className="w-full p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md bg-[#f8fafc] font-normal duration-300 ease-out text-slate-500">
                 <div className="flex justify-between">
                     <div>
-                        <p className="text-xl text-gray-800">{courseData.name}</p>
-                        <p className="text-base text-gray-500">{courseData.description}</p>
+                        <p className="text-xl text-gray-800 font-medium capitalize hover:text-blue-500 duration-300 ease-out">{courseData.name}</p>
+                        <p className="text-sm font-mono mt-1.5">{courseData.code}</p>
                     </div>
                     <ActionCourseBtn courseData={courseData} />
                 </div>
-                <div className="my-6 flex">
-                    <div>
-                        <p className="text-base text-gray-500">Institute</p>
-                        <p className="text-lg text-gray-800">{courseData.instituteName}</p>
+                <p className="text-sm my-6 mt-8">{courseData.description}</p>
+                <div className="flex justify-center">
+                    <div className="flex flex-col items-center justify-between pr-4">
+                        <p className="text-sm flex items-center mb-1"><ClockIcon className="size-3.5 mr-1.5" />Duration</p>
+                        <p className="text-base font-medium text-slate-800">{courseData.duration}</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-between border-x border-gray-200 px-2.5">
+                        <p className="text-sm flex items-center mb-1"><UsersIcon className="size-3.5 mr-1.5" />Students</p>
+                        <p className="text-base font-medium text-slate-800">{courseData._count.students}</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-between pl-4">
+                        <p className="text-sm flex items-center mb-1"><CurrencyRupeeIcon className="size-3.5 mr-1.5" />Fees</p>
+                        <p className="text-base font-medium text-blue-500">&#8377;{courseData.fees}</p>
                     </div>
                 </div>
-                <div className="flex justify-between">
-                    <div>
-                        <p className="text-base text-gray-500">Code</p>
-                        <p className="text-lg text-gray-800">{courseData.code}</p>
-                    </div>
-                    <div>
-                        <p className="text-base text-gray-500">Duration</p>
-                        <p className="text-lg text-gray-800">{courseData.duration}</p>
-                    </div>
-                    <div>
-                        <p className="text-base text-gray-500">Fees</p>
-                        <p className="text-lg text-gray-800">Rs.{courseData.fees}/-</p>
-                    </div>
-                </div>
-                <div className="pt-4 mt-4 border-t border-gray-200 flex items-center">
-                    <UsersIcon className="size-5 mr-2 text-cyan-500" />
-                    <p className="text-base text-gray-800">{courseData._count.students}&nbsp;students</p>
+                <div className="mt-8">
+                    <p className="text-sm flex items-center">Institute</p>
+                    <p className="text-base font-medium text-slate-800">{courseData.instituteName}</p>
                 </div>
             </div>
         </>

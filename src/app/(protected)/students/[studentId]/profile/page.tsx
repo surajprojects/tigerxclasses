@@ -1,14 +1,16 @@
 import Card from "@/components/card/card";
+import { BookOpenText } from "lucide-react";
 import getStudent from "@/lib/server/getStudent";
 import BackBtn from "@/components/button/backBtn";
 import CardData from "@/components/card/cardData";
 import CardBody from "@/components/card/cardBody";
 import CardHeader from "@/components/card/cardHeader";
 import EditStudentBtn from "@/components/button/student/editStudentBtn";
-import AddDocumentBtn from "@/components/button/student/document/addDocumentBtn";
 import AllDocumentCard from "@/components/card/document/allDocumentCard";
+import AddDocumentBtn from "@/components/button/student/document/addDocumentBtn";
 import StudentCourseCard from "@/components/card/course/student/studentCourseCard";
 import AddStudentCourseBtn from "@/components/button/course/student/addStudentCourseBtn";
+import { UserIcon, HomeIcon, UsersIcon, AcademicCapIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
 
 export default async function StudentProfile({
     params,
@@ -56,7 +58,9 @@ export default async function StudentProfile({
                     <CardHeader
                         title="Personal Information"
                         description="Basic student details"
-                    />
+                    >
+                        <UserIcon className="size-5 mr-1 text-blue-500" strokeWidth={2} />
+                    </CardHeader>
                     <CardBody>
                         {/* Full Name */}
                         <CardData key={1} fieldName="Full Name" fieldValue={studentData.fullName} />
@@ -78,7 +82,9 @@ export default async function StudentProfile({
                     <CardHeader
                         title="Address Information"
                         description="Student address details"
-                    />
+                    >
+                        <HomeIcon className="size-5 mr-1.5 text-blue-500" strokeWidth={2} />
+                    </CardHeader>
                     <CardBody>
                         {/* Flat/House/Building */}
                         <CardData key={1} fieldName="Flat/House/Building" fieldValue={studentData.address.flatHouseBuilding} />
@@ -100,7 +106,9 @@ export default async function StudentProfile({
                     <CardHeader
                         title="Family Information"
                         description="Parent and guardian details"
-                    />
+                    >
+                        <UsersIcon className="size-5 mr-1.5 text-blue-500" strokeWidth={2} />
+                    </CardHeader>
                     <CardBody>
                         {/* Father Name */}
                         <CardData key={1} fieldName="Father Name" fieldValue={studentData.fatherName} />
@@ -118,7 +126,9 @@ export default async function StudentProfile({
                     <CardHeader
                         title="Academic Information"
                         description="Student's current academic details"
-                    />
+                    >
+                        <AcademicCapIcon className="size-5 mr-1.5 text-blue-500" strokeWidth={2} />
+                    </CardHeader>
                     <CardBody>
                         {/* Class */}
                         <CardData key={1} fieldName="Class" fieldValue={studentData.class} />
@@ -137,7 +147,9 @@ export default async function StudentProfile({
                         <CardHeader
                             title="Enrolled Courses"
                             description="All courses information"
-                        />
+                        >
+                            <BookOpenText className="size-5 mr-2 text-blue-500" strokeWidth={2} />
+                        </CardHeader>
                         <AddStudentCourseBtn studentId={studentId} />
                     </div>
                     <div className="mt-6 grid grid-cols-3 gap-6">
@@ -157,7 +169,9 @@ export default async function StudentProfile({
                         <CardHeader
                             title="Documents"
                             description="All documents information"
-                        />
+                        >
+                            <DocumentTextIcon className="size-5 mr-1.5 text-blue-500" strokeWidth={2} />
+                        </CardHeader>
                         <AddDocumentBtn studentId={studentId} />
                     </div>
                     <AllDocumentCard studentData={studentData} studentId={studentId} />

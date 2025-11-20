@@ -24,7 +24,7 @@ export default function DeleteBtn({ handleDelete }: { handleDelete?: () => Promi
             <button
                 type="button"
                 onClick={() => setShowForm(true)}
-                className="hover:bg-red-500 hover:text-white p-1.5 rounded-xl cursor-pointer duration-300 ease-out outline-none"
+                className="text-red-500 hover:bg-gray-200/70 p-1.5 rounded-xl cursor-pointer duration-300 ease-out outline-none"
             >
                 <TrashIcon className="size-5" />
             </button>

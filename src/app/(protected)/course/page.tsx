@@ -9,8 +9,8 @@ export default async function Course() {
             <div>
                 <div className="flex justify-between items-center">
                     <div>
-                        <h6 className="text-4xl text-gray-800 font-bold">Courses</h6>
-                        <p className="my-1 font-medium text-gray-500 text-lg">Manage all available courses</p>
+                        <h6 className="text-3xl text-gray-800 font-bold">Courses</h6>
+                        <p className="mt-0.5 font-normal text-gray-500 text-base">Manage all available courses</p>
                     </div>
                     <AddCourseBtn />
                 </div>
