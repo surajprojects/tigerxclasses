@@ -7,9 +7,9 @@ export default function ViewDocument({ studentDocumentData }: { studentDocumentD
             <>
                 <div className="mt-4 mx-6 gap-3 grid grid-cols-2 duration-300 ease-out">
                     {/* Document Type */}
-                    <CardData fieldName="Document Type" fieldValue={studentDocumentData.documentType} />
+                    <CardData fieldName="Document Type" fieldValue={studentDocumentData.documentType.toLowerCase()} capitalize={true} />
                     {/* Institute */}
-                    <CardData fieldName="Institute" fieldValue={studentDocumentData.institute} />
+                    <CardData fieldName="Institute" fieldValue={studentDocumentData.institute.toLowerCase()} capitalize={true} />
                     {/* Created On */}
                     <CardData fieldName="Created On" fieldValue={studentDocumentData.createdAt.split("T")[0]} />
                 </div>
@@ -21,9 +21,9 @@ export default function ViewDocument({ studentDocumentData }: { studentDocumentD
             <>
                 <div className="mt-4 mx-6 gap-3 grid grid-cols-2 duration-300 ease-out">
                     {/* Document Type */}
-                    <CardData fieldName="Document Type" fieldValue={studentDocumentData.documentType} />
+                    <CardData fieldName="Document Type" fieldValue={studentDocumentData.documentType.toLowerCase()} capitalize={true} />
                     {/* Institute */}
-                    <CardData fieldName="Institute" fieldValue={studentDocumentData.institute} />
+                    <CardData fieldName="Institute" fieldValue={studentDocumentData.institute.toLowerCase()} capitalize={true} />
                     {/* Institute Name */}
                     <CardData fieldName="School/College Name" fieldValue={studentDocumentData.instituteName} />
                     {/* Roll No */}
@@ -49,11 +49,11 @@ export default function ViewDocument({ studentDocumentData }: { studentDocumentD
             <>
                 <div className="mt-4 mx-6 gap-3 grid grid-cols-2 duration-300 ease-out">
                     {/* Document Type */}
-                    <CardData fieldName="Document Type" fieldValue={studentDocumentData.documentType} />
+                    <CardData fieldName="Document Type" fieldValue={studentDocumentData.documentType.toLowerCase()} capitalize={true} />
                     {/* Document Name */}
-                    <CardData fieldName="Document Name" fieldValue={studentDocumentData.documentName} />
+                    <CardData fieldName="Document Name" fieldValue={studentDocumentData.documentName} capitalize={true} />
                     {/* Institute */}
-                    <CardData fieldName="Institute" fieldValue={studentDocumentData.institute} />
+                    <CardData fieldName="Institute" fieldValue={studentDocumentData.institute.toLowerCase()} capitalize={true} />
                     {/* Id No */}
                     <CardData fieldName="Id No." fieldValue={studentDocumentData.idNo} />
                     {/* Session */}

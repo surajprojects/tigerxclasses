@@ -103,7 +103,7 @@ export default function StudentForm({
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
                     <h5 className="text-2xl font-medium text-gray-800">Personal Information</h5>
                     <p className="text-gray-500 mt-1">Basic student details</p>
-                    <ul className="grid grid-cols-2 gap-x-6">
+                    <div className="grid grid-cols-2 gap-x-6">
                         {/* Full Name */}
                         <FormField
                             id="fullName"
@@ -172,13 +172,13 @@ export default function StudentForm({
                             removeBorder={true}
                             isRequired={false}
                         />
-                    </ul>
+                    </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
                     <h5 className="text-2xl font-medium text-gray-800">Address Information</h5>
                     <p className="text-gray-500 mt-1">Student address details</p>
-                    <ul className="grid grid-cols-2 gap-x-6">
+                    <div className="grid grid-cols-2 gap-x-6">
                         {/* Flat/House/Building */}
                         <FormField
                             id="address.flatHouseBuilding"
@@ -242,13 +242,13 @@ export default function StudentForm({
                             removeBorder={true}
                             isRequired={false}
                         />
-                    </ul>
+                    </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
                     <h5 className="text-2xl font-medium text-gray-800">Family Information</h5>
                     <p className="text-gray-500 mt-1">Parent and guardian details</p>
-                    <ul className="grid grid-cols-2 gap-x-6">
+                    <div className="grid grid-cols-2 gap-x-6">
                         {/* Father Name */}
                         <FormField
                             id="fatherName"
@@ -287,13 +287,13 @@ export default function StudentForm({
                             removeBorder={true}
                             isRequired={false}
                         />
-                    </ul>
+                    </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
                     <h5 className="text-2xl font-medium text-gray-800">Academic Information</h5>
                     <p className="text-gray-500 mt-1">Student's current academic details</p>
-                    <ul className="grid grid-cols-2 gap-x-6">
+                    <div className="grid grid-cols-2 gap-x-6">
                         {/* Class */}
                         <FormField
                             id="class"
@@ -339,7 +339,17 @@ export default function StudentForm({
                             removeBorder={true}
                             isRequired={false}
                         />
-                    </ul>
+                    </div>
+                    {/* Remarks */}
+                    <FormField
+                        id="remarks"
+                        title="Remarks"
+                        textHolder="Enter remarks"
+                        fieldValue={formData.remarks}
+                        onChangeFunc={handleChange}
+                        removeBorder={true}
+                        isRequired={false}
+                    />
                 </div>
                 {/* Buttons */}
                 <div className="flex items-center">

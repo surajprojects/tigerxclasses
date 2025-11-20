@@ -22,7 +22,7 @@ export default function DocumentCard({
                         <DocumentTextIcon className="size-5" strokeWidth={1.8} />
                     </div>
                     <div>
-                        <p onClick={onToggle} className="font-semibold cursor-pointer">{studentDocumentData.documentType}</p>
+                        <p onClick={onToggle} className="font-semibold cursor-pointer capitalize">{studentDocumentData.documentType.toLowerCase()}</p>
                         <p className="text-xs text-gray-500 mt-1">{studentDocumentData.createdAt.split("T")[0]}</p>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ export default function CardBody({
 }) {
     return (
         <>
-            <div className="my-6 gap-3 grid grid-cols-2">
+            <div className="mt-2 pt-3  border-t border-gray-200 gap-3 grid grid-cols-2">
                 {children}
             </div>
         </>

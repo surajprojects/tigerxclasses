@@ -63,11 +63,11 @@ export default async function StudentProfile({
                     </CardHeader>
                     <CardBody>
                         {/* Full Name */}
-                        <CardData key={1} fieldName="Full Name" fieldValue={studentData.fullName} />
+                        <CardData key={1} fieldName="Full Name" fieldValue={studentData.fullName} capitalize={true} />
                         {/* Date of Birth */}
-                        <CardData key={2} fieldName="Date of Birth" fieldValue={studentData.dob.split("T")[0]} />
+                        <CardData key={2} fieldName="Date of Birth" fieldValue={studentData.dob.split("T")[0]} capitalize={true} />
                         {/* Gender */}
-                        <CardData key={3} fieldName="Gender" fieldValue={studentData.gender} />
+                        <CardData key={3} fieldName="Gender" fieldValue={studentData.gender.toLowerCase()} capitalize={true} />
                         {/* Category */}
                         <CardData key={4} fieldName="Category" fieldValue={studentData.category} />
                         {/* Mobile No */}
@@ -87,15 +87,15 @@ export default async function StudentProfile({
                     </CardHeader>
                     <CardBody>
                         {/* Flat/House/Building */}
-                        <CardData key={1} fieldName="Flat/House/Building" fieldValue={studentData.address.flatHouseBuilding} />
+                        <CardData key={1} fieldName="Flat/House/Building" fieldValue={studentData.address.flatHouseBuilding} capitalize={true} />
                         {/* Street/Area */}
-                        <CardData key={2} fieldName="Street/Area" fieldValue={studentData.address.streetOrArea} />
+                        <CardData key={2} fieldName="Street/Area" fieldValue={studentData.address.streetOrArea} capitalize={true} />
                         {/* Landmark */}
-                        <CardData key={3} fieldName="Landmark" fieldValue={studentData.address.landmark} />
+                        <CardData key={3} fieldName="Landmark" fieldValue={studentData.address.landmark} capitalize={true} />
                         {/* City */}
-                        <CardData key={4} fieldName="City" fieldValue={studentData.address.city} />
+                        <CardData key={4} fieldName="City" fieldValue={studentData.address.city} capitalize={true} />
                         {/* State */}
-                        <CardData key={5} fieldName="State" fieldValue={studentData.address.state} />
+                        <CardData key={5} fieldName="State" fieldValue={studentData.address.state.split("_").join(" ").toLowerCase()} capitalize={true} />
                         {/* Pincode */}
                         <CardData key={6} fieldName="Pincode" fieldValue={studentData.address.pincode} />
                     </CardBody>
@@ -111,9 +111,9 @@ export default async function StudentProfile({
                     </CardHeader>
                     <CardBody>
                         {/* Father Name */}
-                        <CardData key={1} fieldName="Father Name" fieldValue={studentData.fatherName} />
+                        <CardData key={1} fieldName="Father Name" fieldValue={studentData.fatherName} capitalize={true} />
                         {/* Mother Name */}
-                        <CardData key={2} fieldName="Mother Name" fieldValue={studentData.motherName} />
+                        <CardData key={2} fieldName="Mother Name" fieldValue={studentData.motherName} capitalize={true} />
                         {/* Parent/Guardian Mobile No. 1 */}
                         <CardData key={3} fieldName="Parent/Guardian Mobile No. 1" fieldValue={studentData.parentGuardianMobileNo1} />
                         {/* Parent/Guardian Mobile No. 2 */}
@@ -133,12 +133,16 @@ export default async function StudentProfile({
                         {/* Class */}
                         <CardData key={1} fieldName="Class" fieldValue={studentData.class} />
                         {/* Institute */}
-                        <CardData key={2} fieldName="Institute" fieldValue={studentData.institute} />
+                        <CardData key={2} fieldName="Institute" fieldValue={studentData.institute.toLowerCase()} capitalize={true} />
                         {/* Institute Name */}
-                        <CardData key={3} fieldName="Institute Name" fieldValue={studentData.instituteName} />
+                        <CardData key={3} fieldName="Institute Name" fieldValue={studentData.instituteName} capitalize={true} />
                         {/* Session */}
                         <CardData key={4} fieldName="Session" fieldValue={studentData.session} />
                     </CardBody>
+                    <div className="mt-3">
+                        {/* Remarks */}
+                        <CardData key={5} fieldName="Remarks" fieldValue={studentData.remarks} />
+                    </div>
                 </Card>
 
                 {/* Enrolled Courses */}

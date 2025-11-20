@@ -1,13 +1,17 @@
+import clsx from "clsx"
+
 export default function CardData({
     fieldName = "Field Name",
     fieldValue = "Field Value",
     secondary = false,
     marginX = false,
+    capitalize = false,
 }: {
     fieldName?: string,
     fieldValue?: string,
     secondary?: boolean,
     marginX?: boolean,
+    capitalize?: boolean,
 }) {
     return (
         <>
@@ -19,7 +23,7 @@ export default function CardData({
                 :
                 <div className={marginX ? "mx-auto" : ""}>
                     <p className="text-gray-500 text-sm">{fieldName}</p>
-                    <p className="text-gray-800 font-semibold text-base mt-0.5">{fieldValue ? fieldValue : "-"}</p>
+                    <p className={clsx("text-gray-800 font-semibold text-base mt-0.5", capitalize && "capitalize")}>{fieldValue ? fieldValue : "-"}</p>
                 </div>
             }
         </>
