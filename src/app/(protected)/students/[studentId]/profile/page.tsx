@@ -11,6 +11,7 @@ import AddDocumentBtn from "@/components/button/student/document/addDocumentBtn"
 import StudentCourseCard from "@/components/card/course/student/studentCourseCard";
 import AddStudentCourseBtn from "@/components/button/course/student/addStudentCourseBtn";
 import { UserIcon, HomeIcon, UsersIcon, AcademicCapIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
+import StudentDeleteBtn from "@/components/button/student/studentDeleteBtn";
 
 export default async function StudentProfile({
     params,
@@ -31,6 +32,9 @@ export default async function StudentProfile({
                     <BackBtn />
                     <p className="flex-1 text-3xl font-bold text-gray-800 mx-4">Alice Johnson</p>
                     <EditStudentBtn studentId={studentId} />
+                    <div className="bg-gray-200/70 rounded-xl ml-2">
+                        <StudentDeleteBtn studentId={studentId} />
+                    </div>
                 </div>
 
                 <div className="bg-blue-50 p-6 rounded-2xl my-8 shadow-sm">

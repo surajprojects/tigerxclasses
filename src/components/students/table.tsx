@@ -1,11 +1,15 @@
-export default function Table() {
+import Link from "next/link";
+import { StudentsList } from "@/utils/types/studentType";
+import ActionStudentBtn from "../button/student/actionStudentBtn";
+
+export default function Table({ allStudents }: { allStudents: StudentsList }) {
     return (
         <>
             <table className="w-full text-sm text-gray-500 text-center">
                 <thead className="text-xs font-semibold text-gray-800 uppercase border-b border-gray-200">
                     <tr>
                         <th scope="col" className="px-6 py-3">
-                            S.No.
+                            Roll No.
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Student Name
@@ -29,157 +33,49 @@ export default function Table() {
                             Status
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Action
+                            Actions
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="border-b border-gray-200 hover:bg-gray-100 duration-300 ease-out">
-                        <td className="px-6 py-4">
-                            1
-                        </td>
-                        <td className="px-6 py-4 capitalize font-semibold">
-                            Alice
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                            Bob
-                        </td>
-                        <td className="px-6 py-4">
-                            123456789
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf644
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf66
-                        </td>
-                        <td className="px-6 py-4">
-                            16-16-16
-                        </td>
-                        <td className="px-6 py-4">
-                            active
-                        </td>
-                        <td className="px-6 py-4">
-                            Action
-                        </td>
-                    </tr>
-                    <tr className="border-b border-gray-200 hover:bg-gray-100 duration-300 ease-out">
-                        <td className="px-6 py-4">
-                            1
-                        </td>
-                        <td className="px-6 py-4 capitalize font-bold">
-                            Alice
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                            Bob
-                        </td>
-                        <td className="px-6 py-4">
-                            123456789
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf644
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf66
-                        </td>
-                        <td className="px-6 py-4">
-                            16-16-16
-                        </td>
-                        <td className="px-6 py-4">
-                            active
-                        </td>
-                        <td className="px-6 py-4">
-                            Action
-                        </td>
-                    </tr>
-                    <tr className="border-b border-gray-200 hover:bg-gray-100 duration-300 ease-out">
-                        <td className="px-6 py-4">
-                            1
-                        </td>
-                        <td className="px-6 py-4 capitalize font-bold">
-                            Alice
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                            Bob
-                        </td>
-                        <td className="px-6 py-4">
-                            123456789
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf644
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf66
-                        </td>
-                        <td className="px-6 py-4">
-                            16-16-16
-                        </td>
-                        <td className="px-6 py-4">
-                            active
-                        </td>
-                        <td className="px-6 py-4">
-                            Action
-                        </td>
-                    </tr>
-                    <tr className="border-b border-gray-200 hover:bg-gray-100 duration-300 ease-out">
-                        <td className="px-6 py-4">
-                            1
-                        </td>
-                        <td className="px-6 py-4 capitalize font-bold">
-                            Alice
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                            Bob
-                        </td>
-                        <td className="px-6 py-4">
-                            123456789
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf644
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf66
-                        </td>
-                        <td className="px-6 py-4">
-                            16-16-16
-                        </td>
-                        <td className="px-6 py-4">
-                            active
-                        </td>
-                        <td className="px-6 py-4">
-                            Action
-                        </td>
-                    </tr>
-                    <tr className="border-b border-gray-200 hover:bg-gray-100 duration-300 ease-out">
-                        <td className="px-6 py-4">
-                            1
-                        </td>
-                        <td className="px-6 py-4 capitalize font-bold">
-                            Alice
-                        </td>
-                        <td className="px-6 py-4 capitalize">
-                            Bob
-                        </td>
-                        <td className="px-6 py-4">
-                            123456789
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf644
-                        </td>
-                        <td className="px-6 py-4">
-                            sdfsdf66
-                        </td>
-                        <td className="px-6 py-4">
-                            16-16-16
-                        </td>
-                        <td className="px-6 py-4">
-                            active
-                        </td>
-                        <td className="px-6 py-4">
-                            Action
-                        </td>
-                    </tr>
-                    {/* <tr className="h-14"><td colSpan={11} className="text-center">No students found!!!</td></tr> */}
+                    {allStudents.length > 0 ? allStudents.map((student) => {
+                        const studentCourseData = student.studentCourses.find((studentCourse) => studentCourse.status === "ACTIVE");
+                        return <tr key={student.id}
+                            className="border-b border-gray-200 hover:bg-gray-100 duration-300 ease-out">
+                            <td className="px-6 py-4">
+                                {student.rollNo}
+                            </td>
+                            <td className="px-6 py-4 capitalize font-semibold">
+                                <Link href={`/students/${student.id}/profile`}>
+                                    {student.fullName}
+                                </Link>
+                            </td>
+                            <td className="px-6 py-4 capitalize">
+                                {student.fatherName}
+                            </td>
+                            <td className="px-6 py-4">
+                                {student.mobileNo}
+                            </td>
+                            <td className="px-6 py-4">
+                                {studentCourseData?.course.name}
+                            </td>
+                            <td className="px-6 py-4">
+                                {studentCourseData?.batch.name}
+                            </td>
+                            <td className="px-6 py-4">
+                                {studentCourseData?.enrolledOn.split("T")[0]}
+                            </td>
+                            <td className="px-6 py-4 capitalize">
+                                {studentCourseData?.status.toLowerCase()}
+                            </td>
+                            <td className="px-6 py-4">
+                                <ActionStudentBtn studentId={student.id} />
+                            </td>
+                        </tr>
+                    })
+                        :
+                        <tr className="h-14"><td colSpan={9} className="text-center">No students found!!!</td></tr>
+                    }
                 </tbody>
             </table>
         </>

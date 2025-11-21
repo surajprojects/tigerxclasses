@@ -22,7 +22,7 @@ export default function EditStudentCourse({
                     <button
                         type="button"
                         onClick={handleCloseForm}
-                        className="absolute top-2 right-2 m-0.5 hover:bg-gray-100 duration-300 ease-out cursor-pointer rounded-xl p-0.5"
+                        className="absolute top-2 right-2 m-0.5 hover:bg-gray-100 duration-300 ease-out cursor-pointer rounded-xl p-0.5 text-gray-500"
                     >
                         <XMarkIcon className="size-4" />
                     </button>

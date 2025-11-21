@@ -1,8 +1,10 @@
 import Table from "@/components/students/table";
+import getStudents from "@/lib/server/getStudents";
 import AddStudentBtn from "@/components/button/student/addStudentBtn";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function Students() {
+export default async function Students() {
+    const allStudents = await getStudents();
     return (
         <>
             <div>
@@ -36,9 +38,9 @@ export default function Students() {
                 <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
                     <div className="mb-2">
                         <p className="text-lg font-bold text-gray-800">All Students</p>
-                        <p className="text-sm font-medium text-gray-500">4 students found</p>
+                        <p className="text-sm font-medium text-gray-500">{allStudents ? allStudents.length : "0"} students found</p>
                     </div>
-                    <Table />
+                    {allStudents && <Table allStudents={allStudents} />}
                 </div>
             </div>
         </>

@@ -1,9 +1,11 @@
 import { AddressData } from "./addressType";
-import { StudentCourseList } from "./studentCourseType";
+import { StudentCourseData, StudentCourseList } from "./studentCourseType";
 import { StudentDocumentList } from "./studentDocumentType";
 
 export interface StudentData {
     id: string,
+    rollNo: number,
+
     fullName: string,
     dob: string,
     gender: string,

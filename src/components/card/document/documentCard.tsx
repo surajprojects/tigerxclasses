@@ -32,7 +32,12 @@ export default function DocumentCard({
                     studentDocumentData={studentDocumentData}
                 />
             </div>
-            {showDocForm && <ViewDocument studentDocumentData={studentDocumentData} />}
+            <div
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${showDocForm ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0"
+                    }`}
+            >
+                <ViewDocument studentDocumentData={studentDocumentData} />
+            </div>
         </>
     );
 };

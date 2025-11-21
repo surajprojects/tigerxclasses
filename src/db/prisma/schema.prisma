@@ -248,7 +248,10 @@ model Address {
 // Student main profile data
 model Student {
   // Personal info
-  id       String   @id @default(cuid())
+  id     String @id @default(cuid())
+  rollNo Int    @unique @default(autoincrement())
+
+  // Personal info 
   fullName String
   dob      DateTime
   gender   Gender

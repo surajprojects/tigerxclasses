@@ -20,6 +20,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ stud
                 isDeleted: false,
             },
             select: {
+                id: true,
+                rollNo: true,
                 fullName: true,
                 dob: true,
                 gender: true,

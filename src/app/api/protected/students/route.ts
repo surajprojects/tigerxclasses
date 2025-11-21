@@ -17,14 +17,36 @@ export async function GET(req: NextRequest) {
                 userId: String(token.id),
                 isDeleted: false,
             },
-            include: {
+            select: {
+                id: true,
+                fullName: true,
+                fatherName: true,
+                mobileNo: true,
                 studentCourses: {
-                    include: {
-                        batch: true,
-                        course: true
+                    select: {
+                        id: true,
+                        status: true,
+                        enrolledOn: true,
+                        course: {
+                            omit: {
+                                createdAt: true,
+                                isDeleted: true,
+                                updatedAt: true,
+                            },
+                        },
+                        batch: {
+                            omit: {
+                                createdAt: true,
+                                isDeleted: true,
+                                updatedAt: true,
+                            },
+                        },
                     },
                 },
-            }
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
         });
 
         if (!(allStudents.length > 0)) {
