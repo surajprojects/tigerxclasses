@@ -3,6 +3,7 @@ import { StudentCourseData } from "@/utils/types/studentCourseType";
 import AddPaymentBtn from "@/components/button/student/payment/addPaymentBtn";
 import ViewPaymentsBtn from "@/components/button/student/payment/viewPaymentsBtn";
 import ActionStudentCourseBtn from "@/components/button/course/student/actionStudentCourseBtn";
+import clsx from "clsx";
 
 export default function StudentCourseCard({
     studentId,
@@ -63,8 +64,10 @@ export default function StudentCourseCard({
                 </div>
                 {/* Payment Status */}
                 <div className="my-2.5 flex justify-between items-center">
-                    <span className="text-amber-700 bg-amber-100 rounded-2xl px-3 py-0.5 font-medium text-sm">Partial Payment</span>
-                    <AddPaymentBtn studentId={studentId} studentCourseData={studentCourseData} />
+                    <span className={clsx("rounded-2xl px-3 py-0.5 font-medium text-sm", studentCourseData.feesStatus === "PAID" ? "text-green-700 bg-green-100" : studentCourseData.feesStatus === "PARTIAL" ? "text-amber-700 bg-amber-100" : studentCourseData.feesStatus === "UNPAID" ? "text-red-700 bg-red-100" : "")}>
+                        {studentCourseData.feesStatus === "PAID" ? "Full Payment" : studentCourseData.feesStatus === "PARTIAL" ? "Partial Payment" : studentCourseData.feesStatus === "UNPAID" ? "No Payment" : ""}
+                    </span>
+                    {studentCourseData.totalFees !== totalPayment && <AddPaymentBtn studentId={studentId} studentCourseData={studentCourseData} />}
                 </div>
                 {/* View Payments Button */}
                 <ViewPaymentsBtn

@@ -13,6 +13,24 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ p
 
         const { paymentId, studentCourseId } = await params;
 
+        const studentCourseData = await prisma.studentCourse.findUnique({
+            where: {
+                id: studentCourseId,
+                isDeleted: false,
+            },
+            include: {
+                payments: {
+                    where: {
+                        isDeleted: false,
+                    },
+                },
+            },
+        });
+
+        if (!studentCourseData) {
+            return Response.json({ message: "Invalid Student Course Id!!!" }, { status: 400 });
+        }
+
         const paymentData = await prisma.payment.update({
             where: {
                 id: paymentId,
@@ -23,6 +41,34 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ p
                 isDeleted: true,
             },
         });
+
+        const totalPaidFees = studentCourseData.payments.reduce((sum, payment) => sum + payment.amount, 0);
+
+        function updateFeesStatus() {
+            if (studentCourseData) {
+                if ((totalPaidFees - paymentData.amount) === 0) {
+                    return "UNPAID";
+                }
+                else if (studentCourseData.totalFees > (totalPaidFees - paymentData.amount)) {
+                    return "PARTIAL";
+                }
+                else if (studentCourseData.totalFees === (totalPaidFees - paymentData.amount)) {
+                    return "PAID";
+                }
+            }
+        };
+
+        if (updateFeesStatus()) {
+            await prisma.studentCourse.update({
+                where: {
+                    id: studentCourseId,
+                    isDeleted: false,
+                },
+                data: {
+                    feesStatus: updateFeesStatus(),
+                },
+            });
+        };
 
         return Response.json({ message: "Successfully deleted the payment!!!", paymentData }, { status: 200 });
     }

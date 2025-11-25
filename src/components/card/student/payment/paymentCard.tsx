@@ -1,4 +1,5 @@
 import DeleteBtn from "@/components/button/deleteBtn";
+import clsx from "clsx";
 import { CalendarDays, IndianRupee } from "lucide-react";
 
 export default function PaymentCard({
@@ -24,7 +25,7 @@ export default function PaymentCard({
                     <div className="mx-3">
                         <p className="font-semibold text-lg flex items-center">
                             &#8377;{amount}
-                            <span className="mx-2 text-blue-800 bg-blue-100 font-medium text-sm rounded-xl px-2">
+                            <span className={clsx("mx-2 font-medium text-sm rounded-xl px-2", paymentMethod === "UPI" ? "text-blue-800 bg-blue-100" : paymentMethod === "CASH" ? "text-green-800 bg-green-100" : paymentMethod === "PHONEPAY" ? "text-purple-800 bg-purple-100" : paymentMethod === "GOOGLEPAY" ? "text-cyan-800 bg-cyan-100" : "")}>
                                 {paymentMethod}
                             </span>
                         </p>

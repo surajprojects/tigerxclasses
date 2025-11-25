@@ -39,7 +39,6 @@ export default function EditStudentCourse({
                                 session: studentCourseData.session,
                                 totalFees: studentCourseData.totalFees,
                                 status: studentCourseData.status,
-                                feesStatus: studentCourseData.feesStatus,
                                 remarks: studentCourseData.remarks ? studentCourseData.remarks : "",
                             }}
                         />

@@ -42,7 +42,8 @@ export default function ViewPaymentsBtn({
             <button
                 type="button"
                 onClick={() => setShowForm(true)}
-                className="text-gray-800 border border-gray-200 w-full text-center rounded-xl py-1.5 text-sm font-medium mt-2.5 cursor-pointer hover:bg-gray-200/60 duration-300 ease-out">
+                disabled={paymentsList.length < 1 ? true : false}
+                className="text-gray-800 border border-gray-200 w-full text-center rounded-xl py-1.5 text-sm font-medium mt-2.5 cursor-pointer hover:bg-gray-200/60 duration-300 ease-out disabled:cursor-not-allowed disabled:bg-inherit">
                 View Payments &#40;{paymentsList.length}&#41;
             </button>
             {showForm &&

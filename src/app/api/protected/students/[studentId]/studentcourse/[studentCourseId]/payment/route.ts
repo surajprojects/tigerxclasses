@@ -20,6 +20,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ stu
             return Response.json({ message: "Invalid input!!!", details: parsedInput.error.issues }, { status: 400 });
         }
 
+        if (!(parsedInput.data.amount > 0)) {
+            return Response.json({ message: "Student payment must be greater than zero. Negative or zero amounts aren&#8217;t allowed." }, { status: 400 });
+        }
+
         const foundStudent = await prisma.student.findUnique({
             where: {
                 id: studentId,
@@ -50,7 +54,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ stu
         const totalPaidFees = foundStudent.studentCourses[0].payments.reduce((sum, payment) => sum + payment.amount, 0);
 
         if (!(foundStudent.studentCourses[0].totalFees >= (totalPaidFees + parsedInput.data.amount))) {
-            return Response.json({ message: "Student payment cannot exceed total fees amount!!!" }, { status: 409 });
+            return Response.json({ message: "Student payment cannot exceed total fees amount!!!" }, { status: 400 });
         }
 
         const paymentData = await prisma.payment.create({
@@ -62,6 +66,30 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ stu
                 ...(parsedInput.data.remarks && { remarks: parsedInput.data.remarks }),
             }
         });
+
+
+        function updateFeesStatus() {
+            if (foundStudent && parsedInput.data) {
+                if (foundStudent.studentCourses[0].totalFees > (totalPaidFees + parsedInput.data.amount)) {
+                    return "PARTIAL";
+                }
+                else if (foundStudent.studentCourses[0].totalFees === (totalPaidFees + parsedInput.data.amount)) {
+                    return "PAID";
+                }
+            }
+        };
+
+        if (updateFeesStatus()) {
+            await prisma.studentCourse.update({
+                where: {
+                    id: studentCourseId,
+                    isDeleted: false,
+                },
+                data: {
+                    feesStatus: updateFeesStatus(),
+                },
+            });
+        };
 
         return Response.json({ message: "Successfully saved the payment!!!", paymentData }, { status: 200 });
     }

@@ -9,7 +9,7 @@ export default function PaymentForm({
     btnText = "Submit",
     handleSubmit,
     initialData = {
-        amount: 0,
+        amount: 1,
         method: "CASH",
         date: "",
         remarks: "",
@@ -60,7 +60,7 @@ export default function PaymentForm({
                         name="method"
                         value={formData.method}
                         onChange={handleChange}
-                        className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out"
+                        className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer"
                     >
                         {[...Object.values(PaymentMethod)].map((opt, idx) => {
                             return <option key={idx} value={opt}>{opt}</option>

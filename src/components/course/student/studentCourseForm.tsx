@@ -4,8 +4,8 @@ import { useCourses } from "@/hooks/courses";
 import { ChangeEvent, useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import FormField from "@/components/form/formField";
+import { StudentCourseStatus } from "@/db/generated/prisma";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
-import { FeesStatus, StudentCourseStatus } from "@/db/generated/prisma";
 import { StudentCourseInput, StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
 export default function StudentCourseForm({
@@ -20,13 +20,12 @@ export default function StudentCourseForm({
         session: "",
         remarks: "",
         status: "ACTIVE",
-        feesStatus: "PAID",
     },
 }: {
     btnText?: string,
     handleSubmit?: (data: StudentCourseInput) => Promise<void>,
     handleEditSubmit?: (data: StudentCourseInputEdit) => Promise<void>,
-    initialData?: Pick<StudentCourseData, "batchId" | "courseId" | "enrolledOn" | "totalFees" | "session" | "remarks" | "status" | "feesStatus">
+    initialData?: Pick<StudentCourseData, "batchId" | "courseId" | "enrolledOn" | "totalFees" | "session" | "remarks" | "status">
 }) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,15 +54,11 @@ export default function StudentCourseForm({
                         if (!Object.values(StudentCourseStatus).includes(formData.status as StudentCourseStatus)) {
                             throw new Error("Invalid status");
                         }
-                        if (!Object.values(FeesStatus).includes(formData.feesStatus as FeesStatus)) {
-                            throw new Error("Invalid fees status");
-                        }
                         setIsLoading(true);
                         const newFormData = {
                             ...formData,
                             totalFees: Number(formData.totalFees),
                             status: formData.status as StudentCourseStatus,
-                            feesStatus: formData.feesStatus as FeesStatus,
                         };
                         // Handle submit function
                         handleSubmit && await handleSubmit(newFormData);
@@ -150,20 +145,6 @@ export default function StudentCourseForm({
                                     onChange={handleChange}
                                     className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
                                     {[...Object.values(StudentCourseStatus)].map((opt, idx) => {
-                                        return <option key={idx} value={opt}>{opt}</option>
-                                    })}
-                                </select>
-                            </div>
-                            {/* Fees Status */}
-                            <div className="flex flex-col my-2">
-                                <label htmlFor="feesStatus" className="font-sans font-medium text-sm text-gray-800">Fees Status</label>
-                                <select
-                                    id="feesStatus"
-                                    name="feesStatus"
-                                    value={formData.feesStatus}
-                                    onChange={handleChange}
-                                    className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
-                                    {[...Object.values(FeesStatus)].map((opt, idx) => {
                                         return <option key={idx} value={opt}>{opt}</option>
                                     })}
                                 </select>

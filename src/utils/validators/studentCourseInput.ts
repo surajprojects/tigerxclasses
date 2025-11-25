@@ -9,7 +9,6 @@ export const studentCourseInput = z.object({
     session: z.string(),
     remarks: z.string().optional(),
     status: z.enum([...Object.values(StudentCourseStatus)] as [StudentCourseStatus, ...StudentCourseStatus[]]).optional(),
-    feesStatus: z.enum([...Object.values(FeesStatus)] as [FeesStatus, ...FeesStatus[]]).optional(),
 }).strict();
 
 export type StudentCourseInput = z.infer<typeof studentCourseInput>;
