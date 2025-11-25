@@ -83,6 +83,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ stud
                         session: true,
                         status: true,
                         totalFees: true,
+                        student: {
+                            select: {
+                                fullName: true,
+                            },
+                        },
                     },
                     where: {
                         isDeleted: false,

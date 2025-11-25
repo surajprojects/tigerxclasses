@@ -7,11 +7,11 @@ import CardBody from "@/components/card/cardBody";
 import CardHeader from "@/components/card/cardHeader";
 import EditStudentBtn from "@/components/button/student/editStudentBtn";
 import AllDocumentCard from "@/components/card/document/allDocumentCard";
+import StudentDeleteBtn from "@/components/button/student/studentDeleteBtn";
 import AddDocumentBtn from "@/components/button/student/document/addDocumentBtn";
 import StudentCourseCard from "@/components/card/course/student/studentCourseCard";
 import AddStudentCourseBtn from "@/components/button/course/student/addStudentCourseBtn";
 import { UserIcon, HomeIcon, UsersIcon, AcademicCapIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
-import StudentDeleteBtn from "@/components/button/student/studentDeleteBtn";
 
 export default async function StudentProfile({
     params,
@@ -32,7 +32,7 @@ export default async function StudentProfile({
                     <BackBtn />
                     <p className="flex-1 text-3xl font-bold text-gray-800 mx-4">Alice Johnson</p>
                     <EditStudentBtn studentId={studentId} />
-                    <div className="bg-gray-200/70 rounded-xl ml-2">
+                    <div className="border border-gray-200/70 bg-gray-50 rounded-xl ml-2">
                         <StudentDeleteBtn studentId={studentId} />
                     </div>
                 </div>

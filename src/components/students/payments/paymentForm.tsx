@@ -1,0 +1,101 @@
+import Btn from "@/components/button/btn";
+import { ChangeEvent, useState } from "react";
+import FormField from "@/components/form/formField";
+import { PaymentMethod } from "@/db/generated/prisma";
+import { PaymentData } from "@/utils/types/paymentType";
+import { PaymentFormInput } from "@/utils/validators/paymentInput";
+
+export default function PaymentForm({
+    btnText = "Submit",
+    handleSubmit,
+    initialData = {
+        amount: 0,
+        method: "CASH",
+        date: "",
+        remarks: "",
+    },
+}: {
+    btnText?: string,
+    handleSubmit?: (data: PaymentFormInput) => Promise<void>,
+    initialData?: Pick<PaymentData, "amount" | "date" | "method" | "remarks">,
+}) {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [formData, setFormData] = useState(initialData);
+
+    const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const fieldName = evt.target.name;
+        const changedValue = evt.target.value;
+
+        setFormData((prevData) => {
+            return {
+                ...prevData,
+                [fieldName]: changedValue,
+            };
+        });
+    };
+    return (
+        <>
+            <form
+                onSubmit={async (evt) => {
+                    evt.preventDefault();
+                    if (!Object.values(PaymentMethod).includes(formData.method as PaymentMethod)) {
+                        throw new Error("Invalid payment method");
+                    }
+                    setIsLoading(true);
+                    // Handle submit function
+                    handleSubmit && await handleSubmit({
+                        ...formData,
+                        amount: Number(formData.amount),
+                        method: formData.method as PaymentMethod,
+                    });
+                    setIsLoading(false);
+                    setFormData(initialData);
+                }}
+                className="w-full">
+                {/* Method */}
+                <div className="flex flex-col my-2">
+                    <label htmlFor="method" className="font-sans font-medium text-sm text-gray-800">Method*</label>
+                    <select
+                        id="method"
+                        name="method"
+                        value={formData.method}
+                        onChange={handleChange}
+                        className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out"
+                    >
+                        {[...Object.values(PaymentMethod)].map((opt, idx) => {
+                            return <option key={idx} value={opt}>{opt}</option>
+                        })}
+                    </select>
+                </div>
+                {/* Amount */}
+                <FormField
+                    id="amount"
+                    title={`Amount &#40;&#8377;&#41;`}
+                    textHolder="10000"
+                    fieldType="number"
+                    fieldValue={formData.amount}
+                    onChangeFunc={handleChange}
+                />
+                {/* Date */}
+                <FormField
+                    id="date"
+                    title="Date"
+                    fieldType="date"
+                    fieldValue={formData.date}
+                    onChangeFunc={handleChange}
+                />
+                {/* Remarks */}
+                <FormField
+                    id="remarks"
+                    title="Remarks"
+                    textHolder="E.g. First Installment"
+                    fieldValue={formData.remarks ? formData.remarks : ""}
+                    onChangeFunc={handleChange}
+                    isRequired={false}
+                />
+                {/* Add Button */}
+                <Btn btnType="submit" text={btnText} isLoading={isLoading} />
+            </form>
+        </>
+    );
+};

@@ -20,7 +20,7 @@ export interface StudentCourseData {
 
     batch: BatchData,
     course: CourseData,
-    students: StudentData[],
+    student: StudentData,
 };
 
 export type StudentCourseList = StudentCourseData[];

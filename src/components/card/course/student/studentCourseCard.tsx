@@ -1,7 +1,8 @@
-import CardData from "../../cardData";
-import { StudentCourseData } from "@/utils/types/studentCourseType";
-import ActionStudentCourseBtn from "@/components/button/course/student/actionStudentCourseBtn";
 import { CalendarIcon } from "@heroicons/react/24/outline";
+import { StudentCourseData } from "@/utils/types/studentCourseType";
+import AddPaymentBtn from "@/components/button/student/payment/addPaymentBtn";
+import ViewPaymentsBtn from "@/components/button/student/payment/viewPaymentsBtn";
+import ActionStudentCourseBtn from "@/components/button/course/student/actionStudentCourseBtn";
 
 export default function StudentCourseCard({
     studentId,
@@ -10,6 +11,8 @@ export default function StudentCourseCard({
     studentId: string,
     studentCourseData: StudentCourseData,
 }) {
+    const totalPayment = studentCourseData.payments.reduce((sum, payment) => sum + payment.amount, 0);
+    const paymentProgress = Math.floor(totalPayment / studentCourseData.totalFees * 100);
     return (
         <>
             <div className="w-full p-6 rounded-2xl shadow-sm hover:shadow-md bg-[#fcfcfc] border border-white duration-300 ease-out hover:border-blue-500 hover:text-blue-500 font-normal">
@@ -35,34 +38,40 @@ export default function StudentCourseCard({
                     {/* Total Fees */}
                     <div className="flex flex-col items-center justify-center">
                         <p className="text-sm text-gray-500">Total</p>
-                        <p className="text-base text-black font-medium mt-0.5">&#8377;15000</p>
+                        <p className="text-base text-black font-medium mt-0.5">&#8377;{studentCourseData.totalFees}</p>
                     </div>
                     {/* Collected Fees */}
                     <div className="flex flex-col items-center justify-center border-x border-gray-200 px-3">
                         <p className="text-sm text-gray-500">Collected</p>
-                        <p className="text-base text-green-600 font-medium mt-0.5">&#8377;10000</p>
+                        <p className="text-base text-green-600 font-medium mt-0.5">&#8377;{totalPayment}</p>
                     </div>
                     {/* Pending Fees */}
                     <div className="flex flex-col items-center justify-center">
                         <p className="text-sm text-gray-500">Pending</p>
-                        <p className="text-base text-red-500 font-medium mt-0.5">&#8377;5000</p>
+                        <p className="text-base text-red-500 font-medium mt-0.5">&#8377;{studentCourseData.totalFees - totalPayment}</p>
                     </div>
                 </div>
                 {/* Payment Progress */}
                 <div>
                     <div className="flex justify-between mb-1.5">
                         <p className="text-sm text-gray-500">Payment Progress</p>
-                        <p className="text-sm font-medium text-blue-500">67%</p>
+                        <p className="text-sm font-medium text-blue-500">{paymentProgress}%</p>
                     </div>
                     <div className="w-full h-2 bg-gray-200 rounded-2xl">
-                        <div className="w-[67%] h-2 bg-blue-500 rounded-2xl"></div>
+                        <div className="h-2 bg-blue-500 rounded-2xl duration-300 ease-out" style={{ width: `${paymentProgress}%` }}></div>
                     </div>
                 </div>
                 {/* Payment Status */}
-                <div className="my-2.5">
+                <div className="my-2.5 flex justify-between items-center">
                     <span className="text-amber-700 bg-amber-100 rounded-2xl px-3 py-0.5 font-medium text-sm">Partial Payment</span>
+                    <AddPaymentBtn studentId={studentId} studentCourseData={studentCourseData} />
                 </div>
-                <button type="button" className="text-gray-800 border border-gray-200 w-full text-center rounded-xl py-1.5 text-sm font-medium mt-2.5 cursor-pointer hover:bg-gray-200/60 duration-300 ease-out">View Payments &#40;2&#41;</button>
+                {/* View Payments Button */}
+                <ViewPaymentsBtn
+                    studentId={studentId}
+                    studentCourseId={studentCourseData.id}
+                    paymentsList={studentCourseData.payments}
+                />
             </div>
         </>
     );

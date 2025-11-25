@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
             },
             select: {
                 id: true,
+                rollNo: true,
                 fullName: true,
                 fatherName: true,
                 mobileNo: true,

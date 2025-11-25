@@ -39,8 +39,8 @@ export default function SideBar() {
                             return <Link
                                 key={idx}
                                 href={item.href}
-                                className={`my-1.5 ${isCollapse ? "px-2.5" : "px-5"} py-2 border-gray-200 outline-none rounded-xl hover:bg-gray-100 hover:cursor-pointer duration-300 ease-out flex items-center ${pathname === item.href && "shadow-lg shadow-blue-300 border"}`}>
-                                <item.icon className={`size-5 ${!isCollapse && "mr-3"}`} />
+                                className={`my-1.5 ${isCollapse ? "px-2.5" : "px-5"} py-2 border-gray-200 outline-none rounded-xl hover:bg-gray-100 cursor-pointer duration-300 ease-out flex items-center ${((pathname === item.href) || (pathname.startsWith(`${item.href}/`))) && "shadow-lg shadow-blue-300 border hover:bg-white"}`}>
+                                <item.icon className={`size-5 ${!isCollapse && "mr-3"}`} strokeWidth={2} />
                                 {!isCollapse && item.label}
                             </Link>
                         })}

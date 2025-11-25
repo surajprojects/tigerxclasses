@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 
-export async function DELETE(req: NextRequest, { params }: { params: { paymentId: string, studentCourseId: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ paymentId: string, studentCourseId: string }> }) {
     try {
         const token = await verifyUser(req);
 
@@ -11,7 +11,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { paymentId
             return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
         }
 
-        const { paymentId, studentCourseId } = params;
+        const { paymentId, studentCourseId } = await params;
 
         const paymentData = await prisma.payment.update({
             where: {
