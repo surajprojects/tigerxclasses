@@ -57,16 +57,16 @@ export default function Table({ allStudents }: { allStudents: StudentsList }) {
                                 {student.mobileNo}
                             </td>
                             <td className="px-6 py-4">
-                                {studentCourseData?.course.name}
+                                {studentCourseData ? studentCourseData.course.name : "-"}
                             </td>
                             <td className="px-6 py-4">
-                                {studentCourseData?.batch.name}
+                                {studentCourseData ? studentCourseData.batch.name : "-"}
                             </td>
                             <td className="px-6 py-4">
-                                {studentCourseData?.enrolledOn.split("T")[0]}
+                                {studentCourseData ? studentCourseData.enrolledOn.split("T")[0] : "-"}
                             </td>
                             <td className="px-6 py-4 capitalize">
-                                {studentCourseData?.status.toLowerCase()}
+                                {studentCourseData ? studentCourseData.status.toLowerCase() : "-"}
                             </td>
                             <td className="px-6 py-4">
                                 <ActionStudentBtn studentId={student.id} />

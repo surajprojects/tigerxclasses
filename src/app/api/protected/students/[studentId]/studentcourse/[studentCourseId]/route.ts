@@ -54,7 +54,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ st
             return Response.json({ message: "Invalid input!!!", details: parsedInput.error.issues }, { status: 400 });
         }
 
-        if (parsedInput.data.totalFees) {
+        if (Number(parsedInput.data.totalFees)) {
             const studentCourseData = await prisma.studentCourse.findUnique({
                 where: {
                     id: studentCourseId,
@@ -76,7 +76,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ st
 
             const totalPaidFees = studentCourseData.payments.reduce((sum, payment) => sum + payment.amount, 0);
 
-            if (totalPaidFees <= parsedInput.data.totalFees) {
+            if (totalPaidFees <= Number(parsedInput.data.totalFees)) {
                 const studentCourseData = await prisma.studentCourse.update({
                     where: {
                         id: studentCourseId,
@@ -85,10 +85,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ st
                     },
                     data: {
 
-                        feesStatus: totalPaidFees === parsedInput.data.totalFees ? "PAID" : totalPaidFees === 0 ? "UNPAID" : totalPaidFees < parsedInput.data.totalFees ? "PARTIAL" : "UNPAID",
+                        feesStatus: totalPaidFees === Number(parsedInput.data.totalFees) ? "PAID" : totalPaidFees === 0 ? "UNPAID" : totalPaidFees < Number(parsedInput.data.totalFees) ? "PARTIAL" : "UNPAID",
                         ...(parsedInput.data.batchId && { batchId: parsedInput.data.batchId }),
                         ...(parsedInput.data.courseId && { courseId: parsedInput.data.courseId }),
-                        ...(parsedInput.data.totalFees && { totalFees: parsedInput.data.totalFees }),
+                        ...(Number(parsedInput.data.totalFees) && { totalFees: Number(parsedInput.data.totalFees) }),
                         ...(parsedInput.data.status && { status: parsedInput.data.status }),
                         ...(parsedInput.data.enrolledOn && { enrolledOn: new Date(parsedInput.data.enrolledOn).toISOString() }),
                         ...(parsedInput.data.session && { session: parsedInput.data.session }),
@@ -98,7 +98,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ st
 
                 return Response.json({ message: "Successfully updated the student course!!!", studentCourseData }, { status: 200 });
             }
-            else if (totalPaidFees > parsedInput.data.totalFees) {
+            else if (totalPaidFees > Number(parsedInput.data.totalFees)) {
                 return Response.json({ message: "Total fees cannot be less than the amount already paid.!!!" }, { status: 400 });
             }
         }

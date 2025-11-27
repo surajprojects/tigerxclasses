@@ -24,31 +24,40 @@ export default async function StudentProfile({
     if (!studentData) {
         return <p className="italic text-red-500 font-semibold">Student not found!!!</p>;
     }
-
+    const batch = studentData.studentCourses.find((course) => course.status === "ACTIVE")?.batch.name;
+    const enrolledDate = studentData.studentCourses.find((course) => course.status === "ACTIVE")?.enrolledOn.split("T")[0];
     return (
         <>
             <div>
+                {/* Header */}
                 <div className="flex items-center">
                     <BackBtn />
-                    <p className="flex-1 text-3xl font-bold text-gray-800 mx-4">Alice Johnson</p>
+                    <p className="flex-1 text-3xl font-bold text-gray-800 mx-4">{studentData.fullName}</p>
                     <EditStudentBtn studentId={studentId} />
                     <div className="border border-gray-200/70 bg-gray-50 rounded-xl ml-2">
                         <StudentDeleteBtn studentId={studentId} />
                     </div>
                 </div>
 
+                {/* Student Summary */}
                 <div className="bg-blue-50 p-6 rounded-2xl my-8 shadow-sm">
                     <ul className="flex justify-between items-center">
                         <li>
                             <ul>
-                                <li className="text-gray-500">Status</li>
-                                <li className="text-gray-800 font-semibold text-lg">Active</li>
+                                <li className="text-gray-500 text-sm">Active Courses</li>
+                                <li className="text-gray-800 font-semibold text-lg">{studentData.studentCourses.filter((course) => course.status === "ACTIVE").length}</li>
                             </ul>
                         </li>
                         <li>
                             <ul>
-                                <li className="text-gray-500">Active Courses</li>
-                                <li className="text-gray-800 font-semibold text-lg">2</li>
+                                <li className="text-gray-500 text-sm">Batch</li>
+                                <li className="text-gray-800 font-semibold text-lg">{batch ? batch : "-"}</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li className="text-gray-500 text-sm">Enrolled Date</li>
+                                <li className="text-gray-800 font-semibold text-lg">{enrolledDate ? enrolledDate : "-"}</li>
                             </ul>
                         </li>
                         <li>

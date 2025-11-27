@@ -15,8 +15,8 @@ export const studentFormInput = z.object({
     // Family info
     fatherName: z.string(),
     motherName: z.string(),
-    parentGuardianMobileNo1: z.string().regex(/^\d{10}$/, "Guardian mobile No. must be 10 digits number string. Example - '1234567890'").optional(),
-    parentGuardianMobileNo2: z.string().regex(/^\d{10}$/, "Guardian mobile No. must be 10 digits number string. Example - '1234567890'").optional(),
+    parentGuardianMobileNo1: z.string().regex(/^\d{10}$/, "Guardian mobile No. must be 10 digits number string. Example - '1234567890'").optional().or(z.literal("")),
+    parentGuardianMobileNo2: z.string().regex(/^\d{10}$/, "Guardian mobile No. must be 10 digits number string. Example - '1234567890'").optional().or(z.literal("")),
 
     // Education info
     class: z.string().optional(),

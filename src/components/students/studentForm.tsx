@@ -1,10 +1,10 @@
 import Btn from "../button/btn";
 import FormField from "../form/formField";
-import { ChangeEvent, useState } from "react";
 import CancelBtn from "../button/cancelBtn";
-import { StudentFormInput, StudentFormInputEdit } from "@/utils/validators/studentInput";
-import { Category, Gender, Institute, State } from "@/db/generated/prisma";
+import { ChangeEvent, useState } from "react";
 import { StudentFormData } from "@/utils/types/studentType";
+import { Category, Gender, Institute, State } from "@/db/generated/prisma";
+import { StudentFormInput, StudentFormInputEdit } from "@/utils/validators/studentInput";
 
 export default function StudentForm({
     handleSubmit,
@@ -37,7 +37,7 @@ export default function StudentForm({
 }: {
     handleSubmit?: (data: StudentFormInput) => Promise<void>,
     handleEditSubmit?: (data: StudentFormInputEdit) => Promise<void>,
-    initialData?: StudentFormData,
+    initialData?: Omit<StudentFormData, "rollNo">,
 }) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -153,14 +153,29 @@ export default function StudentForm({
                             </select>
                         </div>
                         {/* Mobile No */}
-                        <FormField
-                            id="mobileNo"
-                            title="Mobile No."
-                            textHolder="1234567890"
-                            fieldValue={formData.mobileNo}
-                            onChangeFunc={handleChange}
-                            removeBorder={true}
-                        />
+                        <div className="flex flex-col my-2">
+                            <label htmlFor="mobileNo" className="font-sans font-medium text-sm text-gray-800">Mobile No.*</label>
+                            <input
+                                type="text"
+                                name="mobileNo"
+                                id="mobileNo"
+                                placeholder="1234567890"
+                                inputMode="numeric"
+                                maxLength={10}
+                                value={formData.mobileNo}
+                                onChange={(e) => {
+                                    const mobileNoValue = e.target.value.replace(/\D/g, "");
+                                    setFormData((prevData) => {
+                                        return {
+                                            ...prevData,
+                                            mobileNo: mobileNoValue,
+                                        };
+                                    });
+                                }}
+
+                                className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
+                            />
+                        </div>
                         {/* Email */}
                         <FormField
                             id="email"
@@ -233,15 +248,32 @@ export default function StudentForm({
                             </select>
                         </div>
                         {/* Pincode */}
-                        <FormField
-                            id="address.pincode"
-                            title="Pincode"
-                            textHolder="476337"
-                            fieldValue={formData.address.pincode}
-                            onChangeFunc={handleChange}
-                            removeBorder={true}
-                            isRequired={false}
-                        />
+                        <div className="flex flex-col my-2">
+                            <label htmlFor="pincode" className="font-sans font-medium text-sm text-gray-800">Pincode</label>
+                            <input
+                                type="text"
+                                name="pincode"
+                                id="pincode"
+                                placeholder="123456"
+                                inputMode="numeric"
+                                maxLength={6}
+                                value={formData.address.pincode}
+                                onChange={(e) => {
+                                    const pincodeValue = e.target.value.replace(/\D/g, "");
+                                    setFormData((prevData) => {
+                                        return {
+                                            ...prevData,
+                                            address: {
+                                                ...prevData.address,
+                                                pincode: pincodeValue,
+                                            }
+                                        };
+                                    });
+                                }}
+
+                                className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -268,25 +300,53 @@ export default function StudentForm({
                             removeBorder={true}
                         />
                         {/* Parent/Guardian Mobile No 1 */}
-                        <FormField
-                            id="parentGuardianMobileNo1"
-                            title="Parent/Guardian Mobile No. 1"
-                            textHolder="1234567890"
-                            fieldValue={formData.parentGuardianMobileNo1}
-                            onChangeFunc={handleChange}
-                            removeBorder={true}
-                            isRequired={false}
-                        />
+                        <div className="flex flex-col my-2">
+                            <label htmlFor="parentGuardianMobileNo1" className="font-sans font-medium text-sm text-gray-800">Parent/Guardian Mobile No. 1</label>
+                            <input
+                                type="text"
+                                name="parentGuardianMobileNo1"
+                                id="parentGuardianMobileNo1"
+                                placeholder="1234567890"
+                                inputMode="numeric"
+                                maxLength={10}
+                                value={formData.parentGuardianMobileNo1}
+                                onChange={(e) => {
+                                    const parentGuardianMobileNo1Value = e.target.value.replace(/\D/g, "");
+                                    setFormData((prevData) => {
+                                        return {
+                                            ...prevData,
+                                            parentGuardianMobileNo1: parentGuardianMobileNo1Value,
+                                        };
+                                    });
+                                }}
+
+                                className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
+                            />
+                        </div>
                         {/* Parent/Guardian Mobile No. 2 */}
-                        <FormField
-                            id="parentGuardianMobileNo2"
-                            title="Parent/Guardian Mobile No. 2"
-                            textHolder="1234567890"
-                            fieldValue={formData.parentGuardianMobileNo2}
-                            onChangeFunc={handleChange}
-                            removeBorder={true}
-                            isRequired={false}
-                        />
+                        <div className="flex flex-col my-2">
+                            <label htmlFor="parentGuardianMobileNo2" className="font-sans font-medium text-sm text-gray-800">Parent/Guardian Mobile No. 2</label>
+                            <input
+                                type="text"
+                                name="parentGuardianMobileNo2"
+                                id="parentGuardianMobileNo2"
+                                placeholder="1234567890"
+                                inputMode="numeric"
+                                maxLength={10}
+                                value={formData.parentGuardianMobileNo2}
+                                onChange={(e) => {
+                                    const parentGuardianMobileNo2Value = e.target.value.replace(/\D/g, "");
+                                    setFormData((prevData) => {
+                                        return {
+                                            ...prevData,
+                                            parentGuardianMobileNo2: parentGuardianMobileNo2Value,
+                                        };
+                                    });
+                                }}
+
+                                className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
+                            />
+                        </div>
                     </div>
                 </div>
 

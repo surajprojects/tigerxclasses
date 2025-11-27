@@ -1,5 +1,5 @@
-import DeleteBtn from "@/components/button/deleteBtn";
 import clsx from "clsx";
+import DeleteBtn from "@/components/button/deleteBtn";
 import { CalendarDays, IndianRupee } from "lucide-react";
 
 export default function PaymentCard({

@@ -10,6 +10,8 @@ export default function ViewDocument({ studentDocumentData }: { studentDocumentD
                     <CardData fieldName="Document Type" fieldValue={studentDocumentData.documentType.toLowerCase()} capitalize={true} />
                     {/* Institute */}
                     <CardData fieldName="Institute" fieldValue={studentDocumentData.institute.toLowerCase()} capitalize={true} />
+                    {/* Aadhaar No */}
+                    <CardData fieldName="Aadhaar No." fieldValue={studentDocumentData.aadhaarNo} />
                     {/* Created On */}
                     <CardData fieldName="Created On" fieldValue={studentDocumentData.createdAt.split("T")[0]} />
                 </div>

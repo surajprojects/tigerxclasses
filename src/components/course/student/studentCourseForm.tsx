@@ -5,7 +5,6 @@ import { ChangeEvent, useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import FormField from "@/components/form/formField";
 import { StudentCourseStatus } from "@/db/generated/prisma";
-import { StudentCourseData } from "@/utils/types/studentCourseType";
 import { StudentCourseInput, StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
 export default function StudentCourseForm({
@@ -16,7 +15,7 @@ export default function StudentCourseForm({
         batchId: "",
         courseId: "",
         enrolledOn: "",
-        totalFees: 0,
+        totalFees: "",
         session: "",
         remarks: "",
         status: "ACTIVE",
@@ -25,7 +24,7 @@ export default function StudentCourseForm({
     btnText?: string,
     handleSubmit?: (data: StudentCourseInput) => Promise<void>,
     handleEditSubmit?: (data: StudentCourseInputEdit) => Promise<void>,
-    initialData?: Pick<StudentCourseData, "batchId" | "courseId" | "enrolledOn" | "totalFees" | "session" | "remarks" | "status">
+    initialData?: Required<StudentCourseInput>,
 }) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -57,7 +56,6 @@ export default function StudentCourseForm({
                         setIsLoading(true);
                         const newFormData = {
                             ...formData,
-                            totalFees: Number(formData.totalFees),
                             status: formData.status as StudentCourseStatus,
                         };
                         // Handle submit function
@@ -108,13 +106,29 @@ export default function StudentCourseForm({
                             onChangeFunc={handleChange}
                         />
                         {/* Total Fees */}
-                        <FormField
-                            id="totalFees"
-                            title="Total Fees"
-                            fieldType="number"
-                            fieldValue={formData.totalFees}
-                            onChangeFunc={handleChange}
-                        />
+                        <div className="flex flex-col my-2">
+                            <label htmlFor="totalFees" className="font-sans font-medium text-sm text-gray-800">Total Fees*</label>
+                            <input
+                                type="text"
+                                name="totalFees"
+                                id="totalFees"
+                                placeholder="8000"
+                                inputMode="numeric"
+                                minLength={1}
+                                maxLength={10}
+                                value={formData.totalFees}
+                                onChange={(e) => {
+                                    const totalFeesValue = e.target.value.replace(/\D/g, "");
+                                    setFormData((prevData) => {
+                                        return {
+                                            ...prevData,
+                                            totalFees: totalFeesValue,
+                                        };
+                                    });
+                                }}
+                                className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
+                            />
+                        </div>
                     </div>
                     {/* Session */}
                     <FormField

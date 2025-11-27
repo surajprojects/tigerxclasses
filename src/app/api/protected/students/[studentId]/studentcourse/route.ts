@@ -25,7 +25,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ stu
                 studentId,
                 batchId: parsedInput.data.batchId,
                 courseId: parsedInput.data.courseId,
-                totalFees: parsedInput.data.totalFees,
+                totalFees: Number(parsedInput.data.totalFees),
                 enrolledOn: new Date(parsedInput.data.enrolledOn).toISOString(),
                 session: parsedInput.data.session,
                 ...(parsedInput.data.remarks && { remarks: parsedInput.data.remarks }),

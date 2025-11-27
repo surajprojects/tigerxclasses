@@ -45,6 +45,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ stud
                     },
                 },
                 documents: {
+                    where: {
+                        isDeleted: false,
+                    },
                     omit: {
                         isDeleted: true,
                         updatedAt: true,
