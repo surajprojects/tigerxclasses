@@ -164,14 +164,14 @@ export async function POST(req: NextRequest) {
         }
 
         if (subscriptionCheck.userStatus === "INACTIVE") {
-            const getBatchData = await prisma.batch.findMany({
+            const getBatchesData = await prisma.batch.findMany({
                 where: {
                     userId: String(token.id),
                     isDeleted: false,
                 },
             });
 
-            if (getBatchData.length > 4) {
+            if (getBatchesData.length > 4) {
                 return Response.json({ message: "You&#8217;ve reached your account limit. No more than 5 batches can be created." }, { status: 402 });
             }
 

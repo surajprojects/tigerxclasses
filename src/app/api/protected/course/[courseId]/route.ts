@@ -70,10 +70,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ co
             data: {
                 ...(parsedInput.data.code && { code: parsedInput.data.code }),
                 ...(parsedInput.data.name && { name: parsedInput.data.name }),
-                ...(parsedInput.data.description && { name: parsedInput.data.description }),
+                ...(parsedInput.data.description && { description: parsedInput.data.description }),
                 ...(parsedInput.data.instituteName && { instituteName: parsedInput.data.instituteName }),
                 ...(parsedInput.data.duration && { duration: parsedInput.data.duration }),
-                ...(parsedInput.data.fees && { fees: parsedInput.data.fees }),
+                ...(parsedInput.data.fees && { fees: Number(parsedInput.data.fees), }),
             },
             select: {
                 id: true,

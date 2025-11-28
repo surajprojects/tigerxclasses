@@ -6,7 +6,7 @@ export const courseFormInput = z.object({
     description: z.string(),
     instituteName: z.string(),
     duration: z.string(),
-    fees: z.number(),
+    fees: z.string().regex(/^\d{1,10}$/, "Total fees must be between 1 to 10 digits"),
 }).strict();
 
 export type CourseFormInput = z.infer<typeof courseFormInput>;

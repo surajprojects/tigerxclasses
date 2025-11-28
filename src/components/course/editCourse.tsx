@@ -36,7 +36,7 @@ export default function EditCourse({
                                 instituteName: courseData.instituteName,
                                 code: courseData.code,
                                 duration: courseData.duration,
-                                fees: courseData.fees,
+                                fees: String(courseData.fees),
                             }}
                             btnText="Update Course"
                             handleEditSubmit={handleEditSubmit}

@@ -12,7 +12,7 @@ export default function CourseForm({
         code: "",
         description: "",
         duration: "",
-        fees: 0,
+        fees: "",
         instituteName: "",
         name: "",
     },
@@ -20,7 +20,7 @@ export default function CourseForm({
     btnText?: string,
     handleSubmit?: (data: CourseFormInput) => Promise<void>,
     handleEditSubmit?: (data: CourseFormInputEdit) => Promise<void>,
-    initialData?: Omit<CourseData, "id" | "_count">,
+    initialData?: CourseFormInput,
 }) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,10 +42,14 @@ export default function CourseForm({
                 onSubmit={async (evt) => {
                     evt.preventDefault();
                     setIsLoading(true);
+                    const newFormData = {
+                        ...formData,
+                        fees: formData.fees,
+                    };
                     // Handle submit function
-                    handleSubmit && await handleSubmit({ ...formData, fees: Number(formData.fees) });
+                    handleSubmit && await handleSubmit(newFormData);
                     // Handle edit submit function
-                    handleEditSubmit && await handleEditSubmit({ ...formData, fees: Number(formData.fees) });
+                    handleEditSubmit && await handleEditSubmit(newFormData);
                     setIsLoading(false);
                     setFormData(initialData);
                 }}
@@ -92,14 +96,29 @@ export default function CourseForm({
                         onChangeFunc={handleChange}
                     />
                     {/* Fees */}
-                    <FormField
-                        id="fees"
-                        fieldType="number"
-                        title="Fees"
-                        textHolder="4000"
-                        fieldValue={formData.fees}
-                        onChangeFunc={handleChange}
-                    />
+                    <div className="flex flex-col my-2">
+                        <label htmlFor="fees" className="font-sans font-medium text-sm text-gray-800">Fees*</label>
+                        <input
+                            type="text"
+                            name="fees"
+                            id="fees"
+                            placeholder="8000"
+                            inputMode="numeric"
+                            maxLength={10}
+                            value={formData.fees}
+                            onChange={(e) => {
+                                const feesValue = e.target.value.replace(/\D/g, "");
+                                setFormData((prevData) => {
+                                    return {
+                                        ...prevData,
+                                        fees: feesValue,
+                                    };
+                                });
+                            }}
+
+                            className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out"
+                        />
+                    </div>
                 </div>
                 {/* Add Button */}
                 <Btn btnType="submit" text={btnText} isLoading={isLoading} />

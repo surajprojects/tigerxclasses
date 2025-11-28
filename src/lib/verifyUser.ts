@@ -1,9 +1,9 @@
+import prisma from "@/db";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 import { redirect } from "next/navigation";
 import { authOptions } from "./authOptions";
 import { getServerSession } from "next-auth";
-import prisma from "@/db";
 
 export async function verifyUser(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
