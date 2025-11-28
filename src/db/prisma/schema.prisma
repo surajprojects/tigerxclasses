@@ -133,6 +133,11 @@ enum SubscriptionStatus {
   INACTIVE
 }
 
+// Subscription Status
+enum SubscriptionPlan {
+  MONTHLY
+}
+
 // ----------------------------
 // MODELS
 // ----------------------------
@@ -154,7 +159,7 @@ model User {
   remarks    String?
 
   role   Role       @default(USER)
-  status UserStatus @default(ACTIVE)
+  status UserStatus @default(INACTIVE)
 
   // Address relation
   address   Address @relation(fields: [addressId], references: [id])
@@ -171,6 +176,8 @@ model User {
   students      Student[]
   subscriptions Subscription[]
 
+  currentSubscriptionId String?
+
   isDeleted Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -181,9 +188,9 @@ model Subscription {
   id String @id @default(cuid())
 
   name      String
-  startedOn DateTime           @default(now())
-  expiresOn DateTime?
-  status    SubscriptionStatus @default(INACTIVE)
+  plan      SubscriptionPlan @default(MONTHLY)
+  startedOn DateTime         @default(now())
+  expiresOn DateTime
   remarks   String?
 
   payments UserPayment[]

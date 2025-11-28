@@ -25,14 +25,15 @@ export async function GET(req: Request) {
             data: {
                 category: "ST",
                 dob: "2025-01-01T00:00:00.000Z",
-                email: "tiger@gmail.com",
+                email: "tigeradmin@gmail.com",
                 gender: "MALE",
-                instituteName: "tiger classes",
-                mobileNo: "1234567890",
-                name: "tiger",
+                instituteName: "tiger admin",
+                mobileNo: "1123567890",
+                name: "tigeradmin",
                 password: hashedPassword,
-                username: "tiger",
+                username: "tigeradmin",
                 addressId: addressData.id,
+                role: "ADMIN"
             }
         });
 
