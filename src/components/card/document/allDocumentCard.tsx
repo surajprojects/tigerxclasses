@@ -12,7 +12,7 @@ export default function AllDocumentCard({ studentData, studentId }: { studentDat
     return (
         <>
             <div className="mt-6">
-                {studentData.documents.length > 0 && studentData.documents.map((document) => {
+                {studentData.documents.length > 0 ? studentData.documents.map((document) => {
                     return <DocumentCard
                         key={document.id}
                         studentDocumentData={document}
@@ -20,7 +20,10 @@ export default function AllDocumentCard({ studentData, studentId }: { studentDat
                         onToggle={() => handleToggle(document.id)}
                         studentId={studentId}
                     />;
-                })}
+                })
+                    :
+                    <p className="italic text-gray-500/80 text-sm">No documents found!!!</p>
+                }
             </div>
         </>
     );

@@ -1,5 +1,6 @@
 import DocumentForm from "./documentForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { DocumentType, Institute } from "@/db/generated/prisma";
 import { StudentDocumentData } from "@/utils/types/studentDocumentType";
 import { StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
@@ -33,15 +34,15 @@ export default function EditDocument({
                             btnText="Update Document"
                             handleEditSubmit={handleEditSubmit}
                             initialData={{
-                                documentType: studentDocumentData.documentType,
+                                documentType: studentDocumentData.documentType as DocumentType,
                                 documentName: studentDocumentData.documentName ? studentDocumentData.documentName : "",
-                                institute: studentDocumentData.institute,
+                                institute: studentDocumentData.institute as Institute,
                                 instituteName: studentDocumentData.instituteName ? studentDocumentData.instituteName : "",
                                 idNo: studentDocumentData.idNo ? studentDocumentData.idNo : "",
                                 aadhaarNo: studentDocumentData.aadhaarNo ? studentDocumentData.aadhaarNo : "",
                                 enrollmentNo: studentDocumentData.enrollmentNo ? studentDocumentData.enrollmentNo : "",
-                                obtainedMarks: studentDocumentData.obtainedMarks ? studentDocumentData.obtainedMarks : 0,
-                                totalMarks: studentDocumentData.totalMarks ? studentDocumentData.totalMarks : 0,
+                                obtainedMarks: studentDocumentData.obtainedMarks ? String(studentDocumentData.obtainedMarks) : "",
+                                totalMarks: studentDocumentData.totalMarks ? String(studentDocumentData.totalMarks) : "",
                                 rollNo: studentDocumentData.rollNo ? studentDocumentData.rollNo : "",
                                 session: studentDocumentData.session ? studentDocumentData.session : "",
                                 documentLink: studentDocumentData.documentLink ? studentDocumentData.documentLink : "",

@@ -61,7 +61,7 @@ export default async function StudentProfile({
                             </ul>
                         </li>
                         <li>
-                            <div className="border rounded-full p-8"></div>
+                            {/* <div className="border rounded-full p-8"></div> */}
                         </li>
                     </ul>
                 </div>
@@ -170,13 +170,16 @@ export default async function StudentProfile({
                         <AddStudentCourseBtn studentId={studentId} />
                     </div>
                     <div className="mt-6 grid grid-cols-3 gap-6">
-                        {studentData.studentCourses.length > 0 && studentData.studentCourses.map((studentCourse) => {
+                        {studentData.studentCourses.length > 0 ? studentData.studentCourses.map((studentCourse) => {
                             return <StudentCourseCard
                                 key={studentCourse.id}
                                 studentId={studentId}
                                 studentCourseData={studentCourse}
                             />;
-                        })}
+                        })
+                            :
+                            <p className="italic text-gray-500/80 text-sm">No enrolled courses!!!</p>
+                        }
                     </div>
                 </Card>
 

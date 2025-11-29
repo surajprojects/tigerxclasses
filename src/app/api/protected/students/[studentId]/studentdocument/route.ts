@@ -40,8 +40,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ stu
                     ...(parsedInput.data.aadhaarNo && { aadhaarNo: parsedInput.data.aadhaarNo }),
                     ...(parsedInput.data.rollNo && { rollNo: parsedInput.data.rollNo }),
                     ...(parsedInput.data.enrollmentNo && { enrollmentNo: parsedInput.data.enrollmentNo }),
-                    ...(parsedInput.data.obtainedMarks && { obtainedMarks: parsedInput.data.obtainedMarks }),
-                    ...(parsedInput.data.totalMarks && { totalMarks: parsedInput.data.totalMarks }),
+                    ...(parsedInput.data.obtainedMarks && { obtainedMarks: Number(parsedInput.data.obtainedMarks) }),
+                    ...(parsedInput.data.totalMarks && { totalMarks: Number(parsedInput.data.totalMarks) }),
                     ...(parsedInput.data.session && { session: parsedInput.data.session }),
                     ...(parsedInput.data.documentLink && { documentLink: parsedInput.data.documentLink }),
                 }
@@ -90,8 +90,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ stu
                     ...(parsedInput.data.aadhaarNo && { aadhaarNo: parsedInput.data.aadhaarNo }),
                     ...(parsedInput.data.rollNo && { rollNo: parsedInput.data.rollNo }),
                     ...(parsedInput.data.enrollmentNo && { enrollmentNo: parsedInput.data.enrollmentNo }),
-                    ...(parsedInput.data.obtainedMarks && { obtainedMarks: parsedInput.data.obtainedMarks }),
-                    ...(parsedInput.data.totalMarks && { totalMarks: parsedInput.data.totalMarks }),
+                    ...(parsedInput.data.obtainedMarks && { obtainedMarks: Number(parsedInput.data.obtainedMarks) }),
+                    ...(parsedInput.data.totalMarks && { totalMarks: Number(parsedInput.data.totalMarks) }),
                     ...(parsedInput.data.session && { session: parsedInput.data.session }),
                     ...(parsedInput.data.documentLink && { documentLink: parsedInput.data.documentLink }),
                 }
@@ -112,8 +112,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ stu
                     ...(parsedInput.data.aadhaarNo && { aadhaarNo: parsedInput.data.aadhaarNo }),
                     ...(parsedInput.data.rollNo && { rollNo: parsedInput.data.rollNo }),
                     ...(parsedInput.data.enrollmentNo && { enrollmentNo: parsedInput.data.enrollmentNo }),
-                    ...(parsedInput.data.obtainedMarks && { obtainedMarks: parsedInput.data.obtainedMarks }),
-                    ...(parsedInput.data.totalMarks && { totalMarks: parsedInput.data.totalMarks }),
+                    ...(parsedInput.data.obtainedMarks && { obtainedMarks: Number(parsedInput.data.obtainedMarks) }),
+                    ...(parsedInput.data.totalMarks && { totalMarks: Number(parsedInput.data.totalMarks) }),
                     ...(parsedInput.data.session && { session: parsedInput.data.session }),
                     ...(parsedInput.data.documentLink && { documentLink: parsedInput.data.documentLink }),
                 }

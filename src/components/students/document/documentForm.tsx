@@ -2,7 +2,6 @@ import Btn from "@/components/button/btn";
 import { ChangeEvent, useState } from "react";
 import FormField from "@/components/form/formField";
 import { DocumentType, Institute } from "@/db/generated/prisma";
-import { StudentDocumentData } from "@/utils/types/studentDocumentType";
 import { StudentDocumentInput } from "@/utils/validators/studentDocumentInput";
 import { StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
 
@@ -20,15 +19,15 @@ export default function DocumentForm({
         rollNo: "",
         enrollmentNo: "",
         session: "",
-        obtainedMarks: 0,
-        totalMarks: 0,
+        obtainedMarks: "",
+        totalMarks: "",
         documentLink: "",
     },
 }: {
     btnText?: string,
     handleSubmit?: (data: StudentDocumentInput) => Promise<void>,
     handleEditSubmit?: (data: StudentCourseInputEdit) => Promise<void>,
-    initialData?: Required<Omit<StudentDocumentData, "id" | "studentId" | "createdAt">>,
+    initialData?: Required<StudentDocumentInput>,
 }) {
     const instituteData = {
         AADHAAR: "GOVT",
@@ -50,7 +49,7 @@ export default function DocumentForm({
             if (fieldName === "documentType") {
                 return {
                     ...prevData,
-                    [fieldName]: changedValue,
+                    [fieldName]: changedValue as DocumentType,
                     institute: instituteData[changedValue as keyof typeof instituteData],
                 };
             }
@@ -105,14 +104,29 @@ export default function DocumentForm({
                 </div>
                 {/* Aadhaar No */}
                 {formData.documentType === "AADHAAR" &&
-                    <FormField
-                        id="aadhaarNo"
-                        title="Aadhaar No"
-                        textHolder="1234 5678 1225"
-                        fieldValue={formData.aadhaarNo}
-                        onChangeFunc={handleChange}
-                        isRequired={formData.documentType === "AADHAAR" ? true : false}
-                    />
+                    <div className="flex flex-col my-2">
+                        <label htmlFor="aadhaarNo" className="font-sans font-medium text-sm text-gray-800">Aadhaar No.*</label>
+                        <input
+                            type="text"
+                            name="aadhaarNo"
+                            id="aadhaarNo"
+                            placeholder="1234 5678 9012"
+                            inputMode="numeric"
+                            maxLength={12}
+                            value={formData.aadhaarNo}
+                            onChange={(e) => {
+                                const aadhaarNoValue = e.target.value.replace(/\D/g, "");
+                                setFormData((prevData) => {
+                                    return {
+                                        ...prevData,
+                                        aadhaarNo: aadhaarNoValue,
+                                    };
+                                });
+                            }}
+                            required={formData.documentType === "AADHAAR" ? true : false}
+                            className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-gray-300"
+                        />
+                    </div>
                 }
                 {/* Secondary/HigherSecondary/Graduation/PostGraduation  */}
                 {((formData.documentType === "SECONDARY") || (formData.documentType === "HIGHERSECONDARY") || (formData.documentType === "GRADUATION") || (formData.documentType === "POSTGRADUATION")) &&
@@ -128,14 +142,29 @@ export default function DocumentForm({
                         />
                         <div className="grid grid-cols-2 gap-x-4">
                             {/* Roll No */}
-                            <FormField
-                                id="rollNo"
-                                title="Roll No"
-                                textHolder="123456"
-                                fieldValue={formData.rollNo}
-                                onChangeFunc={handleChange}
-                                isRequired={((formData.documentType === "SECONDARY") || (formData.documentType === "HIGHERSECONDARY") || (formData.documentType === "GRADUATION") || (formData.documentType === "POSTGRADUATION")) ? true : false}
-                            />
+                            <div className="flex flex-col my-2">
+                                <label htmlFor="rollNo" className="font-sans font-medium text-sm text-gray-800">Roll No.*</label>
+                                <input
+                                    type="text"
+                                    name="rollNo"
+                                    id="rollNo"
+                                    placeholder="12345678"
+                                    inputMode="numeric"
+                                    maxLength={12}
+                                    value={formData.rollNo}
+                                    onChange={(e) => {
+                                        const rollNoValue = e.target.value.replace(/\D/g, "");
+                                        setFormData((prevData) => {
+                                            return {
+                                                ...prevData,
+                                                rollNo: rollNoValue,
+                                            };
+                                        });
+                                    }}
+                                    required={((formData.documentType === "SECONDARY") || (formData.documentType === "HIGHERSECONDARY") || (formData.documentType === "GRADUATION") || (formData.documentType === "POSTGRADUATION")) ? true : false}
+                                    className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-gray-300"
+                                />
+                            </div>
                             {/* Enrollment No */}
                             <FormField
                                 id="enrollmentNo"
@@ -146,23 +175,53 @@ export default function DocumentForm({
                                 isRequired={((formData.documentType === "SECONDARY") || (formData.documentType === "HIGHERSECONDARY") || (formData.documentType === "GRADUATION") || (formData.documentType === "POSTGRADUATION")) ? true : false}
                             />
                             {/* Obtained Marks */}
-                            <FormField
-                                id="obtainedMarks"
-                                title="Obtained Marks"
-                                textHolder="455"
-                                fieldValue={formData.obtainedMarks}
-                                onChangeFunc={handleChange}
-                                isRequired={false}
-                            />
+                            <div className="flex flex-col my-2">
+                                <label htmlFor="obtainedMarks" className="font-sans font-medium text-sm text-gray-800">Obtained Marks</label>
+                                <input
+                                    type="text"
+                                    name="obtainedMarks"
+                                    id="obtainedMarks"
+                                    placeholder="450"
+                                    inputMode="numeric"
+                                    maxLength={8}
+                                    value={formData.obtainedMarks}
+                                    onChange={(e) => {
+                                        const obtainedMarksValue = e.target.value.replace(/\D/g, "");
+                                        setFormData((prevData) => {
+                                            return {
+                                                ...prevData,
+                                                obtainedMarks: obtainedMarksValue,
+                                            };
+                                        });
+                                    }}
+                                    required={false}
+                                    className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-gray-300"
+                                />
+                            </div>
                             {/* Total Marks */}
-                            <FormField
-                                id="totalMarks"
-                                title="Total Marks"
-                                textHolder="500"
-                                fieldValue={formData.totalMarks}
-                                onChangeFunc={handleChange}
-                                isRequired={false}
-                            />
+                            <div className="flex flex-col my-2">
+                                <label htmlFor="totalMarks" className="font-sans font-medium text-sm text-gray-800">Total Marks</label>
+                                <input
+                                    type="text"
+                                    name="totalMarks"
+                                    id="totalMarks"
+                                    placeholder="500"
+                                    inputMode="numeric"
+                                    maxLength={8}
+                                    value={formData.totalMarks}
+                                    onChange={(e) => {
+                                        const totalMarksValue = e.target.value.replace(/\D/g, "");
+                                        setFormData((prevData) => {
+                                            return {
+                                                ...prevData,
+                                                totalMarks: totalMarksValue,
+                                            };
+                                        });
+                                    }}
+                                    required={false}
+                                    className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-gray-300"
+                                />
+                            </div>
                         </div>
                         {/* Session */}
                         <FormField

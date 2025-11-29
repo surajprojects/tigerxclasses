@@ -65,8 +65,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ st
                 ...(parsedInput.data.rollNo && { rollNo: parsedInput.data.rollNo }),
                 ...(parsedInput.data.enrollmentNo && { enrollmentNo: parsedInput.data.enrollmentNo }),
                 ...(parsedInput.data.session && { session: parsedInput.data.session }),
-                ...(parsedInput.data.obtainedMarks && { obtainedMarks: parsedInput.data.obtainedMarks }),
-                ...(parsedInput.data.totalMarks && { totalMarks: parsedInput.data.totalMarks }),
+                ...(parsedInput.data.obtainedMarks && { obtainedMarks: Number(parsedInput.data.obtainedMarks) }),
+                ...(parsedInput.data.totalMarks && { totalMarks: Number(parsedInput.data.totalMarks) }),
                 ...(parsedInput.data.documentLink && { documentLink: parsedInput.data.documentLink }),
             }
         });
