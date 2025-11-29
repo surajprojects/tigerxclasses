@@ -2,8 +2,8 @@ import prisma from "@/db";
 import { NextRequest } from "next/server";
 import { verifyAdmin, verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
-import { courseFormInput, CourseFormInput } from "@/utils/validators/courseInput";
 import { verifyUserSubscription } from "@/lib/verifyUserSubscription";
+import { courseFormInput, CourseFormInput } from "@/utils/validators/courseInput";
 
 export async function GET(req: NextRequest) {
     try {
