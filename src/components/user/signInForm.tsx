@@ -1,3 +1,5 @@
+"use client"
+
 import Btn from "../button/btn";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
@@ -82,7 +84,7 @@ export default function SignInForm() {
                         </div>
                     </form>
                 </div>
-            </section >
+            </section>
         </>
     );
 };

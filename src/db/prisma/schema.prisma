@@ -149,7 +149,7 @@ model User {
   password   String
   email      String   @unique
   mobileNo   String   @unique
-  name       String
+  fullName   String
   fatherName String?
   motherName String?
   dob        DateTime
@@ -162,8 +162,8 @@ model User {
   status UserStatus @default(INACTIVE)
 
   // Address relation
-  address   Address @relation(fields: [addressId], references: [id])
-  addressId String
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId String?
 
   // Institute details
   instituteName    String  @unique
