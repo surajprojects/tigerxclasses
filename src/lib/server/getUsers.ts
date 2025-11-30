@@ -1,12 +1,12 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { StudentsList } from "@/utils/types/studentType";
+import { UsersList } from "@/utils/types/userType";
 
-export default async function getStudents() {
+export default async function getUsers() {
     try {
         const cookieStore = (await cookies()).toString();
-        const result = await fetch(`${process.env.NEXTAUTH_URL}/api/protected/students`, {
+        const result = await fetch(`${process.env.NEXTAUTH_URL}/api/protected/users`, {
             headers: {
                 Cookie: cookieStore,
             },
@@ -16,8 +16,8 @@ export default async function getStudents() {
         if (!result.ok) {
             throw new Error("Failed to fetch user");
         }
-        const data: { message: string, allStudents: StudentsList } = await result.json();
-        return data.allStudents;
+        const data: { message: string, allUsers: UsersList } = await result.json();
+        return data.allUsers;
     }
     catch {
         return null;

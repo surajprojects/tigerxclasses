@@ -32,7 +32,7 @@ export async function verifyAdmin(req: NextRequest) {
         return null;
     }
 
-    const userData = await prisma.user.findUnique({
+    const userData = await prisma.user.findMany({
         where: {
             role: "ADMIN",
             id: token.sub ? token.sub : "",
@@ -40,7 +40,7 @@ export async function verifyAdmin(req: NextRequest) {
         },
     });
 
-    if (!userData) {
+    if (!(userData.length === 1)) {
         return null;
     }
 

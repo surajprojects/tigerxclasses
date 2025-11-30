@@ -2,6 +2,7 @@ import StudentCourseForm from "./studentCourseForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
 import { StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
+import { StudentCourseStatus } from "@/db/generated/prisma";
 
 export default function EditStudentCourse({
     setShowForm,
@@ -37,8 +38,8 @@ export default function EditStudentCourse({
                                 courseId: studentCourseData.courseId,
                                 enrolledOn: studentCourseData.enrolledOn.split("T")[0],
                                 session: studentCourseData.session,
-                                totalFees: studentCourseData.totalFees,
-                                status: studentCourseData.status,
+                                totalFees: String(studentCourseData.totalFees),
+                                status: studentCourseData.status as StudentCourseStatus,
                                 remarks: studentCourseData.remarks ? studentCourseData.remarks : "",
                             }}
                         />

@@ -47,7 +47,7 @@ export default function SignUpForm() {
         try {
             await axiosPublic.post("/auth/register", formData);
             toast.success("User created successfully!!!");
-            router.push("/dashboard");
+            router.push("/");
         }
         catch (error: unknown) {
             errorHandle(error);

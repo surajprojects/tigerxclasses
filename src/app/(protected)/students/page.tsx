@@ -1,5 +1,5 @@
-import Table from "@/components/students/table";
 import getStudents from "@/lib/server/getStudents";
+import Table from "@/components/students/studentsTable";
 import AddStudentBtn from "@/components/button/student/addStudentBtn";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 

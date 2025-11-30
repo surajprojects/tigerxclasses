@@ -5,13 +5,14 @@ import { useState } from "react";
 import BtnLogout from "../button/btnLogout";
 import { usePathname } from "next/navigation";
 import { UsersIcon } from "@heroicons/react/24/outline";
-import { DollarSign, ChartColumn, PanelLeft, Notebook, BookOpenText } from "lucide-react";
+import { DollarSign, ChartColumn, PanelLeft, Notebook, BookOpenText, Users } from "lucide-react";
 
 export default function SideBar() {
     const pathname = usePathname();
     const [isCollapse, setIsCollapse] = useState(false);
     const nav = [
         { label: "Dashboard", icon: ChartColumn, href: "/dashboard" },
+        { label: "Users", icon: Users, href: "/users" },
         { label: "Students", icon: UsersIcon, href: "/students" },
         { label: "Batch", icon: Notebook, href: "/batch" },
         { label: "Course", icon: BookOpenText, href: "/course" },

@@ -38,7 +38,7 @@ export default function Table({ allStudents }: { allStudents: StudentsList }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {allStudents.length > 0 ? allStudents.map((student) => {
+                    {(allStudents && (allStudents.length > 0)) ? allStudents.map((student) => {
                         const studentCourseData = student.studentCourses.find((studentCourse) => studentCourse.status === "ACTIVE");
                         return <tr key={student.id}
                             className="border-b border-gray-200 hover:bg-gray-100 duration-300 ease-out">
