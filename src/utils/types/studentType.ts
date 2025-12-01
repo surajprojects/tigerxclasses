@@ -38,7 +38,7 @@ export type StudentFormData = Omit<
     Required<StudentData>,
     "id" | "userId" | "photo" | "documents" | "studentCourses" | "address"
 > & {
-    address: Omit<Required<StudentData["address"]>, "id" | "students">;
+    address: Omit<Required<StudentData["address"]>, "id">;
 };
 
 export interface StudentFeesData {

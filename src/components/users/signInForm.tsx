@@ -7,9 +7,10 @@ import FormField from "../form/formField";
 import FormHeader from "../form/formHeader";
 import FormAction from "../form/formAction";
 import { useState, type ChangeEvent } from "react";
+import { UserFormInput } from "@/utils/validators/userInput";
 
 export default function SignInForm() {
-    const initialData = {
+    const initialData: Pick<UserFormInput, "username" | "password"> = {
         username: "",
         password: "",
     };

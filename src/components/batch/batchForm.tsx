@@ -1,7 +1,6 @@
 import Btn from "../button/btn";
 import FormField from "../form/formField";
 import { ChangeEvent, useState } from "react";
-import { BatchData } from "@/utils/types/batchType";
 import { BatchFormInput, BatchFormInputEdit } from "@/utils/validators/batchInput";
 
 export default function BatchForm({
@@ -20,7 +19,7 @@ export default function BatchForm({
     btnText?: string,
     handleSubmit?: (data: BatchFormInput) => Promise<void>,
     handleEditSubmit?: (data: BatchFormInputEdit) => Promise<void>,
-    initialData?: Pick<BatchData, "name" | "description" | "code" | "time" | "startDate" | "endDate">,
+    initialData?: Required<BatchFormInput>,
 }) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);

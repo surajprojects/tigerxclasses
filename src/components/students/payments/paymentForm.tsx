@@ -2,7 +2,6 @@ import Btn from "@/components/button/btn";
 import { ChangeEvent, useState } from "react";
 import FormField from "@/components/form/formField";
 import { PaymentMethod } from "@/db/generated/prisma";
-import { PaymentData } from "@/utils/types/paymentType";
 import { PaymentFormInput } from "@/utils/validators/paymentInput";
 
 export default function PaymentForm({
@@ -17,7 +16,7 @@ export default function PaymentForm({
 }: {
     btnText?: string,
     handleSubmit?: (data: PaymentFormInput) => Promise<void>,
-    initialData?: Pick<PaymentData, "amount" | "date" | "method" | "remarks">,
+    initialData?: Required<PaymentFormInput>,
 }) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [formData, setFormData] = useState(initialData);

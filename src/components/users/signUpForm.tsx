@@ -8,6 +8,7 @@ import FormAction from "../form/formAction";
 import { useRouter } from "next/navigation";
 import { useState, type ChangeEvent } from "react";
 import axiosPublic from "@/utils/axios/axiosPublic";
+import { UserFormData } from "@/utils/types/userType";
 import { Category, Gender } from "@/db/generated/prisma";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import { UserFormInput } from "@/utils/validators/userInput";

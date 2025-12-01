@@ -1,5 +1,3 @@
-import { StudentsList } from "./studentType";
-
 export interface AddressData {
     id: string,
     flatHouseBuilding?: string,
