@@ -1,9 +1,9 @@
+import clsx from "clsx";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
 import AddPaymentBtn from "@/components/button/student/payment/addPaymentBtn";
 import ViewPaymentsBtn from "@/components/button/student/payment/viewPaymentsBtn";
 import ActionStudentCourseBtn from "@/components/button/course/student/actionStudentCourseBtn";
-import clsx from "clsx";
 
 export default function StudentCourseCard({
     studentId,
@@ -71,6 +71,7 @@ export default function StudentCourseCard({
                 </div>
                 {/* View Payments Button */}
                 <ViewPaymentsBtn
+                    title={studentCourseData.course.name}
                     studentId={studentId}
                     studentCourseId={studentCourseData.id}
                     paymentsList={studentCourseData.payments}

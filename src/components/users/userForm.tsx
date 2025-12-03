@@ -35,10 +35,12 @@ export default function UserForm({
         remarks: "",
         photo: "",
     },
+    showAddress = true,
 }: {
     handleSubmit?: (data: UserFormInput) => Promise<void>,
     handleEditSubmit?: (data: UserFormInputEdit) => Promise<void>,
     initialData?: UserFormData & { confirmPassword: string },
+    showAddress?: boolean,
 }) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -121,6 +123,7 @@ export default function UserForm({
                             id="password"
                             title="Password"
                             textHolder="••••••••"
+                            fieldType="password"
                             fieldValue={formData.password}
                             onChangeFunc={handleChange}
                             removeBorder={true}
@@ -130,6 +133,7 @@ export default function UserForm({
                             id="confirmPassword"
                             title="Confirm Password"
                             textHolder="••••••••"
+                            fieldType="password"
                             fieldValue={formData.confirmPassword}
                             onChangeFunc={handleChange}
                             removeBorder={true}
@@ -260,91 +264,93 @@ export default function UserForm({
                 </div>
 
                 {/* Address Information */}
-                <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
-                    <h5 className="text-2xl font-medium text-gray-800">Address Information</h5>
-                    <p className="text-gray-500 mt-1">User address details</p>
-                    <div className="grid grid-cols-2 gap-x-6">
-                        {/* Flat/House/Building */}
-                        <FormField
-                            id="address.flatHouseBuilding"
-                            title="Flat/House/Building"
-                            textHolder="117/Kha Salapura"
-                            fieldValue={formData.address.flatHouseBuilding}
-                            onChangeFunc={handleChange}
-                            removeBorder={true}
-                            isRequired={false}
-                        />
-                        {/* Street/Area */}
-                        <FormField
-                            id="address.streetOrArea"
-                            title="Street/Area"
-                            textHolder="Pali Road Salapura"
-                            fieldValue={formData.address.streetOrArea}
-                            onChangeFunc={handleChange}
-                            removeBorder={true}
-                        />
-                        {/* Landmark */}
-                        <FormField
-                            id="address.landmark"
-                            title="Landmark"
-                            textHolder="Near Apollo Hospital"
-                            fieldValue={formData.address.landmark}
-                            onChangeFunc={handleChange}
-                            removeBorder={true}
-                            isRequired={false}
-                        />
-                        {/* City */}
-                        <FormField
-                            id="address.city"
-                            title="City"
-                            textHolder="Sheopur"
-                            fieldValue={formData.address.city}
-                            onChangeFunc={handleChange}
-                            removeBorder={true}
-                        />
-                        {/* State */}
-                        <div className="flex flex-col my-2">
-                            <label htmlFor="address.state" className="font-sans font-medium text-sm text-gray-800">State*</label>
-                            <select
-                                id="address.state"
-                                name="address.state"
-                                value={formData.address.state}
-                                onChange={handleChange}
-                                className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
-                                <option value="" disabled>Select State</option>
-                                {[...Object.values(State)].map((opt, idx) => {
-                                    return <option key={idx} value={opt}>{opt}</option>
-                                })}
-                            </select>
-                        </div>
-                        {/* Pincode */}
-                        <div className="flex flex-col my-2">
-                            <label htmlFor="pincode" className="font-sans font-medium text-sm text-gray-800">Pincode</label>
-                            <input
-                                type="text"
-                                name="pincode"
-                                id="pincode"
-                                placeholder="123456"
-                                inputMode="numeric"
-                                maxLength={6}
-                                value={formData.address.pincode}
-                                onChange={(e) => {
-                                    const pincodeValue = e.target.value.replace(/\D/g, "");
-                                    setFormData((prevData) => {
-                                        return {
-                                            ...prevData,
-                                            address: {
-                                                ...prevData.address,
-                                                pincode: pincodeValue,
-                                            }
-                                        };
-                                    });
-                                }}
-                                className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
+                {showAddress &&
+                    <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">
+                        <h5 className="text-2xl font-medium text-gray-800">Address Information</h5>
+                        <p className="text-gray-500 mt-1">User address details</p>
+                        <div className="grid grid-cols-2 gap-x-6">
+                            {/* Flat/House/Building */}
+                            <FormField
+                                id="address.flatHouseBuilding"
+                                title="Flat/House/Building"
+                                textHolder="117/Kha Salapura"
+                                fieldValue={formData.address.flatHouseBuilding}
+                                onChangeFunc={handleChange}
+                                removeBorder={true}
+                                isRequired={false}
                             />
+                            {/* Street/Area */}
+                            <FormField
+                                id="address.streetOrArea"
+                                title="Street/Area"
+                                textHolder="Pali Road Salapura"
+                                fieldValue={formData.address.streetOrArea}
+                                onChangeFunc={handleChange}
+                                removeBorder={true}
+                            />
+                            {/* Landmark */}
+                            <FormField
+                                id="address.landmark"
+                                title="Landmark"
+                                textHolder="Near Apollo Hospital"
+                                fieldValue={formData.address.landmark}
+                                onChangeFunc={handleChange}
+                                removeBorder={true}
+                                isRequired={false}
+                            />
+                            {/* City */}
+                            <FormField
+                                id="address.city"
+                                title="City"
+                                textHolder="Sheopur"
+                                fieldValue={formData.address.city}
+                                onChangeFunc={handleChange}
+                                removeBorder={true}
+                            />
+                            {/* State */}
+                            <div className="flex flex-col my-2">
+                                <label htmlFor="address.state" className="font-sans font-medium text-sm text-gray-800">State*</label>
+                                <select
+                                    id="address.state"
+                                    name="address.state"
+                                    value={formData.address.state}
+                                    onChange={handleChange}
+                                    className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
+                                    <option value="" disabled>Select State</option>
+                                    {[...Object.values(State)].map((opt, idx) => {
+                                        return <option key={idx} value={opt}>{opt}</option>
+                                    })}
+                                </select>
+                            </div>
+                            {/* Pincode */}
+                            <div className="flex flex-col my-2">
+                                <label htmlFor="pincode" className="font-sans font-medium text-sm text-gray-800">Pincode</label>
+                                <input
+                                    type="text"
+                                    name="pincode"
+                                    id="pincode"
+                                    placeholder="123456"
+                                    inputMode="numeric"
+                                    maxLength={6}
+                                    value={formData.address.pincode}
+                                    onChange={(e) => {
+                                        const pincodeValue = e.target.value.replace(/\D/g, "");
+                                        setFormData((prevData) => {
+                                            return {
+                                                ...prevData,
+                                                address: {
+                                                    ...prevData.address,
+                                                    pincode: pincodeValue,
+                                                }
+                                            };
+                                        });
+                                    }}
+                                    className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
 
                 {/* Institute Information */}
                 <div className="bg-white p-6 rounded-2xl my-8 shadow-sm">

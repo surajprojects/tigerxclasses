@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import { NextRequest } from "next/server";
 import { verifyAdmin } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
-import { BatchFormInputEdit, batchFormInputEdit } from "@/utils/validators/batchInput";
 import { userFormInputEdit, UserFormInputEdit } from "@/utils/validators/userInput";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ userId: string }> }) {
@@ -19,6 +18,24 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
         const userData = await prisma.user.findUnique({
             where: {
                 id: userId,
+            },
+            include: {
+                address: true,
+                subscriptions: {
+                    where: {
+                        isDeleted: false,
+                    },
+                    include: {
+                        payments: {
+                            where: {
+                                isDeleted: false,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createdAt: "desc",
+                    }
+                },
             },
         });
 
@@ -99,9 +116,14 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ u
 
         const { userId } = await params;
 
-        const userData = await prisma.user.delete({
+        const userData = await prisma.user.update({
             where: {
                 id: userId,
+                isDeleted: false,
+            },
+            data: {
+                isDeleted: true,
+                deletedOn: new Date().toISOString(),
             },
         });
 

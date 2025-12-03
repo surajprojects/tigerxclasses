@@ -178,9 +178,10 @@ model User {
 
   currentSubscriptionId String?
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // Subscription model for limited or full access
@@ -189,6 +190,7 @@ model Subscription {
 
   name      String
   plan      SubscriptionPlan @default(MONTHLY)
+  amount    Int
   startedOn DateTime         @default(now())
   expiresOn DateTime
   remarks   String?
@@ -198,9 +200,10 @@ model Subscription {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // User Payment model for subscription
@@ -215,9 +218,10 @@ model UserPayment {
   subscription   Subscription @relation(fields: [subscriptionId], references: [id])
   subscriptionId String
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // Batch info
@@ -235,9 +239,10 @@ model Batch {
   user     User            @relation(fields: [userId], references: [id])
   userId   String
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@unique([code, userId])
 }
@@ -257,9 +262,10 @@ model Course {
   user     User            @relation(fields: [userId], references: [id])
   userId   String
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@unique([code, userId])
 }
@@ -288,9 +294,10 @@ model StudentCourse {
   student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
   studentId String
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // Residential address
@@ -308,9 +315,10 @@ model Address {
   users    User[]
   students Student[]
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // Student main profile data
@@ -352,9 +360,10 @@ model Student {
   user           User              @relation(fields: [userId], references: [id])
   userId         String
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@unique([rollNo, userId])
 }
@@ -372,9 +381,10 @@ model Payment {
   studentCourse   StudentCourse @relation(fields: [studentCourseId], references: [id], onDelete: Cascade)
   studentCourseId String
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // Documents of student (like Aadhar, marksheets, etc.)
@@ -397,9 +407,10 @@ model StudentDocument {
   session       String?
   documentLink  String?
 
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // Handles student transfer requests between institutes
@@ -415,8 +426,10 @@ model StudentTransfer {
   fromUserId String
   toUserId   String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isDeleted Boolean   @default(false)
+  deletedOn DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // Transfer status for student movement between institutes

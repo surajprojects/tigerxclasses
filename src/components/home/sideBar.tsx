@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { UsersIcon } from "@heroicons/react/24/outline";
 import { DollarSign, ChartColumn, PanelLeft, Notebook, BookOpenText, Users } from "lucide-react";
 
-export default function SideBar() {
+export default function SideBar({ isAdmin = false }: { isAdmin?: boolean }) {
     const pathname = usePathname();
     const [isCollapse, setIsCollapse] = useState(false);
     const nav = [
@@ -37,6 +37,9 @@ export default function SideBar() {
                     {/* Navigation Routes */}
                     <nav className="flex flex-col font-medium text-gray-800">
                         {nav.map((item, idx) => {
+                            if (!isAdmin && item.label === "Users") {
+                                return
+                            }
                             return <Link
                                 key={idx}
                                 href={item.href}

@@ -24,6 +24,7 @@ export default function UserEditForm({ userData, userId = "1" }: { userData: Use
         <>
             <UserForm
                 handleEditSubmit={handleEditSubmit}
+                showAddress={userData.address ? true : false}
                 initialData={{
                     password: "",
                     confirmPassword: "",
@@ -33,7 +34,7 @@ export default function UserEditForm({ userData, userId = "1" }: { userData: Use
                     fullName: userData.fullName,
                     fatherName: userData.fatherName ? userData.fatherName : "",
                     motherName: userData.motherName ? userData.motherName : "",
-                    dob: userData.dob,
+                    dob: userData.dob.split("T")[0],
                     gender: userData.gender,
                     category: userData.category,
                     email: userData.email,
@@ -41,13 +42,20 @@ export default function UserEditForm({ userData, userId = "1" }: { userData: Use
                     instituteName: userData.instituteName,
                     instituteAddress: userData.instituteAddress ? userData.instituteAddress : "",
                     contactNo: userData.contactNo ? userData.contactNo : "",
-                    address: {
+                    address: userData.address ? {
                         flatHouseBuilding: userData.address.flatHouseBuilding ? userData.address.flatHouseBuilding : "",
                         streetOrArea: userData.address.streetOrArea,
                         landmark: userData.address.landmark ? userData.address.landmark : "",
                         city: userData.address.city,
                         state: userData.address.state,
                         pincode: userData.address.pincode ? userData.address.pincode : "",
+                    } : {
+                        flatHouseBuilding: "",
+                        streetOrArea: "",
+                        landmark: "",
+                        city: "",
+                        state: "",
+                        pincode: "",
                     },
                 }}
             />

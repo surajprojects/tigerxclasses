@@ -20,7 +20,11 @@ export async function GET(req: NextRequest) {
                 return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
             }
 
-            const allCourses = await prisma.course.findMany({});
+            const allCourses = await prisma.course.findMany({
+                include: {
+                    _count: true,
+                }
+            });
 
             if (!(allCourses.length > 0)) {
                 return Response.json({ message: "Course not found!!!" }, { status: 404 });

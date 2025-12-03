@@ -1,4 +1,5 @@
 import { AddressData } from "./addressType";
+import { SubscriptionsList } from "./subscriptionType";
 
 export interface UserData {
     id: string,
@@ -18,14 +19,15 @@ export interface UserData {
     instituteAddress?: string,
     contactNo?: string,
     status: string,
-    isDeleted: string,
+    isDeleted: boolean,
+    subscriptions: SubscriptionsList,
 };
 
 export type UsersList = UserData[];
 
 export type UserFormData = Omit<
     Required<UserData>,
-    "id" | "status" | "isDeleted" | "address"
+    "id" | "status" | "isDeleted" | "address" | "subscriptions"
 > & {
     address: Omit<Required<UserData["address"]>, "id">;
     password: string,

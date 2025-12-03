@@ -14,7 +14,7 @@ export default function StudentCourseForm({
     initialData = {
         batchId: "",
         courseId: "",
-        enrolledOn: "",
+        enrolledOn: new Date().toISOString().split("T")[0],
         totalFees: "",
         session: "",
         remarks: "",
@@ -126,7 +126,7 @@ export default function StudentCourseForm({
                                         };
                                     });
                                 }}
-                                className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
+                                className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out"
                             />
                         </div>
                     </div>

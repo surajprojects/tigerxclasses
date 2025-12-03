@@ -193,6 +193,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ s
             },
             data: {
                 isDeleted: true,
+                deletedOn: new Date().toISOString(),
             }
         });
 

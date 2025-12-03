@@ -10,7 +10,7 @@ export default function PaymentForm({
     initialData = {
         amount: 1,
         method: "CASH",
-        date: "",
+        date: new Date().toISOString().split("T")[0],
         remarks: "",
     },
 }: {
@@ -44,7 +44,6 @@ export default function PaymentForm({
                     // Handle submit function
                     handleSubmit && await handleSubmit({
                         ...formData,
-                        amount: Number(formData.amount),
                         method: formData.method as PaymentMethod,
                     });
                     setIsLoading(false);
@@ -67,14 +66,28 @@ export default function PaymentForm({
                     </select>
                 </div>
                 {/* Amount */}
-                <FormField
-                    id="amount"
-                    title={`Amount &#40;&#8377;&#41;`}
-                    textHolder="10000"
-                    fieldType="number"
-                    fieldValue={formData.amount}
-                    onChangeFunc={handleChange}
-                />
+                <div className="flex flex-col my-2">
+                    <label htmlFor="amount" className="font-sans font-medium text-sm text-gray-800">Amount &#40;&#8377;&#41;*</label>
+                    <input
+                        type="text"
+                        name="amount"
+                        id="amount"
+                        placeholder="10000"
+                        inputMode="numeric"
+                        maxLength={10}
+                        value={formData.amount}
+                        onChange={(e) => {
+                            const amountValue = e.target.value.replace(/\D/g, "");
+                            setFormData((prevData) => {
+                                return {
+                                    ...prevData,
+                                    amount: Number(amountValue),
+                                };
+                            });
+                        }}
+                        className="border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out"
+                    />
+                </div>
                 {/* Date */}
                 <FormField
                     id="date"

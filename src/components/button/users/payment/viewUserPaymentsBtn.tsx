@@ -4,21 +4,21 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { PaymentsList } from "@/utils/types/paymentType";
+import { PaymentsList, UserPaymentsList } from "@/utils/types/paymentType";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import axiosProtected from "@/utils/axios/axiosProtected";
 import ViewPayments from "@/components/students/payments/viewPayments";
 
-export default function ViewPaymentsBtn({
+export default function ViewUserPaymentsBtn({
     title = "Payment",
-    studentId,
-    studentCourseId,
+    userId,
+    subscriptionId,
     paymentsList,
 }: {
     title?: string,
-    studentId: string,
-    studentCourseId: string,
-    paymentsList: PaymentsList,
+    userId: string,
+    subscriptionId: string,
+    paymentsList: PaymentsList | UserPaymentsList,
 }) {
     const router = useRouter();
     const [showForm, setShowForm] = useState<boolean>(false);
@@ -29,7 +29,7 @@ export default function ViewPaymentsBtn({
 
     const handleDelete = async (paymentId: string) => {
         try {
-            await axiosProtected.delete(`/students/${studentId}/studentcourse/${studentCourseId}/payment/${paymentId}`);
+            await axiosProtected.delete(`/users/${userId}/subscription/${subscriptionId}/payment/${paymentId}`);
             toast.success("Payment deleted successfully!!!");
             setShowForm(false);
             router.refresh();

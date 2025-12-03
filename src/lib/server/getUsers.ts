@@ -14,7 +14,7 @@ export default async function getUsers() {
         });
 
         if (!result.ok) {
-            throw new Error("Failed to fetch user");
+            throw new Error("Failed to fetch data");
         }
 
         const data: { message: string, allUsers: UsersList } = await result.json();

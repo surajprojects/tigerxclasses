@@ -2,15 +2,18 @@ import PaymentForm from "./paymentForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { PaymentFormInput } from "@/utils/validators/paymentInput";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
+import StudentPaymentSummaryCard from "@/components/card/student/studentPaymentSummaryCard";
 
 export default function AddPayment({
     setShowForm,
     handleSubmit,
     studentCourseData,
+    studentSummaryCard = true,
 }: {
-    studentCourseData: StudentCourseData,
+    studentCourseData?: StudentCourseData,
     handleSubmit: (data: PaymentFormInput) => Promise<void>,
     setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
+    studentSummaryCard?: boolean,
 }) {
     const handleCloseForm = () => {
         setShowForm(false);
@@ -32,28 +35,12 @@ export default function AddPayment({
                         {/* Description */}
                         <p className="text-gray-500 my-2 mb-4">Add a new payment record</p>
                         {/* Summary Card */}
-                        <div className="bg-blue-50 rounded-xl shadow p-4 mb-4 border border-blue-100 grid grid-cols-2 gap-8">
-                            <div>
-                                <div>
-                                    <p className="text-gray-600">Student</p>
-                                    <p className="font-bold text-gray-700 text-lg">{studentCourseData.student.fullName}</p>
-                                </div>
-                                <div className="mt-2">
-                                    <p className="text-gray-600">Course</p>
-                                    <p className="font-bold text-gray-700 text-lg">{studentCourseData.course.name}</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <p className="text-gray-600">Batch</p>
-                                    <p className="font-bold text-gray-700 text-lg">{studentCourseData.batch.name}</p>
-                                </div>
-                                <div className="mt-2">
-                                    <p className="text-gray-600">Enrolled On</p>
-                                    <p className="font-bold text-gray-700 text-lg">{studentCourseData.enrolledOn.split("T")[0]}</p>
-                                </div>
-                            </div>
-                        </div>
+                        {studentSummaryCard && <StudentPaymentSummaryCard
+                            studentName={studentCourseData ? studentCourseData.student.fullName : ""}
+                            courseName={studentCourseData ? studentCourseData.course.name : ""}
+                            batchName={studentCourseData ? studentCourseData.batch.name : ""}
+                            enrolledOn={studentCourseData ? studentCourseData.enrolledOn.split("T")[0] : ""}
+                        />}
                         {/* Payment Form */}
                         <PaymentForm btnText="Add Payment" handleSubmit={handleSubmit} />
                     </div>

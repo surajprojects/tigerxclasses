@@ -7,12 +7,12 @@ export default async function AuthLayout({
 }: {
     children: React.ReactNode
 }) {
-    await getSessionOrRedirect();
+    const session = await getSessionOrRedirect();
     return (
         <>
             <div className="flex h-screen overflow-hidden">
                 {/* Sidebar */}
-                <SideBar />
+                <SideBar isAdmin={session.user.role === "ADMIN" ? true : false} />
                 <div className="flex flex-col flex-1">
                     {/* Header */}
                     <Header />

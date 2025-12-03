@@ -1,19 +1,21 @@
-import { PaymentsList } from "@/utils/types/paymentType";
+import { PaymentsList, UserPaymentsList } from "@/utils/types/paymentType";
 import PaymentCard from "@/components/card/student/payment/paymentCard";
 import PaymentSummaryCard from "@/components/card/student/payment/paymentSummaryCard";
 
 export default function ViewPayments({
+    title = "Payment",
     paymentsList,
     handleDelete,
 }: {
-    paymentsList: PaymentsList,
+    title?: string,
+    paymentsList: PaymentsList | UserPaymentsList,
     handleDelete: (id: string) => Promise<void>,
 }) {
     return (
         <>
             <div className="text-gray-900">
                 {/* Title */}
-                <h4 className="text-2xl font-medium">Tally</h4>
+                <h4 className="text-2xl font-medium">{title}</h4>
                 {/* Description */}
                 <p className="text-gray-500 my-2 mb-4">Payment history and transaction details</p>
                 {/* Payment Summary Card */}

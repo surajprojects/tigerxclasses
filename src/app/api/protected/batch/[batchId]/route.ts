@@ -114,6 +114,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ b
             },
             data: {
                 isDeleted: true,
+                deletedOn: new Date().toISOString(),
             },
             select: {
                 id: true,

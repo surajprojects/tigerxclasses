@@ -42,8 +42,10 @@ export default function UsersTable({ allUsers }: { allUsers: any }) {
                             <td className="px-6 py-4">
                                 {idx + 1}
                             </td>
-                            <td className="px-6 py-4">
-                                {user.fullName}
+                            <td className="px-6 py-4 capitalize font-semibold">
+                                <Link href={`/users/${user.id}/profile`}>
+                                    {user.fullName}
+                                </Link>
                             </td>
                             <td className="px-6 py-4">
                                 {user.instituteName}

@@ -20,7 +20,11 @@ export async function GET(req: NextRequest) {
                 return Response.json({ message: "Unauthorized!!!" }, { status: 401 });
             }
 
-            const allBatches = await prisma.batch.findMany({});
+            const allBatches = await prisma.batch.findMany({
+                include: {
+                    _count: true,
+                }
+            });
 
             if (!(allBatches.length > 0)) {
                 return Response.json({ message: "Batch not found!!!" }, { status: 404 });
