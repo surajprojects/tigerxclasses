@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+---
 
-## Getting Started
+# Tiger Classes – Student Management System
 
-First, run the development server:
+Tiger Classes is a fully featured **student management system** built using **Next.js 16**, **Prisma**, **PostgreSQL**, **NextAuth**, and **TailwindCSS**.  
+It manages batches, courses, students, enrollments, payments, and documents — with **soft delete**, **role-based access**, and a modern dashboard.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Authentication
+- User **Registration & Login**  
+- **NextAuth** JWT-based authentication  
+- Sessions stored securely  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Batches Management
+- Create / Read / Update / Delete Batches  
+- Soft delete for persistent history  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Courses Management
+- Create / Read / Update / Delete Courses  
+- Course details + fee info  
+- Soft delete enabled  
 
-## Learn More
+### Students Management
+- Create / Read / Update / Delete Students  
+- Student profile pages  
+- Soft delete for history retention  
 
-To learn more about Next.js, take a look at the following resources:
+### Student Courses (Enrolled Courses)
+- Students can enroll in one or multiple courses  
+- CRUD operations for enrollment records  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Payments Module
+- **Create** and **Delete** payment records  
+- Updates are not allowed to keep financial history accurate  
+- Each payment is tied to a specific enrolled course  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Student Documents
+- CRUD for document metadata (form-based)  
+- Soft delete maintained  
 
-## Deploy on Vercel
+### Dashboard
+- Recently added:
+  - Student, course, and batch stats  
+  - Charts with Recharts (line charts, bar charts, pie)  
+- Coming soon:
+  - Payments overview section  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Soft Delete Everywhere
+Every entity (Batch, Course, Student, Enrollment, Payment, Document) uses:
+- `deleted: boolean`
+- `deletedAt: Date | null`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This keeps **history safe**, avoids accidental loss, and makes admin auditing easier.
+
+## Tech Stack
+
+### Frontend + Backend (Full Stack Next.js App)
+- **Next.js 16**
+- **React 19**
+- **TailwindCSS 4**
+- **Recharts**
+- **Lucide React** & **Heroicons**
+- **React Toastify** (notifications)
+- **Axios**
+
+### Backend Logic / DB
+- **Prisma ORM (6.19)**  
+- **Prisma Accelerate Extension**  
+- **PostgreSQL**  
+- **bcryptjs** for hashing  
+- **dotenv** for environment configs  
+
+### Auth
+- **NextAuth 4** (JWT adapter)
+
+### Validation
+- **Zod 4** for all input validation  
+
+### Dev Tools
+- TypeScript  
+- ESLint  
+- Tailwind PostCSS  
+- Prisma Studio  
+- React Compiler  
+- Baseline browser polyfills  
+
+## Deployment
+
+This full stack app is deployed using [Vercel](https://vercel.com/) by Tiger. You can access the live version here: [Tiger Classes](https://tigerxclasses.vercel.app/)
+
+## Installation & Setup
+
+1. Clone the repository
+2. Navigate to the folder
+3. Install dependencies
+4. Setup environment variables
+5. Database setup
+6. Start the development server
+7. Open the app in your browser at http://localhost:3000
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Made with ❤️ by Tiger
+
+---
