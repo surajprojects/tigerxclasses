@@ -35,6 +35,16 @@ export default function StudentCourseForm({
         const fieldName = evt.target.name;
         const changedValue = evt.target.value;
         setFormData((prevData) => {
+            if (fieldName === "courseId") {
+                const courseFees = coursesData.find((course) => course.id === changedValue);
+                if (courseFees) {
+                    return {
+                        ...prevData,
+                        [fieldName]: changedValue,
+                        totalFees: String(courseFees.fees),
+                    }
+                }
+            }
             return {
                 ...prevData,
                 [fieldName]: changedValue
