@@ -21,14 +21,17 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ use
             return Response.json({ message: "Invalid input!!!", details: parsedInput.error.issues }, { status: 400 });
         }
 
+        const expiresOn = new Date();
+        expiresOn.setDate(expiresOn.getDate() + 30);
+
         const userSubscriptionData = await prisma.subscription.create({
             data: {
                 userId,
                 name: parsedInput.data.name,
                 plan: parsedInput.data.plan,
                 amount: parsedInput.data.amount,
-                startedOn: new Date(parsedInput.data.startedOn),
-                expiresOn: new Date(parsedInput.data.expiresOn),
+                startedOn: new Date(),
+                expiresOn,
                 ...(parsedInput.data.remarks && { remarks: parsedInput.data.remarks }),
             }
         });

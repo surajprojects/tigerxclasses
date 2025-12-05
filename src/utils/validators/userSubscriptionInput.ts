@@ -4,8 +4,8 @@ import { SubscriptionPlan } from "@/db/generated/prisma";
 export const userSubscriptionInput = z.object({
     name: z.string(),
     amount: z.number().min(1).max(99999999),
-    startedOn: z.string(),
-    expiresOn: z.string(),
+    startedOn: z.string().optional(),
+    expiresOn: z.string().optional(),
     plan: z.enum([...Object.values(SubscriptionPlan)] as [SubscriptionPlan, ...SubscriptionPlan[]]),
     remarks: z.string().optional(),
 }).strict();

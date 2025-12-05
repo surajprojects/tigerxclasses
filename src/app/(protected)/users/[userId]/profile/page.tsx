@@ -7,6 +7,7 @@ import CardBody from "@/components/card/cardBody";
 import CardHeader from "@/components/card/cardHeader";
 import EditUserBtn from "@/components/button/users/editUserBtn";
 import UserDeleteBtn from "@/components/button/users/userDeleteBtn";
+import UserStatusBtn from "@/components/button/users/userStatusBtn";
 import UserSubscriptionCard from "@/components/card/user/userSubscriptionCard";
 import { UserIcon, HomeIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 import AddUserSubscriptionBtn from "@/components/button/users/addUserSubscriptionBtn";
@@ -45,11 +46,12 @@ export default async function UserProfile({
                                 <li className="text-gray-800 font-semibold text-lg">{userData.username}</li>
                             </ul>
                         </li>
-                        <li>
+                        <li className="flex items-end gap-2">
                             <ul>
                                 <li className="text-gray-500 text-sm">Status</li>
                                 <li className="text-gray-800 font-semibold text-lg">{userData.status}</li>
                             </ul>
+                            <UserStatusBtn userId={userId} />
                         </li>
                         <li>
                             <ul>

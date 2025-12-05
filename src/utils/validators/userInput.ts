@@ -1,6 +1,6 @@
 import z from "zod";
 import { addressInput } from "./addressInput";
-import { Category, Gender } from "@/db/generated/prisma";
+import { Category, Gender, UserStatus } from "@/db/generated/prisma";
 
 export const userFormInput = z.object({
     username: z.string(),
@@ -9,6 +9,7 @@ export const userFormInput = z.object({
     dob: z.string(),
     fatherName: z.string().optional(),
     motherName: z.string().optional(),
+    status: z.enum([...Object.values(UserStatus)] as [UserStatus, ...UserStatus[]]).optional(),
     gender: z.enum([...Object.values(Gender)] as [Gender, ...Gender[]]),
     category: z.enum([...Object.values(Category)] as [Category, ...Category[]]),
     email: z.string(),

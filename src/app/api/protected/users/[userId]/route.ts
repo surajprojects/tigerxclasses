@@ -71,6 +71,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ us
                 id: userId,
             },
             data: {
+                ...(parsedInput.data.status && { status: parsedInput.data.status }),
                 ...(parsedInput.data.username && { username: parsedInput.data.username }),
                 ...(parsedInput.data.password && { password: bcrypt.hashSync(parsedInput.data.password, 10) }),
                 ...(parsedInput.data.fullName && { fullName: parsedInput.data.fullName }),
