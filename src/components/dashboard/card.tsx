@@ -16,15 +16,15 @@ export default function Card({
 }) {
     return (
         <>
-            <div className="rounded-xl bg-white p-5 border border-gray-50 shadow-sm w-full">
-                <div className="mb-8 flex justify-between items-center">
-                    <p className="text-lg font-semibold text-gray-500 mr-14">{title}</p>
+            <div className="rounded-xl bg-white p-5 border border-gray-50 shadow-sm hover:shadow-md duration-300 ease-out w-full">
+                <div className="flex justify-between items-center">
+                    <p className="text-base font-semibold text-gray-500">{title}</p>
                     <div className={clsx("p-2.5 rounded-2xl", className ? className : "bg-blue-50 text-blue-500")}>
                         {children ? children : <UsersIcon className="size-6" />}
                     </div>
                 </div>
-                <p className="text-4xl font-bold text-gray-700 my-2">{data}</p>
-                <p className="text-sm text-green-500">{description}</p>
+                <p className="text-4xl font-bold text-gray-800/90 my-3 mt-4">{data}</p>
+                <p className="text-xs text-green-600 font-medium">{description}</p>
             </div >
         </>
     );

@@ -1,27 +1,48 @@
-import Card from "@/components/dashboard/card";
 import { DollarSign } from "lucide-react";
+import Card from "@/components/dashboard/card";
+import getDashboard from "@/lib/server/getDashboard";
 import { BookOpenIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+    const dashboardData = await getDashboard();
     return (
         <>
             <div>
                 <h6 className="text-4xl text-blue-500 font-bold">Dashboard</h6>
                 <p className="my-2 font-medium text-gray-500 text-base">Welcome back! Here's your management overview.</p>
                 <div className="flex justify-between gap-8 my-8">
-                    <Card className="bg-blue-50 text-blue-500" />
-                    <Card className="bg-cyan-50 text-cyan-500">
+                    {/* Total Students */}
+                    <Card
+                        title="Total Students"
+                        description="All students currently recorded"
+                        data={`${dashboardData.totalStudents}`}
+                        className="bg-blue-50 text-blue-500"
+                    />
+                    {/* Active Students */}
+                    <Card
+                        title="Active Students"
+                        description="All students currently active"
+                        data={`${dashboardData.activeStudents}`}
+                        className="bg-cyan-50 text-cyan-500"
+                    >
                         <BookOpenIcon className="size-6" />
                     </Card>
+                    {/* Total Receivables */}
                     <Card
-                        title="Total Revenue"
-                        data="$43,500"
-                        description="+8% from last month"
+                        title="Total Receivables"
+                        description="Total amount yet to be received"
+                        data={`₹${dashboardData.totalFees - dashboardData.totalFeesPaid}/-`}
                         className="bg-amber-50 text-amber-500"
                     >
                         <DollarSign className="size-6" />
                     </Card>
-                    <Card className="bg-green-50 text-green-500">
+                    {/* Payment Rate */}
+                    <Card
+                        title="Payment Rate"
+                        description="Overall fees collection efficiency"
+                        data={`${(dashboardData.totalStudents > 0) ? ((dashboardData.totalFeesPaid / dashboardData.totalFees) * 100) : 0}%`}
+                        className="bg-green-50 text-green-500"
+                    >
                         <ArrowTrendingUpIcon className="size-6" />
                     </Card>
                 </div>
