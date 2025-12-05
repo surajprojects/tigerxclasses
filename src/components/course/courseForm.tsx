@@ -81,7 +81,7 @@ export default function CourseForm({
                 {/* Code */}
                 <FormField
                     id="code"
-                    title="Code"
+                    title="Code (Must be unique)"
                     textHolder="DCA"
                     fieldValue={formData.code}
                     onChangeFunc={handleChange}

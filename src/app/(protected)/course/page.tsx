@@ -22,7 +22,7 @@ export default async function Course() {
                         />
                     })
                         :
-                        <p>No courses found!!!</p>
+                        <p className="italic text-gray-500">No courses found!!!</p>
                     }
                 </div>
             </div>

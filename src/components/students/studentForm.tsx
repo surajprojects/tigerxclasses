@@ -29,7 +29,7 @@ export default function StudentForm({
         parentGuardianMobileNo1: "",
         parentGuardianMobileNo2: "",
         class: "",
-        institute: "",
+        institute: "NONE",
         instituteName: "",
         session: "",
         remarks: "",
@@ -288,10 +288,10 @@ export default function StudentForm({
                             onChangeFunc={handleChange}
                             removeBorder={true}
                         />
-                        {/* mother Name */}
+                        {/* Mother Name */}
                         <FormField
                             id="motherName"
-                            title="mother Name"
+                            title="Mother Name"
                             textHolder="Enter mother name"
                             fieldValue={formData.motherName}
                             onChangeFunc={handleChange}

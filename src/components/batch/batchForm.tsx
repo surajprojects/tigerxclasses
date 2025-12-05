@@ -68,7 +68,7 @@ export default function BatchForm({
                 {/* Code */}
                 <FormField
                     id="code"
-                    title="Code"
+                    title="Code (Must be unique)"
                     textHolder="B01T7AM"
                     fieldValue={formData.code}
                     onChangeFunc={handleChange}

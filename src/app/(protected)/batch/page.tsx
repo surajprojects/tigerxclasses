@@ -22,7 +22,7 @@ export default async function Batch() {
                         />
                     })
                         :
-                        <p>No batches found!!!</p>
+                        <p className="italic text-gray-500">No batches found!!!</p>
                     }
                 </div>
             </div>

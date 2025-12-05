@@ -13,7 +13,7 @@ export default function UserSubscriptionForm({
         name: "",
         amount: "",
         plan: "",
-        startedOn: new Date().toISOString().split("T")[0],
+        startedOn: "",
         expiresOn: "",
         remarks: "",
     },
@@ -113,6 +113,7 @@ export default function UserSubscriptionForm({
                         fieldType="date"
                         fieldValue={formData.startedOn}
                         onChangeFunc={handleChange}
+                        isRequired={false}
                     />
                     {/* End Date */}
                     <FormField
@@ -121,6 +122,7 @@ export default function UserSubscriptionForm({
                         fieldType="date"
                         fieldValue={formData.expiresOn}
                         onChangeFunc={handleChange}
+                        isRequired={false}
                     />
                 </div>
                 {/* Remarks */}
