@@ -182,6 +182,7 @@ export async function POST(req: NextRequest) {
 
             const studentData = await prisma.student.create({
                 data: {
+                    rollNo: 1,
                     // Personal info
                     fullName: parsedInput.data.fullName,
                     dob: new Date(parsedInput.data.dob).toISOString(),
@@ -240,6 +241,20 @@ export async function POST(req: NextRequest) {
                 return Response.json({ message: "You&#8217;ve reached your account limit. No more than 10 students can be created." }, { status: 402 });
             }
 
+            const lastStudent = await prisma.student.findFirst({
+                where: {
+                    userId: String(token.id),
+                },
+                orderBy: {
+                    rollNo: "desc",
+                },
+                select: {
+                    rollNo: true,
+                },
+            });
+
+            const nextRollNo = lastStudent ? lastStudent.rollNo + 1 : 1;
+
             const addressData = await prisma.address.create({
                 data: {
                     ...(parsedInput.data.address.flatHouseBuilding && { flatHouseBuilding: parsedInput.data.address.flatHouseBuilding }),
@@ -253,6 +268,8 @@ export async function POST(req: NextRequest) {
 
             const studentData = await prisma.student.create({
                 data: {
+                    rollNo: nextRollNo,
+                    userId: String(token.id),
                     // Personal info
                     fullName: parsedInput.data.fullName,
                     dob: new Date(parsedInput.data.dob).toISOString(),
@@ -274,8 +291,6 @@ export async function POST(req: NextRequest) {
                     ...(parsedInput.data.instituteName && { instituteName: parsedInput.data.instituteName }),
                     ...(parsedInput.data.session && { remarks: parsedInput.data.session }),
                     ...(parsedInput.data.remarks && { remarks: parsedInput.data.remarks }),
-
-                    userId: String(token.id),
                 }
             });
 
@@ -283,6 +298,20 @@ export async function POST(req: NextRequest) {
         }
 
         if (subscriptionCheck.userStatus === "ACTIVE") {
+            const lastStudent = await prisma.student.findFirst({
+                where: {
+                    userId: String(token.id),
+                },
+                orderBy: {
+                    rollNo: "desc",
+                },
+                select: {
+                    rollNo: true,
+                },
+            });
+
+            const nextRollNo = lastStudent ? lastStudent.rollNo + 1 : 1;
+
             const addressData = await prisma.address.create({
                 data: {
                     ...(parsedInput.data.address.flatHouseBuilding && { flatHouseBuilding: parsedInput.data.address.flatHouseBuilding }),
@@ -296,6 +325,8 @@ export async function POST(req: NextRequest) {
 
             const studentData = await prisma.student.create({
                 data: {
+                    rollNo: nextRollNo,
+                    userId: String(token.id),
                     // Personal info
                     fullName: parsedInput.data.fullName,
                     dob: new Date(parsedInput.data.dob).toISOString(),
@@ -317,8 +348,6 @@ export async function POST(req: NextRequest) {
                     ...(parsedInput.data.instituteName && { instituteName: parsedInput.data.instituteName }),
                     ...(parsedInput.data.session && { remarks: parsedInput.data.session }),
                     ...(parsedInput.data.remarks && { remarks: parsedInput.data.remarks }),
-
-                    userId: String(token.id),
                 }
             });
 
