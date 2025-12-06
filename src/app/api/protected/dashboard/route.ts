@@ -17,12 +17,15 @@ export async function GET(req: NextRequest) {
             },
             select: {
                 studentCourses: {
+                    where: {
+                        isDeleted: false,
+                    },
                     select: {
                         status: true,
                         totalFees: true,
                         payments: {
-                            select: {
-                                amount: true,
+                            where: {
+                                isDeleted: false,
                             },
                         },
                     },

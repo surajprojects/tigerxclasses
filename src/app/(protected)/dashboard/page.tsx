@@ -1,6 +1,7 @@
 import { DollarSign } from "lucide-react";
 import Card from "@/components/dashboard/card";
 import getDashboard from "@/lib/server/getDashboard";
+import FeesPieChart from "@/components/dashboard/feesPieChart";
 import { BookOpenIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
 
 export default async function Dashboard() {
@@ -10,7 +11,7 @@ export default async function Dashboard() {
             <div>
                 <h6 className="text-4xl text-blue-500 font-bold">Dashboard</h6>
                 <p className="my-2 font-medium text-gray-500 text-base">Welcome back! Here's your management overview.</p>
-                <div className="flex justify-between gap-8 my-8">
+                <div className="grid grid-cols-4 gap-6 my-8">
                     {/* Total Students */}
                     <Card
                         title="Total Students"
@@ -40,11 +41,24 @@ export default async function Dashboard() {
                     <Card
                         title="Payment Rate"
                         description="Overall fees collection efficiency"
-                        data={`${(dashboardData.totalStudents > 0) ? ((dashboardData.totalFeesPaid / dashboardData.totalFees) * 100) : 0}%`}
+                        data={`${(dashboardData.totalStudents > 0) ? Math.floor((dashboardData.totalFeesPaid / dashboardData.totalFees) * 100) : 0}%`}
                         className="bg-green-50 text-green-500"
                     >
                         <ArrowTrendingUpIcon className="size-6" />
                     </Card>
+                </div>
+                <div className="grid grid-cols-2 gap-6">
+                    {/* Fees Pie Chart */}
+                    <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md p-5">
+                        <div>
+                            <p className="text-xl font-bold text-gray-800">Payment Status</p>
+                            <p className="text-sm mt-1 text-gray-500">Distribution of payment</p>
+                        </div>
+                        <FeesPieChart
+                            firstValue={dashboardData.totalFeesPaid}
+                            secondValue={(dashboardData.totalFees) - (dashboardData.totalFeesPaid)}
+                        />
+                    </div>
                 </div>
             </div>
         </>
