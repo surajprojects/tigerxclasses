@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react";
-import DeleteBtn from "../../deleteBtn";
 import { toast } from "react-toastify";
+import DeleteBtn from "../../deleteBtn";
 import { useRouter } from "next/navigation";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import axiosProtected from "@/utils/axios/axiosProtected";

@@ -106,6 +106,21 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ c
 
         const { courseId } = await params;
 
+        const studentCourseData = await prisma.studentCourse.findMany({
+            where: {
+                isDeleted: false,
+                student: {
+                    userId: String(token.id),
+                },
+            },
+        });
+
+        const newStudentCourseData = studentCourseData.find((studentCourse) => studentCourse.courseId === courseId);
+
+        if (newStudentCourseData) {
+            return Response.json({ message: "Course cannot be deleted because it is currently in use!!!" }, { status: 409 });
+        }
+
         const courseData = await prisma.course.update({
             where: {
                 id: courseId,

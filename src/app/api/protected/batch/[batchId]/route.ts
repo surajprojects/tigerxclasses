@@ -106,6 +106,21 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ b
 
         const { batchId } = await params;
 
+        const studentCourseData = await prisma.studentCourse.findMany({
+            where: {
+                isDeleted: false,
+                student: {
+                    userId: String(token.id),
+                },
+            },
+        });
+
+        const newStudentCourseData = studentCourseData.find((studentCourse) => studentCourse.batchId === batchId);
+
+        if (newStudentCourseData) {
+            return Response.json({ message: "Batch cannot be deleted because it is currently in use!!!" }, { status: 409 });
+        }
+
         const batchData = await prisma.batch.update({
             where: {
                 id: batchId,

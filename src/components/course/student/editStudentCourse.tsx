@@ -1,8 +1,8 @@
 import StudentCourseForm from "./studentCourseForm";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { StudentCourseStatus } from "@/db/generated/prisma";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
 import { StudentCourseInputEdit } from "@/utils/validators/studentCourseInput";
-import { StudentCourseStatus } from "@/db/generated/prisma";
 
 export default function EditStudentCourse({
     setShowForm,
