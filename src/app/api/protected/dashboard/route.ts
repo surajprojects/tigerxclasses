@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
                 isDeleted: false,
             },
             select: {
+                createdAt: true,
                 studentCourses: {
                     where: {
                         isDeleted: false,
@@ -33,6 +34,19 @@ export async function GET(req: NextRequest) {
             },
         });
 
+        const studentsByMonth: Record<string, typeof allStudents> = {};
+
+        allStudents.forEach(student => {
+            const date = new Date(student.createdAt);
+            const monthKey = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}`; // e.g., "2025-12"
+
+            if (!studentsByMonth[monthKey]) {
+                studentsByMonth[monthKey] = [];
+            }
+
+            studentsByMonth[monthKey].push(student);
+        });
+
         const studentsData = allStudents.map((student) => {
             return {
                 totalFees: student.studentCourses.reduce((sum, fees) => sum + fees.totalFees, 0),
@@ -42,6 +56,7 @@ export async function GET(req: NextRequest) {
         });
 
         const dashboardData = {
+            studentsByMonth,
             totalStudents: allStudents.length,
             activeStudents: studentsData.filter((student) => student.isActive === true).length,
             totalFeesPaid: studentsData.reduce((sum, payment) => sum + payment.paidFees, 0),

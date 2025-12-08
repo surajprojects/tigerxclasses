@@ -18,7 +18,7 @@ export default function Card({
         <>
             <div className="rounded-xl bg-white p-5 border border-gray-50 shadow-sm hover:shadow-md duration-300 ease-out w-full">
                 <div className="flex justify-between items-center">
-                    <p className="text-base font-semibold text-gray-500">{title}</p>
+                    <p className="text-base font-semibold text-gray-600">{title}</p>
                     <div className={clsx("p-2.5 rounded-2xl", className ? className : "bg-blue-50 text-blue-500")}>
                         {children ? children : <UsersIcon className="size-6" />}
                     </div>
