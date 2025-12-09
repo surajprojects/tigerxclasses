@@ -6,12 +6,16 @@ export default function Card({
     data = "145",
     description = "+12% from last month",
     className,
+    titleStyle,
+    descriptionStyle,
     children,
 }: {
     title?: string,
     data?: string,
     description?: string,
     className?: string,
+    titleStyle?: string,
+    descriptionStyle?: string,
     children?: React.ReactNode,
 }) {
     return (
@@ -23,8 +27,8 @@ export default function Card({
                         {children ? children : <UsersIcon className="size-6" />}
                     </div>
                 </div>
-                <p className="text-4xl font-bold text-gray-800/90 my-3 mt-4">{data}</p>
-                <p className="text-xs text-green-600 font-medium">{description}</p>
+                <p className={clsx("font-bold text-gray-800/90", titleStyle ? titleStyle : "text-4xl my-3 mt-4")}>{data}</p>
+                <p className={clsx("text-xs font-medium", descriptionStyle ? descriptionStyle : "text-green-600")}>{description}</p>
             </div >
         </>
     );
