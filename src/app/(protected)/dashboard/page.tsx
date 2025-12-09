@@ -50,13 +50,13 @@ export default async function Dashboard() {
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                     {/* Students Line Chart */}
-                    <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md p-5">
+                    {/* <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md p-5">
                         <div className="mb-4">
                             <p className="text-xl font-bold text-gray-800">Students Growth</p>
                             <p className="text-sm mt-1 text-gray-600">Monthly students enrollment trend</p>
                         </div>
                         <StudentsLineChart />
-                    </div>
+                    </div> */}
                     {/* Fees Pie Chart */}
                     <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md p-5">
                         <div className="mb-4">
