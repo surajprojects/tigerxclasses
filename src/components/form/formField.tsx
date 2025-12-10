@@ -15,6 +15,7 @@ export default function FormField({
     msgSuccess = "Alright! Username available!",
     msgError = "Oops! Username already taken!",
     onChangeFunc,
+    children,
 }: {
     id?: string,
     title?: string,
@@ -28,6 +29,7 @@ export default function FormField({
     msgSuccess?: string,
     msgError?: string,
     removeBorder?: boolean,
+    children?: React.ReactNode;
     onChangeFunc: (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
 }) {
     return (
@@ -36,16 +38,19 @@ export default function FormField({
                 isTextHolder ?
                     <div className="flex flex-col my-2">
                         <label htmlFor={id} className="font-sans font-medium text-sm text-gray-800">{title}{isRequired && "*"}</label>
-                        <input
-                            type={fieldType}
-                            name={id}
-                            id={id}
-                            value={fieldValue}
-                            onChange={onChangeFunc}
-                            placeholder={textHolder}
-                            required={isRequired}
-                            className={clsx("border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out", removeBorder ? "border-none border-white shadow-sm" : "")}
-                        />
+                        <div className={clsx("flex border border-gray-300 font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus-within:border-blue-500 focus-within:ring-3 ring-blue-400/65 duration-75 ease-out", removeBorder ? "border-none border-white shadow-sm" : "")}>
+                            <input
+                                type={fieldType}
+                                name={id}
+                                id={id}
+                                value={fieldValue}
+                                onChange={onChangeFunc}
+                                placeholder={textHolder}
+                                required={isRequired}
+                                className="grow outline-none"
+                            />
+                            {children}
+                        </div>
                         {showMessage && (isSuccess ?
                             <p className="my-0.5 mx-1.5 text-sm text-green-500">{msgSuccess}</p>
                             :

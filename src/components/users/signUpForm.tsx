@@ -12,6 +12,8 @@ import { UserFormData } from "@/utils/types/userType";
 import { Category, Gender } from "@/db/generated/prisma";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import { UserFormInput } from "@/utils/validators/userInput";
+import { EyeIcon } from "lucide-react";
+import { EyeSlashIcon } from "@heroicons/react/24/outline";
 
 export default function SignUpForm() {
     const initialData = {
@@ -31,6 +33,8 @@ export default function SignUpForm() {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showMessage, setShowMessage] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const fieldName = evt.target.name;
@@ -190,23 +194,39 @@ export default function SignUpForm() {
                         <FormField
                             id="password"
                             title="Password"
-                            fieldType="password"
                             textHolder="••••••••"
+                            fieldType={showPassword ? "text" : "password"}
                             fieldValue={formData.password}
                             onChangeFunc={handleChange}
-                        />
+                        >
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword((prevData) => !prevData)}
+                                className="inline px-0.5 cursor-pointer"
+                            >
+                                {showPassword ? <EyeIcon className="size-4" /> : <EyeSlashIcon className="size-4" />}
+                            </button>
+                        </FormField>
                         {/* Confirm Password */}
                         <FormField
                             id="confirmPassword"
                             title="Confirm Password"
-                            fieldType="password"
+                            fieldType={showConfirmPassword ? "text" : "password"}
                             textHolder="••••••••"
                             fieldValue={formData.confirmPassword}
                             onChangeFunc={handleChange}
                             showMessage={showMessage}
                             isSuccess={false}
                             msgError="Password doesn't match!"
-                        />
+                        >
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword((prevData) => !prevData)}
+                                className="inline px-0.5 cursor-pointer"
+                            >
+                                {showConfirmPassword ? <EyeIcon className="size-4" /> : <EyeSlashIcon className="size-4" />}
+                            </button>
+                        </FormField>
                         {/* Button */}
                         <Btn btnType="submit" text="Sign Up" isLoading={isLoading} btnDisabled={isLoading} />
                         <div className="flex justify-center items-center mt-2">
