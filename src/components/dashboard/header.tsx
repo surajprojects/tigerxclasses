@@ -11,11 +11,6 @@ export default function Header() {
                 <div>
                     <p className="capitalize">{pathname.split("/")[1]}</p>
                 </div>
-                <ul className="flex items-center">
-                    <li className="mx-2 cursor-pointer hover:bg-gray-100 duration-300 ease-out p-1.5 rounded-xl">
-                        <UserIcon className="size-5" />
-                    </li>
-                </ul>
             </header>
         </>
     );

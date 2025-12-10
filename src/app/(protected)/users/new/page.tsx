@@ -1,5 +1,5 @@
 import BackBtn from "@/components/button/backBtn";
-import UserNewForm from "@/components/users/userNewForm";
+import UserNewForm from "@/components/users/admin/userNewForm";
 import StudentPageHeader from "@/components/students/studentPageHeader";
 
 export default function NewUser() {

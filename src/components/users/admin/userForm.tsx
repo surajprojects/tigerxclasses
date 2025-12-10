@@ -1,6 +1,6 @@
-import Btn from "../button/btn";
-import FormField from "../form/formField";
-import CancelBtn from "../button/cancelBtn";
+import Btn from "../../button/btn";
+import FormField from "../../form/formField";
+import CancelBtn from "../../button/cancelBtn";
 import { ChangeEvent, useState } from "react";
 import { UserFormData } from "@/utils/types/userType";
 import { Category, Gender, State } from "@/db/generated/prisma";

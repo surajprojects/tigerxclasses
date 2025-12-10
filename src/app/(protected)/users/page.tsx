@@ -1,5 +1,5 @@
 import getUsers from "@/lib/server/getUsers";
-import UsersTable from "@/components/users/usersTable";
+import UsersTable from "@/components/users/admin/usersTable";
 import AddUserBtn from "@/components/button/users/addUserBtn";
 
 export default async function Admin() {

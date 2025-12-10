@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import BtnLogout from "../button/btnLogout";
 import { usePathname } from "next/navigation";
-import { UsersIcon } from "@heroicons/react/24/outline";
+import { UserIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { DollarSign, ChartColumn, PanelLeft, Notebook, BookOpenText, Users } from "lucide-react";
+import clsx from "clsx";
 
 export default function SideBar({ isAdmin = false }: { isAdmin?: boolean }) {
     const pathname = usePathname();
@@ -20,20 +21,20 @@ export default function SideBar({ isAdmin = false }: { isAdmin?: boolean }) {
     ];
     return (
         <>
-            <aside className={isCollapse ? "bg-white w-16 h-full flex flex-col border-r border-gray-200 duration-300 ease-in-out" : "bg-white w-64 h-full flex flex-col border-r border-gray-200 duration-300 ease-in-out"}>
+            <aside className="bg-white h-full p-3 flex flex-col border-r border-gray-200 duration-300 ease-in-out">
                 {/* Title Container */}
-                <div className="px-4 flex justify-between items-center border-b border-gray-200 py-6">
+                <div className={clsx("flex justify-between items-center border-b border-gray-200", isCollapse ? "flex-col pb-1.5 mt-1.5" : "mt-2 pb-3")}>
                     {!isCollapse && <Link href="/" className="ml-1 text-2xl font-bold hover:cursor-pointer text-blue-500">Tiger Classes</Link>}
                     <button
                         type="button"
                         onClick={() => setIsCollapse((prevData) => !prevData)}
-                        className="hover:bg-gray-100 p-1.5 rounded-xl cursor-pointer duration-300 ease-out outline-none"
+                        className={clsx("hover:bg-gray-100 p-1.5 rounded-xl cursor-pointer duration-300 ease-out outline-none", !isCollapse && "ml-3")}
                     >
                         <PanelLeft className="size-5" />
                     </button>
                 </div>
                 {/* Wrapper Container */}
-                <nav className="px-3 py-4 grow flex flex-col justify-between">
+                <nav className="mt-2 grow flex flex-col justify-between">
                     {/* Navigation Routes */}
                     <nav className="flex flex-col font-medium text-gray-800">
                         {nav.map((item, idx) => {
@@ -50,11 +51,17 @@ export default function SideBar({ isAdmin = false }: { isAdmin?: boolean }) {
                         })}
                     </nav>
                     {/* Control Settings */}
-                    <div className={`flex flex-col font-medium text-gray-800 border-t border-gray-200 ${isCollapse ? "pt-4" : "pt-8"} pb-1`}>
+                    <div className={`flex flex-col font-medium text-gray-800 border-t border-gray-200 ${isCollapse ? "pt-2.5" : "pt-4"} pb-1.5`}>
+                        <Link
+                            href="/profile"
+                            className={`mb-1.5 ${isCollapse ? "px-2.5" : "px-5"} py-2 border border-gray-100 outline-none rounded-xl hover:bg-gray-100 cursor-pointer duration-300 ease-out flex justify-center items-center`}>
+                            <UserIcon className={`size-5 ${!isCollapse && "mr-3"}`} strokeWidth={2} />
+                            {!isCollapse && "Profile"}
+                        </Link>
                         <BtnLogout isCollapse={isCollapse} />
                     </div>
                 </nav>
-            </aside>
+            </aside >
         </>
     );
 };

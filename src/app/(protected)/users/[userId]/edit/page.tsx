@@ -1,6 +1,6 @@
 import getUser from "@/lib/server/getUser";
 import BackBtn from "@/components/button/backBtn";
-import UserEditForm from "@/components/users/userEditForm";
+import UserEditForm from "@/components/users/admin/userEditForm";
 import StudentPageHeader from "@/components/students/studentPageHeader";
 
 export default async function EditUser({
