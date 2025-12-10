@@ -1,9 +1,13 @@
 import Card from "@/components/dashboard/card";
-import StudentsPaymentTable from "@/components/payments/studentsPaymentTable";
+import getPayments from "@/lib/server/getPayments";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import StudentsPaymentTable from "@/components/payments/studentsPaymentTable";
 import { Calendar, CircleAlert, IndianRupeeIcon, TrendingUp } from "lucide-react";
 
-export default function Payments() {
+export default async function Payments() {
+    const studentsData = await getPayments();
+    const totalFees = studentsData.reduce((sum: any, student: any) => sum + student.totalFees, 0);
+    const paidFees = studentsData.reduce((sum: any, student: any) => sum + student.paidFees, 0);
     return (
         <>
             <div>
@@ -15,7 +19,7 @@ export default function Payments() {
                     <Card
                         title="Total Received"
                         description="Completed payment"
-                        data="$7500"
+                        data={`₹${totalFees}`}
                         className="text-orange-500 bg-orange-50/40"
                         titleStyle="text-3xl my-1 mt-3"
                         descriptionStyle="text-gray-500"
@@ -25,7 +29,7 @@ export default function Payments() {
                     <Card
                         title="Pending Amount"
                         description="Awaiting payment"
-                        data="$5500"
+                        data={`₹${totalFees - paidFees}`}
                         className="text-cyan-500 bg-cyan-50/40"
                         titleStyle="text-3xl my-1 mt-3"
                         descriptionStyle="text-gray-500"
@@ -35,8 +39,8 @@ export default function Payments() {
                     <Card
                         title="Payment Rate"
                         description="2 students"
-                        data="50%"
-                        className="text-blue-500 bg-blue-50/40"
+                        data={`${Math.floor((100 * paidFees) / totalFees)}%`}
+                        className="text-green-500 bg-green-50/40"
                         titleStyle="text-3xl my-1 mt-3"
                         descriptionStyle="text-gray-500"
                     >
@@ -77,9 +81,9 @@ export default function Payments() {
                 <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
                     <div className="mb-2">
                         <p className="text-lg font-bold text-gray-800">All Students</p>
-                        <p className="text-sm font-medium text-gray-500">2 students found</p>
+                        <p className="text-sm font-medium text-gray-500">{studentsData ? studentsData.length : "0"} students found</p>
                     </div>
-                    <StudentsPaymentTable />
+                    <StudentsPaymentTable allStudents={studentsData} />
                 </div>
             </div>
         </>

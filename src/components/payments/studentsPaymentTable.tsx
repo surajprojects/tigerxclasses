@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { StudentsList } from "@/utils/types/studentType";
 import ActionStudentBtn from "../button/student/actionStudentBtn";
 
-export default function StudentsPaymentTable({ allStudents }: { allStudents?: StudentsList }) {
+export default function StudentsPaymentTable({ allStudents }: { allStudents: any }) {
     return (
         <>
             <table className="w-full text-sm text-gray-500 text-center">
@@ -38,8 +37,7 @@ export default function StudentsPaymentTable({ allStudents }: { allStudents?: St
                     </tr>
                 </thead>
                 <tbody>
-                    {(allStudents && (allStudents.length > 0)) ? allStudents.map((student) => {
-                        const studentCourseData = student.studentCourses.find((studentCourse) => studentCourse.status === "ACTIVE");
+                    {(allStudents && (allStudents.length > 0)) ? allStudents.map((student: any) => {
                         return <tr key={student.id}
                             className="border-b border-gray-200 hover:bg-gray-100 duration-300 ease-out">
                             <td className="px-6 py-4">
@@ -54,19 +52,19 @@ export default function StudentsPaymentTable({ allStudents }: { allStudents?: St
                                 {student.fatherName}
                             </td>
                             <td className="px-6 py-4">
-                                {student.mobileNo}
+                                {student.totalFees}
                             </td>
                             <td className="px-6 py-4">
-                                {studentCourseData ? studentCourseData.course.name : "-"}
+                                {student.paidFees}
                             </td>
                             <td className="px-6 py-4">
-                                {studentCourseData ? studentCourseData.batch.name : "-"}
+                                {student.totalFees - student.paidFees}
                             </td>
                             <td className="px-6 py-4">
-                                {studentCourseData ? studentCourseData.enrolledOn.split("T")[0] : "-"}
+                                -
                             </td>
                             <td className="px-6 py-4 capitalize">
-                                {studentCourseData ? studentCourseData.status.toLowerCase() : "-"}
+                                -
                             </td>
                             <td className="px-6 py-4">
                                 <ActionStudentBtn studentId={student.id} />

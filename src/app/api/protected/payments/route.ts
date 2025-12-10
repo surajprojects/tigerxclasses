@@ -11,13 +11,23 @@ export async function GET(req: NextRequest) {
         }
 
         const allStudents = await prisma.student.findMany({
-            where: { userId: String(token.id) },
+            where: {
+                userId: String(token.id),
+                isDeleted: false,
+            },
             include: {
                 studentCourses: {
+                    where: {
+                        isDeleted: false,
+                    },
                     include: {
                         batch: true,
                         course: true,
-                        payments: true,
+                        payments: {
+                            where: {
+                                isDeleted: false,
+                            },
+                        },
                     }
                 }
             },
@@ -30,6 +40,7 @@ export async function GET(req: NextRequest) {
         const studentsData = allStudents.map((student) => {
             return {
                 id: student.id,
+                rollNo: student.rollNo,
                 fullName: student.fullName,
                 fatherName: student.fatherName,
                 totalFees: student.studentCourses.reduce((sum, fees) => sum + fees.totalFees, 0),
