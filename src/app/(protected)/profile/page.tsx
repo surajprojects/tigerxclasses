@@ -2,15 +2,21 @@ import Card from "@/components/card/card";
 import CardData from "@/components/card/cardData";
 import CardBody from "@/components/card/cardBody";
 import CardHeader from "@/components/card/cardHeader";
+import ProfileImageUpload from "@/components/home/profileImageUpload";
 import { UserIcon, HomeIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 
-export default async function Profile() {
+export default function Profile() {
     return (
         <>
             <div>
                 <div>
                     <h6 className="text-4xl text-blue-500 font-bold">Profile</h6>
                     <p className="my-2 font-medium text-gray-500 text-base">Manage your account information.</p>
+                </div>
+
+                {/* User Summary */}
+                <div className="bg-blue-50 p-6 rounded-2xl my-8 shadow-sm">
+                    <ProfileImageUpload />
                 </div>
 
                 {/* Personal Information */}
