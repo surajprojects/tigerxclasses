@@ -20,6 +20,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ stud
                 isDeleted: false,
             },
             select: {
+                userId: true,
                 id: true,
                 rollNo: true,
                 fullName: true,
@@ -37,6 +38,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ stud
                 instituteName: true,
                 session: true,
                 remarks: true,
+                photo: true,
                 address: {
                     omit: {
                         isDeleted: true,

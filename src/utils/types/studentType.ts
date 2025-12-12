@@ -1,5 +1,5 @@
 import { AddressData } from "./addressType";
-import { StudentCourseData, StudentCourseList } from "./studentCourseType";
+import { StudentCourseList } from "./studentCourseType";
 import { StudentDocumentList } from "./studentDocumentType";
 
 export interface StudentData {

@@ -1,50 +1,87 @@
 "use client";
 
+import clsx from "clsx";
+import Spinner from "../ui/spinner";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { compressImage } from "@/utils/imageCompressor";
-import { createSupabaseClient } from "@/lib/supabaseClient";
+import { errorHandle } from "@/utils/errors/errorHandle";
+import axiosProtected from "@/utils/axios/axiosProtected";
 
-export default function ProfileImageUpload() {
-    const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+export default function ProfileImageUpload({
+    type = "profile",
+    profileImg = "/avatar.png",
+    userId,
+    studentId,
+}: {
+    type?: "profile" | "institute" | "student";
+    profileImg?: string;
+    userId?: string;
+    studentId?: string;
+}) {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const openFilePicker = () => {
+        inputRef.current?.click();
+    };
+
+    async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        // Compress the image
-        const compressedBlob = await compressImage(file);
+        const size = (type === "profile" || type === "institute");
+        const blob = await compressImage(file, size ? 300 : 200);
 
-        // Check final size (should be < 18 KB)
-        if (compressedBlob.size > 18 * 1024) {
-            alert("Image still too large after compression");
+        if (blob.size > 18 * 1024) {
+            alert("Image still too large after compression!!!");
             return;
         }
 
-        // Upload to supabase
-        const supabase = createSupabaseClient();
+        setLoading(true);
 
-        const filePath = `users/${crypto.randomUUID()}.jpeg`;
+        const form = new FormData();
+        form.append("file", blob, "avatar.jpeg");
+        form.append("type", type);
 
-        const { error } = await supabase.storage
-            .from("avatars")
-            .upload(filePath, compressedBlob, {
-                cacheControl: "3600",
-                upsert: true,
-                contentType: "image/jpeg",
+        if (studentId) form.append("studentId", studentId);
+
+        try {
+            await axiosProtected.post(`/users/profile`, form, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             });
-
-        if (error) {
-            console.log(error);
-            alert("Upload failed");
-            return;
+            setLoading(false);
+            router.refresh();
         }
-
-        // Get public URL
-        const { data } = supabase.storage
-            .from("avatars")
-            .getPublicUrl(filePath);
-
+        catch (error: unknown) {
+            errorHandle(error);
+        };
     };
     return (
         <>
-            <input type="file" accept="image/*" onChange={handleFile} />
+            <div>
+                <input
+                    ref={inputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFile}
+                    style={{ display: "none" }}
+                />
+            </div>
+            <div
+                onClick={openFilePicker}
+                className={clsx("size-24 rounded-full overflow-hidden cursor-pointer border border-gray-400/80 hover:opacity-80 transition duration-300 ease-in-out shadow-sm", loading ? "opacity-80" : "")}
+            >
+                {loading && <Spinner customize={true} className="fill-blue-500 absolute m-9" />}
+                <img
+                    src={profileImg}
+                    alt="profile image"
+                    className="w-full h-full object-cover"
+                />
+            </div>
         </>
     );
 };

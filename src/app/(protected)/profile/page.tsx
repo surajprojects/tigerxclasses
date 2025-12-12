@@ -2,10 +2,15 @@ import Card from "@/components/card/card";
 import CardData from "@/components/card/cardData";
 import CardBody from "@/components/card/cardBody";
 import CardHeader from "@/components/card/cardHeader";
+import getUserProfile from "@/lib/server/getUserProfile";
 import ProfileImageUpload from "@/components/home/profileImageUpload";
 import { UserIcon, HomeIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 
-export default function Profile() {
+export default async function Profile() {
+    const userData = await getUserProfile();
+    if (!userData) {
+        return <p className="italic font-medium">User not found!!!</p>;
+    }
     return (
         <>
             <div>
@@ -15,35 +20,60 @@ export default function Profile() {
                 </div>
 
                 {/* User Summary */}
-                <div className="bg-blue-50 p-6 rounded-2xl my-8 shadow-sm">
-                    <ProfileImageUpload />
+                <div className="bg-blue-50 p-6 rounded-2xl my-8 shadow-sm flex items-center justify-between">
+                    <div className="flex items-center">
+                        <ProfileImageUpload
+                            type="profile"
+                            userId={userData.id}
+                            profileImg={`${userData.photo}?t=${Date.now()}`}
+                        />
+                        <div className="ml-4">
+                            <p className="text-2xl font-medium text-gray-800">{userData.fullName}</p>
+                            <p className="text-gray-600 mt-0.5">{userData.email}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p className="text-gray-500 text-sm">Status</p>
+                        <p className="text-gray-800 font-semibold text-lg">{userData.status}</p>
+                    </div>
+                    <div className="flex items-center">
+                        <div className="mr-4">
+                            <p className="text-2xl font-medium text-gray-800">{userData.instituteName}</p>
+                            <p className="text-gray-600 mt-0.5">{userData.contactNo ? userData.contactNo : 1234567890}</p>
+                        </div>
+                        <ProfileImageUpload
+                            type="institute"
+                            userId={userData.id}
+                            profileImg={`${userData.logo}?t=${Date.now()}`}
+                        />
+                    </div>
                 </div>
 
                 {/* Personal Information */}
                 <Card key={1}>
                     <CardHeader
                         title="Personal Information"
-                        description="Basic user details"
+                        description="User basic details"
                     >
                         <UserIcon className="size-5 mr-1 text-blue-500" strokeWidth={2} />
                     </CardHeader>
                     <CardBody>
                         {/* Full Name */}
-                        <CardData key={1} fieldName="Full Name" fieldValue={"john"} capitalize={true} />
+                        <CardData key={1} fieldName="Full Name" fieldValue={userData.fullName} capitalize={true} />
                         {/* Father Name */}
-                        <CardData key={2} fieldName="Father Name" fieldValue={"john"} capitalize={true} />
+                        <CardData key={2} fieldName="Father Name" fieldValue={userData.fatherName} capitalize={true} />
                         {/* Mother Name */}
-                        <CardData key={3} fieldName="Mother Name" fieldValue={"john"} capitalize={true} />
+                        <CardData key={3} fieldName="Mother Name" fieldValue={userData.motherName} capitalize={true} />
                         {/* Date of Birth */}
-                        <CardData key={4} fieldName="Date of Birth" fieldValue={"2025-01-01"} capitalize={true} />
+                        <CardData key={4} fieldName="Date of Birth" fieldValue={userData.dob.split("T")[0]} />
                         {/* Gender */}
-                        <CardData key={5} fieldName="Gender" fieldValue={"male"} capitalize={true} />
+                        <CardData key={5} fieldName="Gender" fieldValue={userData.gender.toLowerCase()} capitalize={true} />
                         {/* Category */}
-                        <CardData key={6} fieldName="Category" fieldValue={"st"} />
+                        <CardData key={6} fieldName="Category" fieldValue={userData.category.toLowerCase()} capitalize={true} />
                         {/* Mobile No */}
-                        <CardData key={7} fieldName="Mobile No." fieldValue={"1234567897"} />
+                        <CardData key={7} fieldName="Mobile No." fieldValue={userData.mobileNo} />
                         {/* Email */}
-                        <CardData key={8} fieldName="Email" fieldValue={"john@gmail.com"} />
+                        <CardData key={8} fieldName="Email" fieldValue={userData.email} />
                     </CardBody>
                 </Card>
 
@@ -57,17 +87,17 @@ export default function Profile() {
                     </CardHeader>
                     <CardBody>
                         {/* Flat/House/Building */}
-                        <CardData key={1} fieldName="Flat/House/Building" fieldValue={"117/kha"} capitalize={true} />
+                        <CardData key={1} fieldName="Flat/House/Building" fieldValue={userData.address && userData.address.flatHouseBuilding} capitalize={true} />
                         {/* Street/Area */}
-                        <CardData key={2} fieldName="Street/Area" fieldValue={"sheopur"} capitalize={true} />
+                        <CardData key={2} fieldName="Street/Area" fieldValue={userData.address && userData.address.streetOrArea} capitalize={true} />
                         {/* Landmark */}
-                        <CardData key={3} fieldName="Landmark" fieldValue={"sheopur"} capitalize={true} />
+                        <CardData key={3} fieldName="Landmark" fieldValue={userData.address && userData.address.landmark} capitalize={true} />
                         {/* City */}
-                        <CardData key={4} fieldName="City" fieldValue={"sheopur"} capitalize={true} />
+                        <CardData key={4} fieldName="City" fieldValue={userData.address && userData.address.city} capitalize={true} />
                         {/* State */}
-                        <CardData key={5} fieldName="State" fieldValue={"mp"} capitalize={true} />
+                        <CardData key={5} fieldName="State" fieldValue={userData.address && userData.address.state.toLowerCase()} capitalize={true} />
                         {/* Pincode */}
-                        <CardData key={6} fieldName="Pincode" fieldValue={"476337"} />
+                        <CardData key={6} fieldName="Pincode" fieldValue={userData.address && userData.address.pincode} />
                     </CardBody>
                 </Card>
 
@@ -81,11 +111,11 @@ export default function Profile() {
                     </CardHeader>
                     <CardBody>
                         {/* Institute Name */}
-                        <CardData key={1} fieldName="Institute Name" fieldValue={"tiger classes"} capitalize={true} />
+                        <CardData key={1} fieldName="Institute Name" fieldValue={userData.instituteName} capitalize={true} />
                         {/* Institute Address */}
-                        <CardData key={2} fieldName="Institute Address" fieldValue={"pali road"} capitalize={true} />
+                        <CardData key={2} fieldName="Institute Address" fieldValue={userData.instituteAddress} capitalize={true} />
                         {/* Contact No */}
-                        <CardData key={3} fieldName="Contact No." fieldValue={"1234657890"} />
+                        <CardData key={3} fieldName="Contact No." fieldValue={userData.contactNo} />
                     </CardBody>
                 </Card>
 

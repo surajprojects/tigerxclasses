@@ -169,6 +169,7 @@ model User {
   instituteName    String  @unique
   instituteAddress String?
   contactNo        String?
+  logo             String?
 
   // Relations
   batches       Batch[]

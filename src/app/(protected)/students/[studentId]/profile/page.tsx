@@ -5,6 +5,7 @@ import BackBtn from "@/components/button/backBtn";
 import CardData from "@/components/card/cardData";
 import CardBody from "@/components/card/cardBody";
 import CardHeader from "@/components/card/cardHeader";
+import ProfileImageUpload from "@/components/home/profileImageUpload";
 import EditStudentBtn from "@/components/button/student/editStudentBtn";
 import AllDocumentCard from "@/components/card/document/allDocumentCard";
 import StudentDeleteBtn from "@/components/button/student/studentDeleteBtn";
@@ -61,7 +62,12 @@ export default async function StudentProfile({
                             </ul>
                         </li>
                         <li>
-                            {/* <div className="border rounded-full p-8"></div> */}
+                            <ProfileImageUpload
+                                type="student"
+                                studentId={studentId}
+                                userId={studentData.userId}
+                                profileImg={`${studentData.photo}?t=${Date.now()}`}
+                            />
                         </li>
                     </ul>
                 </div>
