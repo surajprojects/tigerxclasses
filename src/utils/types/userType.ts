@@ -21,6 +21,7 @@ export interface UserData {
     logo?: string,
     status: string,
     isDeleted: boolean,
+    verified: boolean,
     subscriptions: SubscriptionsList,
 };
 
@@ -28,8 +29,8 @@ export type UsersList = UserData[];
 
 export type UserFormData = Omit<
     Required<UserData>,
-    "id" | "status" | "isDeleted" | "address" | "subscriptions"
+    "id" | "status" | "isDeleted" | "address" | "subscriptions" | "photo" | "logo" | "verified"
 > & {
-    address: Omit<Required<UserData["address"]>, "id">;
+    address: Omit<Required<NonNullable<UserData["address"]>>, "id">;
     password: string,
 };

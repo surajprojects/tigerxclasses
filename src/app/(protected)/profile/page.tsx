@@ -25,7 +25,7 @@ export default async function Profile() {
                         <ProfileImageUpload
                             type="profile"
                             userId={userData.id}
-                            profileImg={`${userData.photo}?t=${Date.now()}`}
+                            profileImg={userData.photo ? `${userData.photo}?t=${Date.now()}` : "/avatar.png"}
                         />
                         <div className="ml-4">
                             <p className="text-2xl font-medium text-gray-800">{userData.fullName}</p>
@@ -36,6 +36,10 @@ export default async function Profile() {
                         <p className="text-gray-500 text-sm">Status</p>
                         <p className="text-gray-800 font-semibold text-lg">{userData.status}</p>
                     </div>
+                    <div>
+                        <p className="text-gray-500 text-sm">Verified</p>
+                        <p className="text-gray-800 font-semibold text-lg">{`${userData.verified}`}</p>
+                    </div>
                     <div className="flex items-center">
                         <div className="mr-4">
                             <p className="text-2xl font-medium text-gray-800">{userData.instituteName}</p>
@@ -44,7 +48,7 @@ export default async function Profile() {
                         <ProfileImageUpload
                             type="institute"
                             userId={userData.id}
-                            profileImg={`${userData.logo}?t=${Date.now()}`}
+                            profileImg={userData.logo ? `${userData.logo}?t=${Date.now()}` : "/avatar.png"}
                         />
                     </div>
                 </div>

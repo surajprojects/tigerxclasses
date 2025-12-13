@@ -38,7 +38,7 @@ export default async function Payments() {
                     </Card>
                     <Card
                         title="Payment Rate"
-                        description="2 students"
+                        description={`${studentsData ? studentsData.length : 0} students`}
                         data={`${Math.floor((100 * paidFees) / totalFees)}%`}
                         className="text-green-500 bg-green-50/40"
                         titleStyle="text-3xl my-1 mt-3"
@@ -46,7 +46,7 @@ export default async function Payments() {
                     >
                         <TrendingUp className="size-4" />
                     </Card>
-                    <Card
+                    {/* <Card
                         title="No Payment"
                         description="Requires attention"
                         data="$3000"
@@ -55,7 +55,7 @@ export default async function Payments() {
                         descriptionStyle="text-gray-500"
                     >
                         <CircleAlert className="size-4" />
-                    </Card>
+                    </Card> */}
                 </div>
                 <div className="rounded-2xl bg-white p-6 my-6 border border-gray-100 shadow-sm">
                     <p className="text-lg text-gray-800 font-medium">Search & Filter</p>

@@ -1,7 +1,6 @@
 import Btn from "../button/btn";
 import FormField from "../form/formField";
 import { ChangeEvent, useState } from "react";
-import { CourseData } from "@/utils/types/courseType";
 import { CourseFormInput, CourseFormInputEdit } from "@/utils/validators/courseInput";
 
 export default function CourseForm({

@@ -30,7 +30,6 @@ export default function UserEditForm({ userData, userId = "1" }: { userData: Use
                     confirmPassword: "",
                     username: userData.username,
                     remarks: userData.remarks ? userData.remarks : "",
-                    photo: userData.photo ? userData.photo : "",
                     fullName: userData.fullName,
                     fatherName: userData.fatherName ? userData.fatherName : "",
                     motherName: userData.motherName ? userData.motherName : "",

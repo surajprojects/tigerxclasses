@@ -33,7 +33,6 @@ export default function UserForm({
         instituteAddress: "",
         contactNo: "",
         remarks: "",
-        photo: "",
     },
     showAddress = true,
 }: {

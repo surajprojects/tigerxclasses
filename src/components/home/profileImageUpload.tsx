@@ -11,7 +11,6 @@ import axiosProtected from "@/utils/axios/axiosProtected";
 export default function ProfileImageUpload({
     type = "profile",
     profileImg = "/avatar.png",
-    userId,
     studentId,
 }: {
     type?: "profile" | "institute" | "student";

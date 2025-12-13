@@ -14,7 +14,6 @@ export const userFormInput = z.object({
     category: z.enum([...Object.values(Category)] as [Category, ...Category[]]),
     email: z.string(),
     mobileNo: z.string().regex(/^\d{10}$/, "Mobile No. must be 10 digits number string. Example - '1234567890'"),
-    photo: z.string().optional(),
     remarks: z.string().optional(),
     address: addressInput.optional(),
     instituteName: z.string(),

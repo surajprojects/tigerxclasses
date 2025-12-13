@@ -1,5 +1,3 @@
-"use client"
-
 import { Cell, PieChart, Pie, Tooltip, ResponsiveContainer, PieLabelRenderProps } from "recharts";
 
 export default function FeesPieChart({
@@ -17,11 +15,20 @@ export default function FeesPieChart({
     secondValue?: number,
     secondColor?: string,
 }) {
+    if (firstValue < 1 && secondValue < 1) {
+        return (
+            <>
+                <p>No data available!</p>
+            </>
+        );
+    }
+
     const data = [
         { name: firstName, value: firstValue },
         { name: secondName, value: secondValue },
     ];
     const COLORS = [`#${firstColor}`, `#${secondColor}`,];
+
     return (
         <>
             <div className="w-full h-64">

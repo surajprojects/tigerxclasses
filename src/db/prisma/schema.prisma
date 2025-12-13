@@ -158,8 +158,9 @@ model User {
   photo      String?
   remarks    String?
 
-  role   Role       @default(USER)
-  status UserStatus @default(INACTIVE)
+  role     Role       @default(USER)
+  status   UserStatus @default(INACTIVE)
+  verified Boolean    @default(false)
 
   // Address relation
   address   Address? @relation(fields: [addressId], references: [id])

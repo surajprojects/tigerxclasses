@@ -1,12 +1,14 @@
 import { DollarSign } from "lucide-react";
 import Card from "@/components/dashboard/card";
 import getDashboard from "@/lib/server/getDashboard";
-import FeesPieChart from "@/components/dashboard/feesPieChart";
-import StudentsLineChart from "@/components/dashboard/studentsLineChart";
+import ChartsWrapper from "@/components/dashboard/chartsWrapper";
 import { BookOpenIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
 
 export default async function Dashboard() {
     const dashboardData = await getDashboard();
+    if (!dashboardData) {
+        return <p className="italic font-medium">Data not found!!!</p>;
+    }
     return (
         <>
             <div>
@@ -57,17 +59,7 @@ export default async function Dashboard() {
                         </div>
                         <StudentsLineChart />
                     </div> */}
-                    {/* Fees Pie Chart */}
-                    <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md p-5">
-                        <div className="mb-4">
-                            <p className="text-xl font-bold text-gray-800">Payment Status</p>
-                            <p className="text-sm mt-1 text-gray-600">Distribution of payment</p>
-                        </div>
-                        <FeesPieChart
-                            firstValue={dashboardData.totalFeesPaid}
-                            secondValue={(dashboardData.totalFees) - (dashboardData.totalFeesPaid)}
-                        />
-                    </div>
+                    <ChartsWrapper dashboardData={dashboardData} />
                 </div>
             </div>
         </>

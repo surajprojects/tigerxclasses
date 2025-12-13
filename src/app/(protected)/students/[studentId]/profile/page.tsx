@@ -66,7 +66,7 @@ export default async function StudentProfile({
                                 type="student"
                                 studentId={studentId}
                                 userId={studentData.userId}
-                                profileImg={`${studentData.photo}?t=${Date.now()}`}
+                                profileImg={studentData.photo ? `${studentData.photo}?t=${Date.now()}` : "/avatar.png"}
                             />
                         </li>
                     </ul>
