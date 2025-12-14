@@ -34,3 +34,10 @@ export type UserFormData = Omit<
     address: Omit<Required<NonNullable<UserData["address"]>>, "id">;
     password: string,
 };
+
+export type UserProfileFormData = Omit<
+    Required<UserData>,
+    "id" | "status" | "isDeleted" | "address" | "subscriptions" | "photo" | "logo" | "verified" | "username" | "remarks"
+> & {
+    address: Omit<Required<NonNullable<UserData["address"]>>, "id">;
+};

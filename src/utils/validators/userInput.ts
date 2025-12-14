@@ -26,3 +26,12 @@ export type UserFormInput = z.infer<typeof userFormInput>;
 export const userFormInputEdit = userFormInput.partial().strict();
 
 export type UserFormInputEdit = z.infer<typeof userFormInputEdit>;
+
+export const userProfileFormEdit = userFormInput.omit({
+    remarks: true,
+    username: true,
+    password: true,
+    status: true,
+}).partial();
+
+export type UserProfileFormEdit = z.infer<typeof userProfileFormEdit>;

@@ -106,18 +106,22 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ c
 
         const { courseId } = await params;
 
-        const studentCourseData = await prisma.studentCourse.findMany({
+        const studentCourseData = await prisma.student.findMany({
             where: {
                 isDeleted: false,
-                student: {
-                    userId: String(token.id),
+                userId: String(token.id),
+            },
+            include: {
+                studentCourses: {
+                    where: {
+                        courseId,
+                        isDeleted: false,
+                    },
                 },
             },
         });
 
-        const newStudentCourseData = studentCourseData.find((studentCourse) => studentCourse.courseId === courseId);
-
-        if (newStudentCourseData) {
+        if (studentCourseData.length > 0) {
             return Response.json({ message: "Course cannot be deleted because it is currently in use!!!" }, { status: 409 });
         }
 

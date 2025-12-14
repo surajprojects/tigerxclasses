@@ -5,6 +5,7 @@ import CardHeader from "@/components/card/cardHeader";
 import getUserProfile from "@/lib/server/getUserProfile";
 import ProfileImageUpload from "@/components/home/profileImageUpload";
 import { UserIcon, HomeIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
+import EditUserProfileBtn from "@/components/button/users/editUserProfileBtn";
 
 export default async function Profile() {
     const userData = await getUserProfile();
@@ -14,9 +15,12 @@ export default async function Profile() {
     return (
         <>
             <div>
-                <div>
-                    <h6 className="text-4xl text-blue-500 font-bold">Profile</h6>
-                    <p className="my-2 font-medium text-gray-500 text-base">Manage your account information.</p>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h6 className="text-4xl text-blue-500 font-bold">Profile</h6>
+                        <p className="my-2 font-medium text-gray-500 text-base">Manage your account information.</p>
+                    </div>
+                    <EditUserProfileBtn />
                 </div>
 
                 {/* User Summary */}
