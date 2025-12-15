@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { UserData } from "@/utils/types/userType";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import axiosProtected from "@/utils/axios/axiosProtected";
-import { BatchFormInput } from "@/utils/validators/batchInput";
 import UserProfileForm from "@/components/users/userProfileForm";
+import { UserProfileFormEdit } from "@/utils/validators/userInput";
 import { PencilIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function EditUserProfileBtn() {
+export default function EditUserProfileBtn({ userProfileData }: { userProfileData: UserData }) {
     const router = useRouter();
     const [showForm, setShowForm] = useState<boolean>(false);
 
@@ -17,10 +18,10 @@ export default function EditUserProfileBtn() {
         setShowForm(false);
     };
 
-    const handleEditSubmit = async (formData: BatchFormInput) => {
+    const handleEditSubmit = async (formData: UserProfileFormEdit) => {
         try {
-            await axiosProtected.post("/batch", formData);
-            toast.success("Batch created successfully!!!");
+            await axiosProtected.post("/users", formData);
+            toast.success("Profile updated successfully!!!");
             setShowForm(false);
             router.refresh();
         }
@@ -52,7 +53,37 @@ export default function EditUserProfileBtn() {
                             <h5 className="text-xl font-medium text-gray-800">Edit Profile</h5>
                             <p className="text-gray-600 text-base my-1">Fill in the details to update user profile.
                             </p>
-                            <UserProfileForm />
+                            <UserProfileForm
+                                setShowForm={setShowForm}
+                                handleEditSubmit={handleEditSubmit}
+                                initialData={{
+                                    fullName: userProfileData.fullName,
+                                    fatherName: userProfileData.fatherName ? userProfileData.fatherName : "",
+                                    motherName: userProfileData.motherName ? userProfileData.motherName : "",
+                                    dob: userProfileData.dob.split("T")[0],
+                                    gender: userProfileData.gender,
+                                    category: userProfileData.category,
+                                    mobileNo: userProfileData.mobileNo,
+                                    email: userProfileData.email,
+                                    instituteName: userProfileData.instituteName,
+                                    instituteAddress: userProfileData.instituteAddress ? userProfileData.instituteAddress : "",
+                                    contactNo: userProfileData.contactNo ? userProfileData.contactNo : "",
+                                    address: userProfileData.address ? {
+                                        flatHouseBuilding: userProfileData.address.flatHouseBuilding ? userProfileData.address.flatHouseBuilding : "",
+                                        streetOrArea: userProfileData.address.streetOrArea,
+                                        landmark: userProfileData.address.landmark ? userProfileData.address.landmark : "",
+                                        city: userProfileData.address.city,
+                                        state: userProfileData.address.state,
+                                        pincode: userProfileData.address.pincode ? userProfileData.address.pincode : "",
+                                    } : {
+                                        flatHouseBuilding: "",
+                                        streetOrArea: "",
+                                        landmark: "",
+                                        city: "",
+                                        state: "",
+                                        pincode: "",
+                                    },
+                                }} />
                         </div>
                     </div>
                 </div>

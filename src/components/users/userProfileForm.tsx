@@ -1,10 +1,9 @@
 import Btn from "../button/btn";
 import FormField from "../form/formField";
-import CancelBtn from "../button/cancelBtn";
 import { ChangeEvent, useState } from "react";
 import { UserProfileFormData } from "@/utils/types/userType";
 import { Category, Gender, State } from "@/db/generated/prisma";
-import { UserFormInputEdit, UserProfileFormEdit } from "@/utils/validators/userInput";
+import { UserProfileFormEdit } from "@/utils/validators/userInput";
 
 export default function UserProfileForm({
     handleEditSubmit,
@@ -29,9 +28,11 @@ export default function UserProfileForm({
         instituteAddress: "",
         contactNo: "",
     },
+    setShowForm,
 }: {
     handleEditSubmit?: (data: UserProfileFormEdit) => Promise<void>,
     initialData?: UserProfileFormData,
+    setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
     const [formData, setFormData] = useState(initialData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -99,6 +100,7 @@ export default function UserProfileForm({
                             fieldValue={formData.fullName}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                         {/* Father Name */}
                         <FormField
@@ -128,15 +130,17 @@ export default function UserProfileForm({
                             fieldValue={formData.dob}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                         {/* Gender */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="gender" className="font-sans font-medium text-sm text-gray-800">Gender*</label>
+                            <label htmlFor="gender" className="font-sans font-medium text-sm text-gray-800">Gender</label>
                             <select
                                 id="gender"
                                 name="gender"
                                 value={formData.gender}
                                 onChange={handleChange}
+                                required={false}
                                 className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
                                 <option value="" disabled>Select Gender</option>
                                 {[...Object.values(Gender)].map((opt, idx) => {
@@ -146,12 +150,13 @@ export default function UserProfileForm({
                         </div>
                         {/* Category */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="category" className="font-sans font-medium text-sm text-gray-800">Category*</label>
+                            <label htmlFor="category" className="font-sans font-medium text-sm text-gray-800">Category</label>
                             <select
                                 id="category"
                                 name="category"
                                 value={formData.category}
                                 onChange={handleChange}
+                                required={false}
                                 className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
                                 <option value="" disabled>Select Category</option>
                                 {[...Object.values(Category)].map((opt, idx) => {
@@ -161,7 +166,7 @@ export default function UserProfileForm({
                         </div>
                         {/* Mobile No */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="mobileNo" className="font-sans font-medium text-sm text-gray-800">Mobile No.*</label>
+                            <label htmlFor="mobileNo" className="font-sans font-medium text-sm text-gray-800">Mobile No.</label>
                             <input
                                 type="text"
                                 name="mobileNo"
@@ -179,6 +184,7 @@ export default function UserProfileForm({
                                         };
                                     });
                                 }}
+                                required={false}
                                 className="border font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out border-none border-white shadow-sm"
                             />
                         </div>
@@ -191,6 +197,7 @@ export default function UserProfileForm({
                             fieldValue={formData.email}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                     </div>
                 </div>
@@ -218,6 +225,7 @@ export default function UserProfileForm({
                             fieldValue={formData.address.streetOrArea}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={formData.address.streetOrArea === "" ? true : false}
                         />
                         {/* Landmark */}
                         <FormField
@@ -237,6 +245,7 @@ export default function UserProfileForm({
                             fieldValue={formData.address.city}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={formData.address.city === "" ? true : false}
                         />
                         {/* State */}
                         <div className="flex flex-col my-2">
@@ -246,6 +255,7 @@ export default function UserProfileForm({
                                 name="address.state"
                                 value={formData.address.state}
                                 onChange={handleChange}
+                                required={formData.address.state === "" ? true : false}
                                 className="border-none shadow-sm font-sans font-normal text-[#2a2522] rounded-xl px-3 py-2 my-2 text-sm outline-none focus:border-blue-500 focus:ring-3 ring-blue-400/65 duration-75 ease-out cursor-pointer">
                                 <option value="" disabled>Select State</option>
                                 {[...Object.values(State)].map((opt, idx) => {
@@ -295,6 +305,7 @@ export default function UserProfileForm({
                             fieldValue={formData.instituteName}
                             onChangeFunc={handleChange}
                             removeBorder={true}
+                            isRequired={false}
                         />
                         {/* Mobile No */}
                         <div className="flex flex-col my-2">
@@ -337,7 +348,13 @@ export default function UserProfileForm({
                     <div className="w-24">
                         <Btn btnType="submit" text={handleEditSubmit ? "Update" : "Submit"} isLoading={isLoading} />
                     </div>
-                    <CancelBtn />
+                    <button
+                        type="button"
+                        onClick={() => setShowForm(false)}
+                        className="font-sans text-black hover:text-white text-sm font-semibold px-3 py-2 rounded-xl cursor-pointer outline-none mx-3 border border-gray-300 hover:bg-red-500 duration-300 ease-out"
+                    >
+                        Cancel
+                    </button>
                 </div>
             </form>
         </>

@@ -18,7 +18,7 @@ export const userFormInput = z.object({
     address: addressInput.optional(),
     instituteName: z.string(),
     instituteAddress: z.string().optional(),
-    contactNo: z.string().regex(/^\d{10}$/, "Contact No. must be 10 digits number string. Example - '1234567890'").optional(),
+    contactNo: z.string().regex(/^\d{10}$/, "Contact No. must be 10 digits number string. Example - '1234567890'").optional().or(z.literal("")),
 }).strict();
 
 export type UserFormInput = z.infer<typeof userFormInput>;

@@ -60,35 +60,37 @@ export async function POST(req: NextRequest) {
             return Response.json({ message: "Invalid input!!!", details: parsedInput.error.issues }, { status: 400 });
         }
 
+        const updateData: Prisma.UserUpdateInput = {
+            ...(parsedInput.data.fullName && { fullName: parsedInput.data.fullName }),
+            ...(parsedInput.data.fatherName && { fatherName: parsedInput.data.fatherName }),
+            ...(parsedInput.data.motherName && { motherName: parsedInput.data.motherName }),
+            ...(parsedInput.data.dob && { dob: new Date(parsedInput.data.dob) }),
+            ...(parsedInput.data.gender && { gender: parsedInput.data.gender }),
+            ...(parsedInput.data.category && { category: parsedInput.data.category }),
+            ...(parsedInput.data.mobileNo && { mobileNo: parsedInput.data.mobileNo }),
+            ...(parsedInput.data.email && { email: parsedInput.data.email }),
+            ...(parsedInput.data.instituteName && { instituteName: parsedInput.data.instituteName }),
+            ...(parsedInput.data.instituteAddress && { instituteAddress: parsedInput.data.instituteAddress }),
+            ...(parsedInput.data.contactNo && { contactNo: parsedInput.data.contactNo }),
+        };
+
         const address = parsedInput.data.address;
-
-        const hasAddressData =
-            address?.streetOrArea ||
-            address?.city ||
-            address?.state ||
-            address?.pincode;
-
-        const updateAddress: Prisma.UserUpdateInput = {};
+        const hasAddressData = address?.streetOrArea || address?.city || address?.state;
 
         if (hasAddressData) {
-            updateAddress.address = {
+            const addressData = {
+                ...(address.flatHouseBuilding && { flatHouseBuilding: address.flatHouseBuilding }),
+                streetOrArea: address.streetOrArea!,
+                ...(address.landmark && { landmark: address.landmark }),
+                city: address.city!,
+                state: address.state!,
+                ...(address.pincode && { pincode: address.pincode }),
+            };
+
+            updateData.address = {
                 upsert: {
-                    update: {
-                        ...(parsedInput.data.address?.flatHouseBuilding && { flatHouseBuilding: parsedInput.data.address.flatHouseBuilding }),
-                        streetOrArea: parsedInput.data.address?.streetOrArea,
-                        ...(parsedInput.data.address?.landmark && { landmark: parsedInput.data.address.landmark }),
-                        city: parsedInput.data.address?.city,
-                        state: parsedInput.data.address?.state,
-                        ...(parsedInput.data.address?.pincode && { pincode: parsedInput.data.address.pincode }),
-                    },
-                    create: {
-                        ...(parsedInput.data.address!.flatHouseBuilding && { flatHouseBuilding: parsedInput.data.address!.flatHouseBuilding }),
-                        streetOrArea: parsedInput.data.address!.streetOrArea,
-                        ...(parsedInput.data.address!.landmark && { landmark: parsedInput.data.address!.landmark }),
-                        city: parsedInput.data.address!.city,
-                        state: parsedInput.data.address!.state,
-                        ...(parsedInput.data.address!.pincode && { pincode: parsedInput.data.address!.pincode }),
-                    },
+                    update: addressData,
+                    create: addressData,
                 },
             };
         }
@@ -98,20 +100,7 @@ export async function POST(req: NextRequest) {
                 id: String(userId),
                 isDeleted: false,
             },
-            data: {
-                ...(parsedInput.data.fullName && { fullName: parsedInput.data.fullName }),
-                ...(parsedInput.data.fatherName && { fatherName: parsedInput.data.fatherName }),
-                ...(parsedInput.data.motherName && { motherName: parsedInput.data.motherName }),
-                ...(parsedInput.data.dob && { dob: new Date(parsedInput.data.dob).toISOString() }),
-                ...(parsedInput.data.gender && { gender: parsedInput.data.gender }),
-                ...(parsedInput.data.category && { category: parsedInput.data.category }),
-                ...(parsedInput.data.mobileNo && { mobileNo: parsedInput.data.mobileNo }),
-                ...(parsedInput.data.email && { email: parsedInput.data.email }),
-                ...(parsedInput.data.instituteName && { instituteName: parsedInput.data.instituteName }),
-                ...(parsedInput.data.instituteAddress && { instituteAddress: parsedInput.data.instituteAddress }),
-                ...(parsedInput.data.contactNo && { contactNo: parsedInput.data.contactNo }),
-                ...(parsedInput.data.address && updateAddress.address),
-            },
+            data: updateData,
             select: {
                 id: true,
                 fullName: true,
