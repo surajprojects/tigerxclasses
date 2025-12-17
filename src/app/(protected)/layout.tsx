@@ -17,7 +17,7 @@ export default async function AuthLayout({
                 <SideBar
                     title={userData && userData.instituteName ? userData.instituteName : ""}
                     isAdmin={session.user.role === "ADMIN" ? true : false}
-                    profileImg={userData && userData.photo ? userData.photo : "/avatar.png"}
+                    profileImg={userData && userData.photo ? `${userData.photo}?t=${Date.now()}` : "/avatar.png"}
                 />
                 <div className="flex flex-col flex-1">
                     {/* Header */}

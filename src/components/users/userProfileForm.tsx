@@ -249,7 +249,7 @@ export default function UserProfileForm({
                         />
                         {/* State */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="address.state" className="font-sans font-medium text-sm text-gray-800">State*</label>
+                            <label htmlFor="address.state" className="font-sans font-medium text-sm text-gray-800">State</label>
                             <select
                                 id="address.state"
                                 name="address.state"

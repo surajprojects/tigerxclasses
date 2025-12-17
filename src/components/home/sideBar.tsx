@@ -31,12 +31,12 @@ export default function SideBar({
         <>
             <aside className="bg-white max-w-60 h-full p-3 flex flex-col border-r border-gray-200 duration-300 ease-in-out">
                 {/* Title Container */}
-                <div className={clsx("flex justify-between items-center border-b border-gray-200", isCollapse ? "flex-col pb-1.5 mt-1.5" : "mt-2 pb-3")}>
+                <div className={clsx("flex justify-between items-center border-b border-gray-200", isCollapse ? "flex-col pb-1.5 mt-1.5" : "mt-2 pb-2")}>
                     {!isCollapse && <Link href="/" className="ml-1 text-2xl font-bold hover:cursor-pointer text-blue-500 capitalize">{title}</Link>}
                     <button
                         type="button"
                         onClick={() => setIsCollapse((prevData) => !prevData)}
-                        className={clsx("hover:bg-gray-100 p-1.5 rounded-xl cursor-pointer duration-300 ease-out outline-none", !isCollapse && "ml-3")}
+                        className={clsx("hover:bg-gray-100 p-2 rounded-xl cursor-pointer duration-300 ease-out outline-none", !isCollapse && "ml-3")}
                     >
                         <PanelLeft className="size-5" />
                     </button>
@@ -52,7 +52,7 @@ export default function SideBar({
                             return <Link
                                 key={idx}
                                 href={item.href}
-                                className={`my-1.5 ${isCollapse ? "px-2.5" : "px-5"} py-2 border-gray-200 outline-none rounded-xl hover:bg-gray-100 cursor-pointer duration-300 ease-out flex items-center ${((pathname === item.href) || (pathname.startsWith(`${item.href}/`))) && "shadow-lg shadow-blue-300 border hover:bg-white"}`}>
+                                className={`my-1.5 ${isCollapse ? "justify-center" : "px-5"} py-2 border-gray-200 outline-none rounded-xl hover:bg-gray-100 cursor-pointer duration-300 ease-out flex items-center ${((pathname === item.href) || (pathname.startsWith(`${item.href}/`))) && "shadow-lg shadow-blue-300 border hover:bg-white"}`}>
                                 <item.icon className={`size-5 ${!isCollapse && "mr-3"}`} strokeWidth={2} />
                                 {!isCollapse && item.label}
                             </Link>
@@ -64,7 +64,7 @@ export default function SideBar({
                             href="/profile"
                             className={`mb-1.5 ${isCollapse ? "px-2.5" : "px-5"} py-2 border border-gray-100 outline-none rounded-xl hover:bg-gray-100 cursor-pointer duration-300 ease-out flex justify-center items-center`}>
                             {profileImg ?
-                                <div className="size-6 rounded-full overflow-hidden border border-gray-400/80 shadow-sm mr-2">
+                                <div className={`size-6 rounded-full overflow-hidden border border-gray-400/80 shadow-sm ${!isCollapse && "mr-2"}`}>
                                     <img
                                         src={profileImg}
                                         alt="profile image"

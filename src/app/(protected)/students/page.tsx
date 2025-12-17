@@ -41,6 +41,7 @@ export default async function Students() {
                         <p className="text-sm font-medium text-gray-500">{allStudents ? allStudents.length : "0"} students found</p>
                     </div>
                     {allStudents && <Table allStudents={allStudents} />}
+
                 </div>
             </div>
         </>

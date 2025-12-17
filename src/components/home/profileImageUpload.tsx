@@ -72,7 +72,7 @@ export default function ProfileImageUpload({
             </div>
             <div
                 onClick={openFilePicker}
-                className={clsx("size-24 rounded-full overflow-hidden cursor-pointer border border-gray-400/80 hover:opacity-80 transition duration-300 ease-in-out shadow-sm", loading ? "opacity-80" : "")}
+                className={clsx("size-24 rounded-full overflow-hidden cursor-pointer border border-gray-400/80 hover:opacity-80 transition duration-300 ease-in-out shadow-sm relative", loading ? "opacity-80" : "")}
             >
                 {loading && <Spinner customize={true} className="fill-blue-500 absolute m-9" />}
                 <img

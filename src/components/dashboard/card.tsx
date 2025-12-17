@@ -9,6 +9,7 @@ export default function Card({
     titleStyle,
     descriptionStyle,
     children,
+    dataIcon,
 }: {
     title?: string,
     data?: string,
@@ -17,6 +18,7 @@ export default function Card({
     titleStyle?: string,
     descriptionStyle?: string,
     children?: React.ReactNode,
+    dataIcon?: React.ReactNode,
 }) {
     return (
         <>
@@ -27,7 +29,9 @@ export default function Card({
                         {children ? children : <UsersIcon className="size-6" />}
                     </div>
                 </div>
-                <p className={clsx("font-bold text-gray-800/90", titleStyle ? titleStyle : "text-4xl my-3 mt-4")}>{data}</p>
+                <p className={clsx("font-bold text-gray-800/90 flex items-center", titleStyle ? titleStyle : "text-4xl my-3 mt-4")}>
+                    {dataIcon}{data}
+                </p>
                 <p className={clsx("text-xs font-medium", descriptionStyle ? descriptionStyle : "text-green-600")}>{description}</p>
             </div >
         </>

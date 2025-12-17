@@ -1,4 +1,4 @@
-import { DollarSign } from "lucide-react";
+import { DollarSign, IndianRupee } from "lucide-react";
 import Card from "@/components/dashboard/card";
 import getDashboard from "@/lib/server/getDashboard";
 import ChartsWrapper from "@/components/dashboard/chartsWrapper";
@@ -35,7 +35,8 @@ export default async function Dashboard() {
                     <Card
                         title="Total Receivables"
                         description="Total amount yet to be received"
-                        data={`₹${dashboardData.totalFees - dashboardData.totalFeesPaid}/-`}
+                        data={`${dashboardData.totalFees - dashboardData.totalFeesPaid}/-`}
+                        dataIcon={<IndianRupee className="size-7 pt-0.5" strokeWidth={3} />}
                         className="bg-amber-50 text-amber-500"
                     >
                         <DollarSign className="size-6" />
