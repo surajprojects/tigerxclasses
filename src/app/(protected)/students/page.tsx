@@ -1,10 +1,10 @@
 import getStudents from "@/lib/server/getStudents";
-import Table from "@/components/students/studentsTable";
 import AddStudentBtn from "@/components/button/student/addStudentBtn";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import AllStudentsWrapper from "@/components/students/allStudentsWrapper";
+import { FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default async function Students() {
-    const allStudents = await getStudents();
+    const allStudentsData = await getStudents();
     return (
         <>
             <div>
@@ -15,8 +15,8 @@ export default async function Students() {
                     </div>
                     <AddStudentBtn />
                 </div>
-                <div className="rounded-2xl bg-white p-6 my-6 border border-gray-100 shadow-sm">
-                    <div className="rounded-2xl bg-gray-50 p-2 mt-4 flex items-center">
+                <div className="rounded-2xl bg-white flex items-center p-6 my-6 border border-gray-100 shadow-sm">
+                    <div className="rounded-2xl bg-gray-50 p-2 mt-4 flex items-center w-full">
                         <label htmlFor="searchStudent" className="text-gray-400 cursor-pointer">
                             <MagnifyingGlassIcon className="size-5 ml-2 mr-3" />
                         </label>
@@ -34,14 +34,22 @@ export default async function Students() {
                             <XMarkIcon className="size-5" />
                         </button>
                     </div>
+                    <button
+                        type="button"
+                        className="shadow-sm hover:shadow-md transition duration-300 ease-out cursor-pointer rounded-xl border p-2 border-gray-200 mt-3 ml-3 text-gray-600"
+                    >
+                        <FunnelIcon className="size-5" />
+                    </button>
                 </div>
                 <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
                     <div className="mb-2">
                         <p className="text-lg font-bold text-gray-800">All Students</p>
-                        <p className="text-sm font-medium text-gray-500">{allStudents ? allStudents.length : "0"} students found</p>
+                        <p className="text-sm font-medium text-gray-500">{allStudentsData ? allStudentsData.studentsCount : "0"} students found</p>
                     </div>
-                    {allStudents && <Table allStudents={allStudents} />}
-
+                    {allStudentsData && <AllStudentsWrapper
+                        allStudents={allStudentsData.allStudents}
+                        studentsCount={allStudentsData.studentsCount}
+                    />}
                 </div>
             </div>
         </>

@@ -5,7 +5,7 @@ import ActionStudentBtn from "../button/student/actionStudentBtn";
 export default function Table({ allStudents }: { allStudents: StudentsList }) {
     return (
         <>
-            <table className="w-full text-sm text-gray-500 text-center">
+            <table className="w-full text-sm text-gray-600 text-center">
                 <thead className="text-xs font-semibold text-gray-800 uppercase border-b border-gray-200">
                     <tr>
                         <th scope="col" className="px-6 py-3">

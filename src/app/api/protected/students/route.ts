@@ -50,6 +50,22 @@ export async function GET(req: NextRequest) {
 
         // INACTIVE users are allowed for free app usage
         if (subscriptionCheck.userStatus === "INACTIVE") {
+            const searchParams = req.nextUrl.searchParams
+            const currentPage = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+            const take = searchParams.get("limit") ? Number(searchParams.get("limit")) : 5;
+            const skip = (currentPage - 1) * take;
+
+            const studentsCount = await prisma.student.count({
+                where: {
+                    userId: String(token.id),
+                    isDeleted: false,
+                },
+            });
+
+            if (!(studentsCount > 0)) {
+                return Response.json({ message: "Students not found!!!" }, { status: 404 });
+            }
+
             const allStudents = await prisma.student.findMany({
                 where: {
                     userId: String(token.id),
@@ -86,14 +102,11 @@ export async function GET(req: NextRequest) {
                 orderBy: {
                     createdAt: "asc",
                 },
-                take: 10,
+                take,
+                skip,
             });
 
-            if (!(allStudents.length > 0)) {
-                return Response.json({ message: "Students not found!!!" }, { status: 404 });
-            }
-
-            return Response.json({ message: "Successfully found all students!!!", allStudents }, { status: 200 });
+            return Response.json({ message: "Successfully found all students!!!", allStudents, studentsCount }, { status: 200 });
         }
 
         if (subscriptionCheck.userStatus === "ACTIVE") {

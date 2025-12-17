@@ -32,8 +32,8 @@ export default async function Profile() {
                             profileImg={userData.photo ? `${userData.photo}?t=${Date.now()}` : "/avatar.png"}
                         />
                         <div className="ml-4">
-                            <p className="text-2xl font-medium text-gray-800">{userData.fullName}</p>
-                            <p className="text-gray-600 mt-0.5">{userData.email}</p>
+                            <p className="text-2xl font-medium text-gray-800 capitalize">{userData.fullName}</p>
+                            <p className="text-gray-600 mt-0.5">{userData.username}</p>
                         </div>
                     </div>
                     <div>
@@ -46,7 +46,7 @@ export default async function Profile() {
                     </div>
                     <div className="flex items-center">
                         <div className="mr-4">
-                            <p className="text-2xl font-medium text-gray-800">{userData.instituteName}</p>
+                            <p className="text-2xl font-medium text-gray-800 capitalize">{userData.instituteName}</p>
                             <p className="text-gray-600 mt-0.5">{userData.contactNo ? userData.contactNo : 1234567890}</p>
                         </div>
                         <ProfileImageUpload
@@ -77,7 +77,7 @@ export default async function Profile() {
                         {/* Gender */}
                         <CardData key={5} fieldName="Gender" fieldValue={userData.gender.toLowerCase()} capitalize={true} />
                         {/* Category */}
-                        <CardData key={6} fieldName="Category" fieldValue={userData.category.toLowerCase()} capitalize={true} />
+                        <CardData key={6} fieldName="Category" fieldValue={userData.category} />
                         {/* Mobile No */}
                         <CardData key={7} fieldName="Mobile No." fieldValue={userData.mobileNo} />
                         {/* Email */}

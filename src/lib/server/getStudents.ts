@@ -17,8 +17,8 @@ export default async function getStudents() {
             throw new Error("Failed to fetch data");
         }
 
-        const data: { message: string, allStudents: StudentsList } = await result.json();
-        return data.allStudents;
+        const data: { message: string, allStudents: StudentsList, studentsCount: number } = await result.json();
+        return data;
     }
     catch {
         return null;
