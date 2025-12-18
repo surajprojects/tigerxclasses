@@ -2,7 +2,7 @@ import Btn from "../button/btn";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import { StudentsList } from "@/utils/types/studentType";
 import axiosProtected from "@/utils/axios/axiosProtected";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 export default function StudentsPagination({
     studentsCount,
@@ -11,10 +11,15 @@ export default function StudentsPagination({
     studentsCount: number,
     setAllStudentsData: Dispatch<SetStateAction<StudentsList>>,
 }) {
+    const isFirstRender = useRef(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [takeRows, setTakeRows] = useState<string>("5");
-    const [currentPage, setCurrentPage] = useState<number>(1);
     const totalPages = Math.ceil(studentsCount / Number(takeRows));
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [btnDisabled, setIsBtnDisabled] = useState({
+        prevBtn: true,
+        nextBtn: totalPages > 1 ? false : true,
+    });
 
     const handlePageChange = async (page = 1, limit = 5) => {
         setIsLoading(true);
@@ -29,6 +34,11 @@ export default function StudentsPagination({
     };
 
     useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
         handlePageChange(currentPage, Number(takeRows));
     }, [currentPage, takeRows])
 
@@ -56,9 +66,16 @@ export default function StudentsPagination({
                         <Btn
                             text="Prev"
                             isLoading={isLoading}
-                            btnDisabled={isLoading}
+                            btnDisabled={btnDisabled.prevBtn}
                             handleClick={() => {
                                 if (currentPage > 1) {
+                                    setIsBtnDisabled((prevData) => {
+                                        return {
+                                            ...prevData,
+                                            prevBtn: (currentPage - 1) === 1,
+                                            nextBtn: false,
+                                        };
+                                    })
                                     setCurrentPage((prevData) => prevData - 1);
                                 }
                             }}
@@ -68,9 +85,16 @@ export default function StudentsPagination({
                         <Btn
                             text="Next"
                             isLoading={isLoading}
-                            btnDisabled={isLoading}
+                            btnDisabled={btnDisabled.nextBtn}
                             handleClick={() => {
-                                if (currentPage < totalPages) {
+                                if ((totalPages > 1) && (currentPage < totalPages)) {
+                                    setIsBtnDisabled((prevData) => {
+                                        return {
+                                            ...prevData,
+                                            prevBtn: false,
+                                            nextBtn: (currentPage + 1) === totalPages,
+                                        };
+                                    })
                                     setCurrentPage((prevData) => prevData + 1);
                                 }
                             }}

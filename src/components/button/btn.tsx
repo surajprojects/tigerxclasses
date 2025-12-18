@@ -8,7 +8,7 @@ export default function Btn({
     btnType = "button",
     isLoading = false,
     btnDisabled = false,
-    className = "bg-blue-500 hover:bg-blue-500/90 text-white",
+    className = "bg-blue-500 hover:bg-blue-500/90 disabled:bg-blue-500/90 text-white",
     spinnerClassName,
     handleClick,
 }: {
@@ -24,9 +24,9 @@ export default function Btn({
         <>
             <button
                 type={btnType}
-                disabled={btnDisabled}
+                disabled={isLoading ? true : btnDisabled}
                 onClick={handleClick}
-                className={clsx("font-sans w-full text-sm font-semibold py-2 rounded-xl hover:cursor-pointer  duration-300 ease-out outline-none", className)}>
+                className={clsx("font-sans w-full text-sm font-semibold py-2 rounded-xl hover:cursor-pointer  duration-300 ease-out outline-none disabled:cursor-not-allowed", className)}>
                 {isLoading ? <div className="flex justify-center items-center w-full"><Spinner className={spinnerClassName} customize={true} /></div> : text}
             </button>
         </>
