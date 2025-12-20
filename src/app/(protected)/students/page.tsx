@@ -1,10 +1,12 @@
 import getStudents from "@/lib/server/getStudents";
 import AddStudentBtn from "@/components/button/student/addStudentBtn";
 import AllStudentsWrapper from "@/components/students/allStudentsWrapper";
-import StudentsSearchFilter from "@/components/students/studentsSearchFilter";
 
 export default async function Students() {
     const allStudentsData = await getStudents();
+    if (!allStudentsData) {
+        return <p className="italic font-medium">Students not found!!!</p>;
+    }
     return (
         <>
             <div>
@@ -15,17 +17,7 @@ export default async function Students() {
                     </div>
                     <AddStudentBtn />
                 </div>
-                <StudentsSearchFilter />
-                <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
-                    <div className="mb-2">
-                        <p className="text-lg font-bold text-gray-800">All Students</p>
-                        <p className="text-sm font-medium text-gray-500">{allStudentsData ? allStudentsData.studentsCount : "0"} students found</p>
-                    </div>
-                    {allStudentsData && <AllStudentsWrapper
-                        allStudents={allStudentsData.allStudents}
-                        studentsCount={allStudentsData.studentsCount}
-                    />}
-                </div>
+                <AllStudentsWrapper allStudents={allStudentsData.allStudents} studentsCount={allStudentsData.studentsCount} />
             </div>
         </>
     );

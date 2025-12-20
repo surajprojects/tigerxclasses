@@ -4,6 +4,7 @@ import { verifyAdmin, verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { verifyUserSubscription } from "@/lib/verifyUserSubscription";
 import { studentFormInput, StudentFormInput } from "@/utils/validators/studentInput";
+import { Category, Gender } from "@/db/generated/prisma";
 
 export async function GET(req: NextRequest) {
     try {
@@ -50,15 +51,35 @@ export async function GET(req: NextRequest) {
 
         // INACTIVE users are allowed for free app usage
         if (subscriptionCheck.userStatus === "INACTIVE") {
-            const searchParams = req.nextUrl.searchParams
+            const searchParams = req.nextUrl.searchParams;
+
+            // Pagination Params
             const currentPage = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
             const take = searchParams.get("limit") ? Number(searchParams.get("limit")) : 5;
             const skip = (currentPage - 1) * take;
+
+            // Search & Filter Params
+            const fullName = searchParams.get("name");
+            const rollNo = searchParams.get("rollno");
+            const fatherName = searchParams.get("fathername");
+            const motherName = searchParams.get("mothername");
+            const dob = searchParams.get("dob");
+            const gender = searchParams.get("gender");
+            const category = searchParams.get("category");
+            const mobileNo = searchParams.get("mobileno");
 
             const studentsCount = await prisma.student.count({
                 where: {
                     userId: String(token.id),
                     isDeleted: false,
+                    ...(fullName && fullName.length > 0 && { fullName }),
+                    ...(rollNo && rollNo.length > 0 && { rollNo: Number(rollNo) }),
+                    ...(fatherName && fatherName.length > 0 && { fatherName }),
+                    ...(motherName && motherName.length > 0 && { motherName }),
+                    ...(dob && dob.length > 0 && { dob: new Date(dob).toISOString() }),
+                    ...(gender && gender.length > 0 && { gender: gender as Gender }),
+                    ...(category && category.length > 0 && { category: category as Category }),
+                    ...(mobileNo && mobileNo.length > 0 && { mobileNo }),
                 },
             });
 
@@ -70,6 +91,14 @@ export async function GET(req: NextRequest) {
                 where: {
                     userId: String(token.id),
                     isDeleted: false,
+                    ...(fullName && fullName.length > 0 && { fullName }),
+                    ...(rollNo && rollNo.length > 0 && { rollNo: Number(rollNo) }),
+                    ...(fatherName && fatherName.length > 0 && { fatherName }),
+                    ...(motherName && motherName.length > 0 && { motherName }),
+                    ...(dob && dob.length > 0 && { dob: new Date(dob).toISOString() }),
+                    ...(gender && gender.length > 0 && { gender: gender as Gender }),
+                    ...(category && category.length > 0 && { category: category as Category }),
+                    ...(mobileNo && mobileNo.length > 0 && { mobileNo }),
                 },
                 select: {
                     id: true,
@@ -77,6 +106,7 @@ export async function GET(req: NextRequest) {
                     fullName: true,
                     fatherName: true,
                     mobileNo: true,
+                    gender: true,
                     studentCourses: {
                         select: {
                             id: true,

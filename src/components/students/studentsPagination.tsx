@@ -1,31 +1,44 @@
 import Btn from "../button/btn";
+import { filterDataType } from "./allStudentsWrapper";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import { StudentsList } from "@/utils/types/studentType";
 import axiosProtected from "@/utils/axios/axiosProtected";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import Spinner from "../ui/spinner";
 
 export default function StudentsPagination({
+    filterData,
     studentsCount,
+    takeRows,
+    currentPage,
     setAllStudentsData,
+    setAllStudentsCount,
+    setTakeRows,
+    setCurrentPage,
 }: {
+    filterData: filterDataType,
     studentsCount: number,
+    takeRows: string,
+    currentPage: number,
     setAllStudentsData: Dispatch<SetStateAction<StudentsList>>,
+    setAllStudentsCount: Dispatch<SetStateAction<number>>,
+    setTakeRows: Dispatch<SetStateAction<string>>,
+    setCurrentPage: Dispatch<SetStateAction<number>>,
 }) {
     const isFirstRender = useRef(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [takeRows, setTakeRows] = useState<string>("5");
     const totalPages = Math.ceil(studentsCount / Number(takeRows));
-    const [currentPage, setCurrentPage] = useState<number>(1);
     const [btnDisabled, setIsBtnDisabled] = useState({
         prevBtn: true,
         nextBtn: totalPages > 1 ? false : true,
     });
 
-    const handlePageChange = async (page = 1, limit = 5) => {
+    const handlePageChange = async () => {
         setIsLoading(true);
         try {
-            const result = await axiosProtected.get(`/students?page=${page}&limit=${limit}`);
+            const result = await axiosProtected.get(`/students?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
             setAllStudentsData(result.data.allStudents);
+            setAllStudentsCount(result.data.studentsCount);
         }
         catch (error: unknown) {
             errorHandle(error);
@@ -38,8 +51,7 @@ export default function StudentsPagination({
             isFirstRender.current = false;
             return;
         }
-
-        handlePageChange(currentPage, Number(takeRows));
+        handlePageChange();
     }, [currentPage, takeRows])
 
     return (
@@ -60,13 +72,12 @@ export default function StudentsPagination({
                         <option key={4} value="50">50</option>
                     </select>
                 </div>
-                <p>Showing {currentPage} to {totalPages}</p>
+                <p className="flex">Showing {isLoading && <Spinner className="fill-gray-400 mx-2" customize={true} />}{!isLoading && currentPage} to {totalPages}</p>
                 <div className="flex justify-between items-center gap-x-2">
                     <div className="w-14">
                         <Btn
                             text="Prev"
-                            isLoading={isLoading}
-                            btnDisabled={btnDisabled.prevBtn}
+                            btnDisabled={isLoading ? true : btnDisabled.prevBtn}
                             handleClick={() => {
                                 if (currentPage > 1) {
                                     setIsBtnDisabled((prevData) => {
@@ -84,8 +95,7 @@ export default function StudentsPagination({
                     <div className="w-14">
                         <Btn
                             text="Next"
-                            isLoading={isLoading}
-                            btnDisabled={btnDisabled.nextBtn}
+                            btnDisabled={isLoading ? true : btnDisabled.nextBtn}
                             handleClick={() => {
                                 if ((totalPages > 1) && (currentPage < totalPages)) {
                                     setIsBtnDisabled((prevData) => {
