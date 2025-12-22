@@ -8,6 +8,9 @@ const FeesPieChart = dynamic(
 );
 
 export default function ChartsWrapper({ dashboardData }: { dashboardData: any }) {
+    if (!dashboardData) {
+        return <p className="italic font-medium">Data not found!!!</p>;
+    }
     return (
         <>
             {/* Fees Pie Chart */}

@@ -34,7 +34,10 @@ export default function FeesPieChart({
             <div className="w-full h-64">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                        <Tooltip formatter={(value: number) => [`₹${value.toLocaleString()}/-`, "Amount"]} />
+                        <Tooltip formatter={(value) => {
+                            if (value == null) return ["₹0", "Amount"];
+                            return [`₹${value}`, "Amount"];
+                        }} />
                         <Pie
                             data={data}
                             nameKey="name"

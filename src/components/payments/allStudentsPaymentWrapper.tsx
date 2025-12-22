@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react";
-import Table from "./studentsTable";
-import StudentsPagination from "./studentsPagination";
-import { StudentsList } from "@/utils/types/studentType";
-import StudentsSearchFilter from "./studentsSearchFilter";
-import { filterDataType } from "@/utils/types/filterType";
 
-export default function AllStudentsWrapper({
+import { StudentsList } from "@/utils/types/studentType";
+import { filterDataType } from "@/utils/types/filterType";
+import StudentsPaymentTable from "./studentsPaymentTable";
+import StudentsPagination from "../students/studentsPagination";
+import StudentsSearchFilter from "../students/studentsSearchFilter";
+
+export default function AllStudentsPaymentWrapper({
     allStudents,
     studentsCount,
 }: {
@@ -45,7 +46,7 @@ export default function AllStudentsWrapper({
                     <p className="text-lg font-bold text-gray-800">All Students</p>
                     <p className="text-sm font-medium text-gray-500">{allStudentsCount} students found</p>
                 </div>
-                <Table allStudents={allStudentsData} />
+                <StudentsPaymentTable allStudents={allStudentsData} />
                 <StudentsPagination
                     filterData={filterData}
                     studentsCount={allStudentsCount}

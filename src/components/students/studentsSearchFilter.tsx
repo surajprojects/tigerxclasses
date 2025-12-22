@@ -2,12 +2,12 @@ import Btn from "../button/btn";
 import Spinner from "../ui/spinner";
 import FormField from "../form/formField";
 import { FunnelIcon } from "lucide-react";
-import { filterDataType } from "./allStudentsWrapper";
 import { Category, Gender } from "@/db/generated/prisma";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import { StudentsList } from "@/utils/types/studentType";
 import axiosProtected from "@/utils/axios/axiosProtected";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import { filterDataType } from "@/utils/types/filterType";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { MagnifyingGlassIcon, PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function StudentsSearchFilter({
@@ -62,7 +62,7 @@ export default function StudentsSearchFilter({
     const handleSubmit = async () => {
         setIsLoading(true);
         try {
-            const result = await axiosProtected.get(`/students?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
+            const result = await axiosProtected.get(`/payments?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
             setAllStudentsData(result.data.allStudents);
             setAllStudentsCount(result.data.studentsCount);
         }

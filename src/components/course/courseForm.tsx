@@ -96,7 +96,7 @@ export default function CourseForm({
                     />
                     {/* Fees */}
                     <div className="flex flex-col my-2">
-                        <label htmlFor="fees" className="font-sans font-medium text-sm text-gray-800">Fees*</label>
+                        <label htmlFor="fees" className="font-sans font-medium text-sm text-gray-800">Fees &#40;&#8377;&#41;*</label>
                         <input
                             type="text"
                             name="fees"

@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
+import { StudentsList } from "@/utils/types/studentType";
 
 export default async function getPayments() {
     try {
@@ -16,8 +17,8 @@ export default async function getPayments() {
             throw new Error("Failed to fetch data");
         }
 
-        const data: { message: string, studentsData: any } = await result.json();
-        return data.studentsData;
+        const data: { message: string, allStudents: StudentsList, studentsCount: number } = await result.json();
+        return data;
     }
     catch {
         return null;

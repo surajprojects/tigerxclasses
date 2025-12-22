@@ -1,10 +1,10 @@
 import prisma from "@/db";
 import { NextRequest } from "next/server";
+import { Category, Gender } from "@/db/generated/prisma";
 import { verifyAdmin, verifyUser } from "@/lib/verifyUser";
 import apiErrorHandle from "@/utils/errors/apiErrorHandle";
 import { verifyUserSubscription } from "@/lib/verifyUserSubscription";
 import { studentFormInput, StudentFormInput } from "@/utils/validators/studentInput";
-import { Category, Gender } from "@/db/generated/prisma";
 
 export async function GET(req: NextRequest) {
     try {

@@ -1,13 +1,21 @@
 import Card from "@/components/dashboard/card";
 import getPayments from "@/lib/server/getPayments";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import StudentsPaymentTable from "@/components/payments/studentsPaymentTable";
-import { Calendar, CircleAlert, IndianRupeeIcon, TrendingUp } from "lucide-react";
+import { Calendar, IndianRupeeIcon, TrendingUp } from "lucide-react";
+import AllStudentsPaymentWrapper from "@/components/payments/allStudentsPaymentWrapper";
 
 export default async function Payments() {
-    const studentsData = await getPayments();
-    const totalFees = studentsData.reduce((sum: any, student: any) => sum + student.totalFees, 0);
-    const paidFees = studentsData.reduce((sum: any, student: any) => sum + student.paidFees, 0);
+    const allStudentsData = await getPayments();
+
+    if (!allStudentsData) {
+        return (
+            <>
+                <p className="italic text-gray-500 mt-5">Students not found!!!</p>
+            </>
+        );
+    }
+
+    const totalFees = allStudentsData.allStudents.reduce((sum: any, student: any) => sum + student.totalFees, 0);
+    const paidFees = allStudentsData.allStudents.reduce((sum: any, student: any) => sum + student.paidFees, 0);
     return (
         <>
             <div>
@@ -38,8 +46,8 @@ export default async function Payments() {
                     </Card>
                     <Card
                         title="Payment Rate"
-                        description={`${studentsData ? studentsData.length : 0} students`}
-                        data={`${Math.floor((100 * paidFees) / totalFees)}%`}
+                        description={`${allStudentsData.allStudents ? allStudentsData.allStudents.length : 0} students`}
+                        data={`${(Math.floor((100 * paidFees) / totalFees)) ? (Math.floor((100 * paidFees) / totalFees)) : 0}%`}
                         className="text-green-500 bg-green-50/40"
                         titleStyle="text-3xl my-1 mt-3"
                         descriptionStyle="text-gray-500"
@@ -57,34 +65,7 @@ export default async function Payments() {
                         <CircleAlert className="size-4" />
                     </Card> */}
                 </div>
-                <div className="rounded-2xl bg-white p-6 my-6 border border-gray-100 shadow-sm">
-                    <p className="text-lg text-gray-800 font-medium">Search & Filter</p>
-                    <div className="rounded-2xl bg-gray-50 p-2 mt-6 flex items-center">
-                        <label htmlFor="searchStudent" className="text-gray-400 cursor-pointer">
-                            <MagnifyingGlassIcon className="size-5 ml-2 mr-3" />
-                        </label>
-                        <input
-                            type="text"
-                            name="searchStudent"
-                            id="searchStudent"
-                            placeholder="Search by name"
-                            className="w-full outline-none text-gray-500 font-medium border-b border-gray-200 pb-0.5"
-                        />
-                        <button
-                            type="button"
-                            className="text-gray-400 cursor-pointer hover:bg-gray-200 rounded-xl p-1.5 ease-out duration-300"
-                        >
-                            <XMarkIcon className="size-5" />
-                        </button>
-                    </div>
-                </div>
-                <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
-                    <div className="mb-2">
-                        <p className="text-lg font-bold text-gray-800">All Students</p>
-                        <p className="text-sm font-medium text-gray-500">{studentsData ? studentsData.length : "0"} students found</p>
-                    </div>
-                    <StudentsPaymentTable allStudents={studentsData} />
-                </div>
+                <AllStudentsPaymentWrapper allStudents={allStudentsData.allStudents} studentsCount={allStudentsData.studentsCount} />
             </div>
         </>
     );

@@ -1,7 +1,7 @@
 import Btn from "../button/btn";
-import { filterDataType } from "./allStudentsWrapper";
 import { errorHandle } from "@/utils/errors/errorHandle";
 import { StudentsList } from "@/utils/types/studentType";
+import { filterDataType } from "@/utils/types/filterType";
 import axiosProtected from "@/utils/axios/axiosProtected";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import Spinner from "../ui/spinner";
@@ -36,7 +36,7 @@ export default function StudentsPagination({
     const handlePageChange = async () => {
         setIsLoading(true);
         try {
-            const result = await axiosProtected.get(`/students?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
+            const result = await axiosProtected.get(`/payments?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
             setAllStudentsData(result.data.allStudents);
             setAllStudentsCount(result.data.studentsCount);
         }
