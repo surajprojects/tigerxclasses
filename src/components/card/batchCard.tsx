@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/dateAndTime";
 import { BatchData } from "@/utils/types/batchType";
 import ActionBatchBtn from "../button/batch/actionBatchBtn";
 import { UsersIcon, ClockIcon, CalendarDateRangeIcon } from "@heroicons/react/24/outline";
@@ -37,11 +38,11 @@ export default function BatchCard({
                 <div className="flex">
                     <div>
                         <p className="text-sm text-gray-600 flex items-center"><CalendarDateRangeIcon className="size-3.5 mr-1" />Start Date</p>
-                        <p className="text-base font-medium text-gray-800">{batchData.startDate.split("T")[0]}</p>
+                        <p className="text-base font-medium text-gray-800">{formatDate(batchData.startDate.split("T")[0])}</p>
                     </div>
                     <div className="mx-auto">
                         <p className="text-sm text-gray-600 flex items-center"><CalendarDateRangeIcon className="size-3.5 mr-1" />End Date</p>
-                        <p className="text-base font-medium text-gray-800">{batchData.endDate.split("T")[0]}</p>
+                        <p className="text-base font-medium text-gray-800">{formatDate(batchData.endDate.split("T")[0])}</p>
                     </div>
                 </div>
                 <div className="pt-3.5 mt-3.5 border-t border-gray-200 flex items-center">

@@ -1,11 +1,12 @@
 import Card from "@/components/card/card";
+import { formatDate } from "@/utils/dateAndTime";
 import CardData from "@/components/card/cardData";
 import CardBody from "@/components/card/cardBody";
 import CardHeader from "@/components/card/cardHeader";
 import getUserProfile from "@/lib/server/getUserProfile";
 import ProfileImageUpload from "@/components/home/profileImageUpload";
 import EditUserProfileBtn from "@/components/button/users/editUserProfileBtn";
-import { UserIcon, HomeIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
+import { UserIcon, HomeIcon, AcademicCapIcon, CheckBadgeIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
 export default async function Profile() {
     const userData = await getUserProfile();
@@ -36,13 +37,13 @@ export default async function Profile() {
                             <p className="text-gray-600 mt-0.5">{userData.username}</p>
                         </div>
                     </div>
-                    <div>
+                    <div className="flex flex-col items-center">
                         <p className="text-gray-500 text-sm">Status</p>
-                        <p className="text-gray-800 font-semibold text-lg">{userData.status}</p>
+                        <p className="text-gray-800 font-semibold text-lg"><span className="bg-amber-300 px-2.5 py-0.5 text-xs rounded-xl shadow-xs">{userData.status}</span></p>
                     </div>
-                    <div>
+                    <div className="flex flex-col items-center">
                         <p className="text-gray-500 text-sm">Verified</p>
-                        <p className="text-gray-800 font-semibold text-lg">{`${userData.verified}`}</p>
+                        <p className="text-gray-800 font-semibold text-lg mt-1">{userData.verified ? <CheckBadgeIcon className="size-5 text-green-500" /> : <XCircleIcon className="size-5 text-red-500" />}</p>
                     </div>
                     <div className="flex items-center">
                         <div className="mr-4">
@@ -73,7 +74,7 @@ export default async function Profile() {
                         {/* Mother Name */}
                         <CardData key={3} fieldName="Mother Name" fieldValue={userData.motherName} capitalize={true} />
                         {/* Date of Birth */}
-                        <CardData key={4} fieldName="Date of Birth" fieldValue={userData.dob.split("T")[0]} />
+                        <CardData key={4} fieldName="Date of Birth" fieldValue={formatDate(userData.dob.split("T")[0])} />
                         {/* Gender */}
                         <CardData key={5} fieldName="Gender" fieldValue={userData.gender.toLowerCase()} capitalize={true} />
                         {/* Category */}

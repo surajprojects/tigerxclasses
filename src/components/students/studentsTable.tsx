@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { formatDate } from "@/utils/dateAndTime";
 import { StudentsList } from "@/utils/types/studentType";
 import ActionStudentBtn from "../button/student/actionStudentBtn";
 
@@ -63,7 +64,7 @@ export default function Table({ allStudents }: { allStudents: StudentsList }) {
                                 {studentCourseData ? studentCourseData.batch.name : "-"}
                             </td>
                             <td className="px-6 py-4">
-                                {studentCourseData ? studentCourseData.enrolledOn.split("T")[0] : "-"}
+                                {studentCourseData ? formatDate(studentCourseData.enrolledOn.split("T")[0]) : "-"}
                             </td>
                             <td className="px-6 py-4 capitalize">
                                 {studentCourseData ? studentCourseData.status.toLowerCase() : "-"}

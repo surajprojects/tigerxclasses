@@ -1,6 +1,7 @@
 import Card from "@/components/card/card";
 import { BookOpenText } from "lucide-react";
 import getStudent from "@/lib/server/getStudent";
+import { formatDate } from "@/utils/dateAndTime";
 import BackBtn from "@/components/button/backBtn";
 import CardData from "@/components/card/cardData";
 import CardBody from "@/components/card/cardBody";
@@ -25,8 +26,10 @@ export default async function StudentProfile({
     if (!studentData) {
         return <p className="italic text-red-500 font-semibold">Student not found!!!</p>;
     }
+
     const batch = studentData.studentCourses.find((course) => course.status === "ACTIVE")?.batch.name;
     const enrolledDate = studentData.studentCourses.find((course) => course.status === "ACTIVE")?.enrolledOn.split("T")[0];
+
     return (
         <>
             <div>
@@ -58,7 +61,7 @@ export default async function StudentProfile({
                         <li>
                             <ul>
                                 <li className="text-gray-500 text-sm">Enrolled Date</li>
-                                <li className="text-gray-800 font-semibold text-lg">{enrolledDate ? enrolledDate : "-"}</li>
+                                <li className="text-gray-800 font-semibold text-lg">{enrolledDate ? formatDate(enrolledDate) : "-"}</li>
                             </ul>
                         </li>
                         <li>
@@ -84,7 +87,7 @@ export default async function StudentProfile({
                         {/* Full Name */}
                         <CardData key={1} fieldName="Full Name" fieldValue={studentData.fullName} capitalize={true} />
                         {/* Date of Birth */}
-                        <CardData key={2} fieldName="Date of Birth" fieldValue={studentData.dob.split("T")[0]} capitalize={true} />
+                        <CardData key={2} fieldName="Date of Birth" fieldValue={formatDate(studentData.dob.split("T")[0])} />
                         {/* Gender */}
                         <CardData key={3} fieldName="Gender" fieldValue={studentData.gender.toLowerCase()} capitalize={true} />
                         {/* Category */}

@@ -187,7 +187,7 @@ function formatDate(yyyymmdd: string) {
         }
     }
     else {
-        return null;
+        return yyyymmdd;
     }
 };
 

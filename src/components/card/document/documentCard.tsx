@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/dateAndTime";
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import ViewDocument from "../../students/document/viewDocument";
 import { StudentDocumentData } from "@/utils/types/studentDocumentType";
@@ -23,7 +24,7 @@ export default function DocumentCard({
                     </div>
                     <div>
                         <p onClick={onToggle} className="font-semibold cursor-pointer capitalize">{studentDocumentData.documentType.toLowerCase()}</p>
-                        <p className="text-xs text-gray-500 mt-1">{studentDocumentData.createdAt.split("T")[0]}</p>
+                        <p className="text-xs text-gray-500 mt-1">{formatDate(studentDocumentData.createdAt.split("T")[0])}</p>
                     </div>
                 </div>
                 <ActionDocumentBtn
@@ -33,7 +34,7 @@ export default function DocumentCard({
                 />
             </div>
             <div
-                className={`transition-all duration-300 ease-in-out overflow-hidden ${showDocForm ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0"
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${showDocForm ? "opacity-100 max-h-125" : "opacity-0 max-h-0"
                     }`}
             >
                 <ViewDocument studentDocumentData={studentDocumentData} />
