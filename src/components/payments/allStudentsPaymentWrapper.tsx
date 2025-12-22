@@ -29,10 +29,10 @@ export default function AllStudentsPaymentWrapper({
         motherName: "",
         mobileNo: "",
     });
-
     return (
         <>
             <StudentsSearchFilter
+                url="/payments"
                 takeRows={takeRows}
                 currentPage={currentPage}
                 filterData={filterData}
@@ -48,6 +48,7 @@ export default function AllStudentsPaymentWrapper({
                 </div>
                 <StudentsPaymentTable allStudents={allStudentsData} />
                 <StudentsPagination
+                    url="/payments"
                     filterData={filterData}
                     studentsCount={allStudentsCount}
                     takeRows={takeRows}

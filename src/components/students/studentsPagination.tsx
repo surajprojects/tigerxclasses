@@ -7,6 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import Spinner from "../ui/spinner";
 
 export default function StudentsPagination({
+    url,
     filterData,
     studentsCount,
     takeRows,
@@ -16,6 +17,7 @@ export default function StudentsPagination({
     setTakeRows,
     setCurrentPage,
 }: {
+    url: string,
     filterData: filterDataType,
     studentsCount: number,
     takeRows: string,
@@ -36,7 +38,7 @@ export default function StudentsPagination({
     const handlePageChange = async () => {
         setIsLoading(true);
         try {
-            const result = await axiosProtected.get(`/payments?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
+            const result = await axiosProtected.get(`${url}?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
             setAllStudentsData(result.data.allStudents);
             setAllStudentsCount(result.data.studentsCount);
         }

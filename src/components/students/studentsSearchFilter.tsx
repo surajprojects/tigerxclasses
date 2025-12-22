@@ -11,6 +11,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { MagnifyingGlassIcon, PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function StudentsSearchFilter({
+    url,
     takeRows,
     currentPage,
     filterData,
@@ -19,6 +20,7 @@ export default function StudentsSearchFilter({
     setAllStudentsData,
     setAllStudentsCount,
 }: {
+    url: string,
     takeRows: string,
     currentPage: number,
     filterData: filterDataType,
@@ -62,7 +64,7 @@ export default function StudentsSearchFilter({
     const handleSubmit = async () => {
         setIsLoading(true);
         try {
-            const result = await axiosProtected.get(`/payments?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
+            const result = await axiosProtected.get(`${url}?page=${currentPage}&limit=${takeRows}&name=${filterData.fullName}&rollno=${filterData.rollNo}&gender=${filterData.gender}&category=${filterData.category}&dob=${filterData.dob}&mobileno=${filterData.mobileNo}&fathername=${filterData.fatherName}&mothername=${filterData.motherName}`);
             setAllStudentsData(result.data.allStudents);
             setAllStudentsCount(result.data.studentsCount);
         }

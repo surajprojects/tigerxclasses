@@ -28,10 +28,10 @@ export default function AllStudentsWrapper({
         motherName: "",
         mobileNo: "",
     });
-
     return (
         <>
             <StudentsSearchFilter
+                url="/students"
                 takeRows={takeRows}
                 currentPage={currentPage}
                 filterData={filterData}
@@ -47,6 +47,7 @@ export default function AllStudentsWrapper({
                 </div>
                 <Table allStudents={allStudentsData} />
                 <StudentsPagination
+                    url="/students"
                     filterData={filterData}
                     studentsCount={allStudentsCount}
                     takeRows={takeRows}
