@@ -1,5 +1,5 @@
-import { PaymentsList, UserPaymentsList } from "@/utils/types/paymentType";
 import PaymentCard from "@/components/card/student/payment/paymentCard";
+import { PaymentsList, UserPaymentsList } from "@/utils/types/paymentType";
 import PaymentSummaryCard from "@/components/card/student/payment/paymentSummaryCard";
 
 export default function ViewPayments({

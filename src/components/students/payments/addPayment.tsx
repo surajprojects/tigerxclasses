@@ -3,6 +3,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { PaymentFormInput } from "@/utils/validators/paymentInput";
 import { StudentCourseData } from "@/utils/types/studentCourseType";
 import StudentPaymentSummaryCard from "@/components/card/student/studentPaymentSummaryCard";
+import { formatDate } from "@/utils/dateAndTime";
 
 export default function AddPayment({
     setShowForm,
@@ -39,7 +40,7 @@ export default function AddPayment({
                             studentName={studentCourseData ? studentCourseData.student.fullName : ""}
                             courseName={studentCourseData ? studentCourseData.course.name : ""}
                             batchName={studentCourseData ? studentCourseData.batch.name : ""}
-                            enrolledOn={studentCourseData ? studentCourseData.enrolledOn.split("T")[0] : ""}
+                            enrolledOn={studentCourseData ? formatDate(studentCourseData.enrolledOn.split("T")[0]) : ""}
                         />}
                         {/* Payment Form */}
                         <PaymentForm btnText="Add Payment" handleSubmit={handleSubmit} />

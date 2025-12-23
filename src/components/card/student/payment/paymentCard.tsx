@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { formatDate } from "@/utils/dateAndTime";
 import DeleteBtn from "@/components/button/deleteBtn";
 import { CalendarDays, IndianRupee } from "lucide-react";
 
@@ -32,7 +33,7 @@ export default function PaymentCard({
                         <div className="flex">
                             <p className="text-gray-500 text-sm flex items-center">
                                 <CalendarDays className="size-3.5 mr-1" strokeWidth={1.5} />
-                                {date}
+                                {formatDate(date)}
                             </p>
                             {remarks && <p className="text-gray-400 italic mx-4 text-sm">{remarks}</p>}
                         </div>

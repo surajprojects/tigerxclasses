@@ -117,7 +117,7 @@ export default function StudentCourseForm({
                         />
                         {/* Total Fees */}
                         <div className="flex flex-col my-2">
-                            <label htmlFor="totalFees" className="font-sans font-medium text-sm text-gray-800">Total Fees*</label>
+                            <label htmlFor="totalFees" className="font-sans font-medium text-sm text-gray-800">Total Fees &#40;&#8377;&#41;*</label>
                             <input
                                 type="text"
                                 name="totalFees"
