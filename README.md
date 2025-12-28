@@ -3,7 +3,7 @@
 # Tiger Classes – Student Management System
 
 Tiger Classes is a fully featured **student management system** built using **Next.js 16**, **Prisma**, **PostgreSQL**, **NextAuth**, and **TailwindCSS**.  
-It manages batches, courses, students, enrollments, payments, and documents — with **soft delete**, **role-based access**, and a modern dashboard.
+It manages batches, courses, students, enrollments, payments, and documents — with **soft delete**, a complete dashboard, and an improved user experience.
 
 ## Features
 
@@ -24,27 +24,42 @@ It manages batches, courses, students, enrollments, payments, and documents — 
 ### Students Management
 - Create / Read / Update / Delete Students  
 - Student profile pages  
+- Profile photo support for students
 - Soft delete for history retention  
+- Filtering and pagination
+  - Control rows per page (5, 10, 20, 50, etc.)
+  - Filter data based on requirements
 
 ### Student Courses (Enrolled Courses)
 - Students can enroll in one or multiple courses  
 - CRUD operations for enrollment records  
 
 ### Payments Module
-- **Create** and **Delete** payment records  
-- Updates are not allowed to keep financial history accurate  
-- Each payment is tied to a specific enrolled course  
+- **Create** and **Delete** payment records
+- Updates are not allowed to keep financial history accurate
+- Each payment is tied to a specific enrolled course
+- Dedicated payments page
+- Filtering and pagination
+  - View payment data efficiently
+  - Control rows per page
+  - Quick access to payment details across all students
 
 ### Student Documents
 - CRUD for document metadata (form-based)  
 - Soft delete maintained  
 
 ### Dashboard
-- Recently added:
-  - Student, course, and batch stats  
-  - Charts with Recharts (line charts, bar charts, pie)  
-- Coming soon:
-  - Payments overview section  
+- Overview of:
+  - Students
+  - Payments
+- Visual analytics using Recharts
+  - Pie charts
+- Quick insights into institute data
+
+### User Profile
+- View and update user profile details
+- User and Institute logo upload
+- Profile information visible across the app (header & sidebar)
 
 ### Soft Delete Everywhere
 Every entity (Batch, Course, Student, Enrollment, Payment, Document) uses:
@@ -52,6 +67,16 @@ Every entity (Batch, Course, Student, Enrollment, Payment, Document) uses:
 - `deletedAt: Date | null`
 
 This keeps **history safe**, avoids accidental loss, and makes admin auditing easier.
+
+### UI/UX Improvements
+- Multiple UI/UX refinements
+- Improved layouts and spacing
+- Bug fixes across dashboard, students, and payments modules
+- Better data readability and navigation
+
+## ScreenShots
+
+![Screenshot](tigerxclasses-screenshot.png)
 
 ## Tech Stack
 
